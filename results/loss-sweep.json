@@ -5,7 +5,7 @@
     "data": "synthetic",
     "seed": 1,
     "repeat": 20,
-    "repeat_large": 2,
+    "repeat_large": 10,
     "compression": true,
     "sizes": [
       {
@@ -87,136 +87,146 @@
       "protocol": "P2PACT UDP",
       "profile": "0% loss",
       "payload_bytes": {
-        "huge": 92976,
-        "long": 420,
-        "medium": 158,
-        "very long": 2339,
-        "very short": 92
+        "huge": 81302,
+        "long": 436,
+        "medium": 173,
+        "very long": 2382,
+        "very short": 105
       },
       "wire_bytes": {
-        "huge": 96000,
-        "long": 476,
-        "medium": 213,
-        "very long": 2450,
-        "very short": 147
+        "huge": 83964,
+        "long": 496,
+        "medium": 233,
+        "very long": 2526,
+        "very short": 166
       },
       "rtt_ms": {
-        "huge": 239.991,
-        "long": 81.851,
-        "medium": 82.983,
-        "very long": 82.31,
-        "very short": 81.402
+        "huge": 89.794,
+        "long": 81.31,
+        "medium": 81.421,
+        "very long": 83.119,
+        "very short": 81.073
       },
-      "cold_ms": 81.406,
-      "cold_bytes": 592
+      "cold_ms": 85.116,
+      "cold_bytes": 600,
+      "sent": 90,
+      "errors": 0
     },
     {
       "protocol": "P2PACT UDP",
       "profile": "1% loss",
       "payload_bytes": {
-        "huge": 77380,
-        "long": 420,
-        "medium": 173,
-        "very long": 2457,
-        "very short": 92
+        "huge": 82415,
+        "long": 436,
+        "medium": 185,
+        "very long": 2382,
+        "very short": 105
       },
       "wire_bytes": {
-        "huge": 79872,
-        "long": 476,
-        "medium": 228,
-        "very long": 2568,
-        "very short": 147
+        "huge": 85178,
+        "long": 496,
+        "medium": 248,
+        "very long": 2526,
+        "very short": 166
       },
       "rtt_ms": {
-        "huge": 280.426,
-        "long": 82.065,
-        "medium": 81.557,
-        "very long": 82.675,
-        "very short": 81.312
+        "huge": 179.344,
+        "long": 81.878,
+        "medium": 81.204,
+        "very long": 82.601,
+        "very short": 81.331
       },
-      "cold_ms": 81.809,
-      "cold_bytes": 592
+      "cold_ms": 83.179,
+      "cold_bytes": 600,
+      "sent": 90,
+      "errors": 0
     },
     {
       "protocol": "P2PACT UDP",
       "profile": "5% loss",
       "payload_bytes": {
-        "huge": 90025,
-        "long": 532,
-        "medium": 191,
-        "very long": 2456,
-        "very short": 92
+        "huge": 79840,
+        "long": 475,
+        "medium": 213,
+        "very long": 2566,
+        "very short": 105
       },
       "wire_bytes": {
-        "huge": 92965,
-        "long": 587,
-        "medium": 246,
-        "very long": 2567,
-        "very short": 147
+        "huge": 82463,
+        "long": 538,
+        "medium": 288,
+        "very long": 2721,
+        "very short": 166
       },
       "rtt_ms": {
-        "huge": 398.599,
-        "long": 81.131,
-        "medium": 82.033,
-        "very long": 82.446,
-        "very short": 81.681
+        "huge": 598.813,
+        "long": 81.382,
+        "medium": 81.358,
+        "very long": 83.032,
+        "very short": 81.06
       },
-      "cold_ms": 82.677,
-      "cold_bytes": 648
+      "cold_ms": 84.886,
+      "cold_bytes": 600,
+      "sent": 90,
+      "errors": 0
     },
     {
       "protocol": "P2PACT UDP",
       "profile": "10% loss",
       "payload_bytes": {
-        "huge": 82103,
-        "long": 551,
-        "medium": 215,
-        "very long": 2917,
-        "very short": 98
+        "huge": 86795,
+        "long": 579,
+        "medium": 216,
+        "very long": 2493,
+        "very short": 118
       },
       "wire_bytes": {
-        "huge": 84678,
-        "long": 606,
-        "medium": 298,
-        "very long": 3029,
-        "very short": 153
+        "huge": 89570,
+        "long": 653,
+        "medium": 293,
+        "very long": 2636,
+        "very short": 186
       },
       "rtt_ms": {
-        "huge": 699.714,
-        "long": 81.471,
-        "medium": 81.532,
-        "very long": 82.972,
-        "very short": 81.366
+        "huge": 4100.281,
+        "long": 81.219,
+        "medium": 81.404,
+        "very long": 82.967,
+        "very short": 81.317
       },
-      "cold_ms": 81.986,
-      "cold_bytes": 592
+      "cold_ms": 195.58,
+      "cold_bytes": 600,
+      "sent": 90,
+      "errors": 0
     },
     {
       "protocol": "P2PACT UDP",
       "profile": "20% loss",
       "payload_bytes": {
-        "huge": 102098,
-        "long": 557,
-        "medium": 291,
-        "very long": 3053,
-        "very short": 130
+        "huge": 96555,
+        "long": 567,
+        "medium": 260,
+        "very long": 2662,
+        "very short": 134
       },
       "wire_bytes": {
-        "huge": 105570,
-        "long": 641,
-        "medium": 403,
-        "very long": 3193,
-        "very short": 214
+        "huge": 99601,
+        "long": 647,
+        "medium": 354,
+        "very long": 2809,
+        "very short": 213
       },
       "rtt_ms": {
-        "huge": 2899.445,
-        "long": 81.028,
-        "medium": 177.807,
-        "very long": 176.075,
-        "very short": 80.857
+        "huge": 8100.72,
+        "long": 177.207,
+        "medium": 81.725,
+        "very long": 174.519,
+        "very short": 80.861
       },
-      "cold_ms": 601.914,
-      "cold_bytes": 921
+      "cold_ms": 84.749,
+      "cold_bytes": 600,
+      "sent": 90,
+      "errors": 0
     }
   ]
 }

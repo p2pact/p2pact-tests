@@ -20,21 +20,74 @@ Each implementation ships an interop peer: a node driven by JSON lines on stdin
 [p2pact-go/cmd/p2pact-interop](https://github.com/p2pact/p2pact-go/tree/main/cmd/p2pact-interop)).
 Write one for your implementation and add it to `interop_test.go`.
 
-## Findings so far
+## Findings
 
-From [`results/RESULTS.md`](results/RESULTS.md), P2PACT over UDP against the other protocols:
+### Real network
 
-- **Bytes**: 2–4.5× fewer than HTTPS, 2–3× fewer than WebSocket, HTTP/2 and gRPC, on every
-  message size; a new connection costs about 0.7 KB against 4–16 KB.
-- **First message on a new connection**: 2× faster on the internet and mobile (one round
-  trip instead of two), 3× faster over Bluetooth.
-- **Everyday messages** (up to a few thousand characters) on a live connection: the same time
-  as everyone else — the network's round trip dominates.
-- **Slow links** (Bluetooth): long messages 1.3–4× faster, because there are fewer bytes.
-- **Huge messages** (200 000 characters) on fast links: slower than TCP-based protocols on a
-  local network (compression costs CPU), and in the emulated internet. But TCP-based
-  protocols are measured in better-than-real conditions here (next section); against HTTP/3,
-  the only protocol measured on the same lossy UDP link, P2PACT is 1–6× faster.
+[`results-real/RESULTS.md`](results-real/RESULTS.md): a laptop on home Wi-Fi to a 1-CPU cloud
+server, 130–150 ms round trip, nothing emulated. Every message was checked and every one
+arrived intact. P2PACT over UDP against the six other protocols:
+
+- **First message on a new connection**: 132–182 ms against 291–333 ms for HTTP/3, 420–464 ms
+  for HTTPS and HTTP/2, 528–633 ms for WebSocket and gRPC — **2–4× faster** (one round trip:
+  the request rides in the first handshake packet).
+- **Load** (2000 messages, 50 at a time, like 50 chats): 330–375 messages a second against
+  279–357 for gRPC, WebSocket, HTTP/2 and HTTP/3 and 203–224 for HTTPS — **the best or level
+  with the best**.
+- **Huge messages** (200 000 characters): 156–181 ms against 156–231 ms (HTTP/3 up to 440) —
+  **level or faster**.
+- **Everyday messages**: the same for everyone, 125–160 ms; the network's round trip decides.
+- **Bytes**: 2–4.5× fewer than HTTPS, 2–3× fewer than WebSocket, HTTP/2 and gRPC.
+
+### Emulated links
+
+[`results/RESULTS.md`](results/RESULTS.md): local network, Bluetooth (30 ms, 40 KB/s),
+internet (40 ms, 1 % loss), mobile (100 ms, 500 KB/s, 3 % loss). All messages arrived intact.
+
+- **Faster**: a new connection 2–3× everywhere; Bluetooth 1.8× on long messages and 2.5× on
+  huge ones (fewer bytes on a slow link); huge messages against HTTP/3 on the same lossy link
+  3–4×.
+- **Level**: everyday messages; the local network under load (~21 000 messages a second for
+  every protocol).
+- **Slower**: load on the mobile profile (147 a second against 203 for HTTP/3) and on the
+  internet profile (487 against 558); huge messages at 10–20 % loss (4–8 s: the retransmission
+  timer reaches its 4 s cap). TCP-based protocols look faster on lossy profiles only because
+  they run without loss there (see the method).
+
+### What the tests found in the protocol
+
+Each of these was a real bug or weakness, fixed in all implementations and in the spec:
+
+1. Queued messages went out on a 20 ms tick instead of at once.
+2. A handshake counted its first message as sent when no handshake packet went out, so the
+   message waited for its retransmission timer.
+3. Data that overtook the handshake reply reset the session.
+4. The reference implementation used keyed BLAKE2s where the spec says HMAC-BLAKE2s, so
+   invite ids differed from other implementations (found by the interop test).
+5. Acks for a lone part waited 40 ms; now every second part is acknowledged at once, as in TCP.
+6. A fixed window and timer: no growth on fast links, spurious retransmissions on slow ones.
+   Now a congestion window that grows while no queue builds (as BBR probes), timers from
+   the measured round trip, a delivery-rate limit in bytes while a queue builds.
+7. A random loss halved the window as if the network were congested.
+8. Replies went to a road the device had used before it reconnected (a new TCP connection,
+   a restart, UDP given up for TCP) and arrived only by retransmission: now the road of the
+   current session heard from last.
+9. On TCP the protocol kept a window of its own on top of TCP's.
+10. All messages between two devices shared one queue, so a loss on one chat held up all the
+    others. Now **streams**, as in QUIC: one per chat, independent, with ack ranges.
+11. The known-devices file was written in place and could be read half-written.
+
+## Real network
+
+```sh
+# on a server (ports 48731–48736, UDP and TCP)
+p2pact-bench serve -bind 0.0.0.0 -advertise <public address>
+# on your machine
+go run ./cmd/p2pact-bench run -remote <server address> scenarios/*.json -out results-real
+```
+
+The scenario's profiles are replaced by one, "real network". Keep the connection up for the
+whole run: lost messages are counted as errors and a run with many of them stops.
 
 ## p2pact-bench
 
