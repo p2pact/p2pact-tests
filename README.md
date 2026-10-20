@@ -31,18 +31,18 @@ Write one for your implementation and add it to `interop_test.go`.
 ### Real network
 
 [`results-real/RESULTS.md`](results-real/RESULTS.md): a laptop on home Wi-Fi to a 1-CPU cloud
-server, 130–150 ms round trip, nothing emulated. Every message was checked and every one
+server, 115–150 ms round trip, nothing emulated. Every message was checked and every one
 arrived intact. P2PACT over UDP against the six other protocols:
 
-- **First message on a new connection**: 132–182 ms against 291–333 ms for HTTP/3, 420–464 ms
-  for HTTPS and HTTP/2, 528–633 ms for WebSocket and gRPC — **2–4× faster** (one round trip:
+- **First message on a new connection**: 117–140 ms against 244–320 ms for HTTP/3, 357–406 ms
+  for HTTPS and HTTP/2, 478–557 ms for WebSocket and gRPC — **2–4× faster** (one round trip:
   the request rides in the first handshake packet).
-- **Load** (2000 messages, 50 at a time, like 50 chats): 330–375 messages a second against
-  279–357 for gRPC, WebSocket, HTTP/2 and HTTP/3 and 203–224 for HTTPS — **the best or level
-  with the best**.
-- **Huge messages** (200 000 characters): 156–181 ms against 156–231 ms (HTTP/3 up to 440) —
-  **level or faster**.
-- **Everyday messages**: the same for everyone, 125–160 ms; the network's round trip decides.
+- **Load** (2000 messages, 50 at a time, like 50 chats): 337–388 messages a second against
+  307–398 for gRPC, WebSocket, HTTP/2 and HTTP/3 and 230–233 for HTTPS — **level with the
+  best** (within 10 % either way), 1.5× ahead of HTTPS.
+- **Huge messages** (200 000 characters): 129–160 ms against 141–220 ms — **level or faster**
+  (up to 1.4× against HTTP/3).
+- **Everyday messages**: the same for everyone, 115–143 ms; the network's round trip decides.
 - **Bytes**: 2–4.5× fewer than HTTPS, 2–3× fewer than WebSocket, HTTP/2 and gRPC.
 
 ### Emulated links
@@ -50,15 +50,16 @@ arrived intact. P2PACT over UDP against the six other protocols:
 [`results/RESULTS.md`](results/RESULTS.md): local network, Bluetooth (30 ms, 40 KB/s),
 internet (40 ms, 1 % loss), mobile (100 ms, 500 KB/s, 3 % loss). All messages arrived intact.
 
-- **Faster**: a new connection 2–3× everywhere; Bluetooth 1.8× on long messages and 2.5× on
-  huge ones (fewer bytes on a slow link); huge messages against HTTP/3 on the same lossy link
-  3–4×.
-- **Level**: everyday messages; the local network under load (~21 000 messages a second for
-  every protocol).
-- **Slower**: load on the mobile profile (147 a second against 203 for HTTP/3) and on the
-  internet profile (487 against 558); huge messages at 10–20 % loss (4–8 s: the retransmission
-  timer reaches its 4 s cap). TCP-based protocols look faster on lossy profiles only because
-  they run without loss there (see the method).
+- **Faster**: a new connection 2–3× everywhere; Bluetooth 1.4–1.9× on very long messages and
+  2.5–4× on huge ones (fewer bytes on a slow link); huge messages against HTTP/3 on the same
+  lossy link 2–8× (95 ms against 756 ms at 1 % loss, 0.65 s against 2.7 s at 3 %).
+- **Level**: everyday messages; the local network under load (~18 000–20 000 messages a second
+  for every protocol); load against HTTP/3 on the lossy profiles (internet 507–594 a second
+  against 533–573, mobile 148–233 against 167–200).
+- **Slower**: load over Bluetooth (76–187 a second against 158–202 for the TCP-based protocols:
+  parts are resent needlessly while the slow link queues); huge messages at 10–20 % loss
+  (4.1–4.5 s: the retransmission timer reaches its 4 s cap). TCP-based protocols look faster on
+  lossy profiles only because they run without loss there (see the method).
 
 ### What the tests found in the protocol
 
@@ -82,6 +83,12 @@ Each of these was a real bug or weakness, fixed in all implementations and in th
 10. All messages between two devices shared one queue, so a loss on one chat held up all the
     others. Now **streams**, as in QUIC: one per chat, independent, with ack ranges.
 11. The known-devices file was written in place and could be read half-written.
+12. Losses were noticed only by the timer or three later parts. Now time-based loss detection
+    (RACK, RFC 8985): huge messages at 1 % loss 180 → 95 ms, load on the mobile profile
+    147 → 233 a second.
+13. That loss detection also ran on TCP, where nothing is lost: parts waiting in a slow TCP
+    connection's queue were resent, a huge message over Bluetooth sent 352 KB instead of 77 KB
+    and took 9.2 s instead of 1.9 s. Now it runs only on UDP.
 
 ## Real network
 

@@ -87,27 +87,27 @@
       "protocol": "P2PACT UDP",
       "profile": "0% loss",
       "payload_bytes": {
-        "huge": 81302,
+        "huge": 85218,
         "long": 436,
         "medium": 173,
-        "very long": 2382,
+        "very long": 2557,
         "very short": 105
       },
       "wire_bytes": {
-        "huge": 83964,
+        "huge": 88026,
         "long": 496,
         "medium": 233,
-        "very long": 2526,
+        "very long": 2713,
         "very short": 166
       },
       "rtt_ms": {
-        "huge": 89.794,
-        "long": 81.31,
-        "medium": 81.421,
-        "very long": 83.119,
-        "very short": 81.073
+        "huge": 91.797,
+        "long": 82.618,
+        "medium": 81.704,
+        "very long": 83.209,
+        "very short": 82.352
       },
-      "cold_ms": 85.116,
+      "cold_ms": 84.64,
       "cold_bytes": 600,
       "sent": 90,
       "errors": 0
@@ -116,27 +116,27 @@
       "protocol": "P2PACT UDP",
       "profile": "1% loss",
       "payload_bytes": {
-        "huge": 82415,
+        "huge": 77603,
         "long": 436,
         "medium": 185,
-        "very long": 2382,
+        "very long": 2383,
         "very short": 105
       },
       "wire_bytes": {
-        "huge": 85178,
+        "huge": 80072,
         "long": 496,
         "medium": 248,
-        "very long": 2526,
+        "very long": 2529,
         "very short": 166
       },
       "rtt_ms": {
-        "huge": 179.344,
-        "long": 81.878,
-        "medium": 81.204,
-        "very long": 82.601,
-        "very short": 81.331
+        "huge": 191.185,
+        "long": 81.935,
+        "medium": 82.024,
+        "very long": 82.679,
+        "very short": 81.758
       },
-      "cold_ms": 83.179,
+      "cold_ms": 84.401,
       "cold_bytes": 600,
       "sent": 90,
       "errors": 0
@@ -145,27 +145,27 @@
       "protocol": "P2PACT UDP",
       "profile": "5% loss",
       "payload_bytes": {
-        "huge": 79840,
-        "long": 475,
+        "huge": 83735,
+        "long": 455,
         "medium": 213,
-        "very long": 2566,
+        "very long": 2957,
         "very short": 105
       },
       "wire_bytes": {
-        "huge": 82463,
-        "long": 538,
-        "medium": 288,
-        "very long": 2721,
+        "huge": 86431,
+        "long": 517,
+        "medium": 287,
+        "very long": 3127,
         "very short": 166
       },
       "rtt_ms": {
-        "huge": 598.813,
-        "long": 81.382,
-        "medium": 81.358,
-        "very long": 83.032,
-        "very short": 81.06
+        "huge": 340.25,
+        "long": 82.824,
+        "medium": 82.525,
+        "very long": 84.689,
+        "very short": 82.552
       },
-      "cold_ms": 84.886,
+      "cold_ms": 85.501,
       "cold_bytes": 600,
       "sent": 90,
       "errors": 0
@@ -174,28 +174,28 @@
       "protocol": "P2PACT UDP",
       "profile": "10% loss",
       "payload_bytes": {
-        "huge": 86795,
-        "long": 579,
-        "medium": 216,
-        "very long": 2493,
-        "very short": 118
+        "huge": 85783,
+        "long": 609,
+        "medium": 213,
+        "very long": 3005,
+        "very short": 121
       },
       "wire_bytes": {
-        "huge": 89570,
-        "long": 653,
-        "medium": 293,
-        "very long": 2636,
-        "very short": 186
+        "huge": 88504,
+        "long": 682,
+        "medium": 285,
+        "very long": 3172,
+        "very short": 191
       },
       "rtt_ms": {
-        "huge": 4100.281,
-        "long": 81.219,
-        "medium": 81.404,
-        "very long": 82.967,
-        "very short": 81.317
+        "huge": 4100.099,
+        "long": 82.623,
+        "medium": 82.139,
+        "very long": 84.037,
+        "very short": 81.768
       },
-      "cold_ms": 195.58,
-      "cold_bytes": 600,
+      "cold_ms": 86.734,
+      "cold_bytes": 727,
       "sent": 90,
       "errors": 0
     },
@@ -203,27 +203,27 @@
       "protocol": "P2PACT UDP",
       "profile": "20% loss",
       "payload_bytes": {
-        "huge": 96555,
-        "long": 567,
-        "medium": 260,
-        "very long": 2662,
-        "very short": 134
+        "huge": 96957,
+        "long": 734,
+        "medium": 261,
+        "very long": 3143,
+        "very short": 135
       },
       "wire_bytes": {
-        "huge": 99601,
-        "long": 647,
-        "medium": 354,
-        "very long": 2809,
+        "huge": 99981,
+        "long": 834,
+        "medium": 349,
+        "very long": 3325,
         "very short": 213
       },
       "rtt_ms": {
-        "huge": 8100.72,
-        "long": 177.207,
-        "medium": 81.725,
-        "very long": 174.519,
-        "very short": 80.861
+        "huge": 4468.85,
+        "long": 171.071,
+        "medium": 84.597,
+        "very long": 177.544,
+        "very short": 81.862
       },
-      "cold_ms": 84.749,
+      "cold_ms": 86.454,
       "cold_bytes": 600,
       "sent": 90,
       "errors": 0

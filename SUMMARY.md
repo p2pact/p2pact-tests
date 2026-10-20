@@ -8,13 +8,13 @@ A laptop on home Wi-Fi to a cloud server, nothing emulated. Details: [results-re
 
 | Protocol | Medium message | Long message | Huge message (200 000 chars) | New connection + first message | Load: messages a second (50 at a time) | Bytes per medium message |
 |---|---:|---:|---:|---:|---:|---:|
-| P2PACT UDP | **136 ms** | **138 ms** | **181 ms** | **138 ms** | **368/s** | **226 B** |
-| P2PACT TCP | 142 ms (1.0×) | 151 ms (1.1×) | 197 ms (1.1×) | 286 ms (2.1×) | 311/s (1.2×) | 388 B (1.7×) |
-| WebSocket | 145 ms (1.1×) | 139 ms (1.0×) | 199 ms (1.1×) | 572 ms (4.1×) | 339/s (1.1×) | 462 B (2.0×) |
-| HTTPS+JSON | 141 ms (1.0×) | 154 ms (1.1×) | 231 ms (1.3×) | 450 ms (3.3×) | 209/s (1.8×) | 754 B (3.3×) |
-| HTTP/2 | 156 ms (1.1×) | 153 ms (1.1×) | 206 ms (1.1×) | 464 ms (3.4×) | 308/s (1.2×) | 490 B (2.2×) |
-| gRPC | 148 ms (1.1×) | 154 ms (1.1×) | 188 ms (1.0×) | 553 ms (4.0×) | 297/s (1.2×) | 578 B (2.6×) |
-| HTTP/3 | 145 ms (1.1×) | 155 ms (1.1×) | 440 ms (2.4×) | 304 ms (2.2×) | 333/s (1.1×) | 634 B (2.8×) |
+| P2PACT UDP | **120 ms** | **134 ms** | **160 ms** | **121 ms** | **355/s** | **232 B** |
+| P2PACT TCP | 134 ms (1.1×) | 142 ms (1.1×) | 158 ms (1.0×) | 242 ms (2.0×) | 343/s (1.0×) | 386 B (1.7×) |
+| WebSocket | 135 ms (1.1×) | 131 ms (1.0×) | 171 ms (1.1×) | 478 ms (3.9×) | 357/s (1.0×) | 462 B (2.0×) |
+| HTTPS+JSON | 137 ms (1.1×) | 141 ms (1.1×) | 184 ms (1.1×) | 401 ms (3.3×) | 230/s (1.5×) | 754 B (3.2×) |
+| HTTP/2 | 125 ms (1.0×) | 120 ms (0.9×) | 186 ms (1.2×) | 397 ms (3.3×) | 368/s (1.0×) | 489 B (2.1×) |
+| gRPC | 121 ms (1.0×) | 129 ms (1.0×) | 201 ms (1.3×) | 517 ms (4.3×) | 398/s (0.9×) | 588 B (2.5×) |
+| HTTP/3 | 119 ms (1.0×) | 117 ms (0.9×) | 220 ms (1.4×) | 244 ms (2.0×) | 392/s (0.9×) | 610 B (2.6×) |
 
 ## Emulated links
 
@@ -22,12 +22,12 @@ One machine, delay, bandwidth and loss emulated. Details: [results/RESULTS.md](r
 
 | Protocol | Long, Bluetooth | Huge, Bluetooth | Huge, local network | Huge, internet 1% loss * | Huge, mobile 3% loss * | New connection, mobile | Load, internet 1% loss * | Load, local network |
 |---|---:|---:|---:|---:|---:|---:|---:|---:|
-| P2PACT UDP | **106 ms** | **1.96 s** | **6.2 ms** | **180 ms** | **722 ms** | **205 ms** | **487/s** | **21528/s** |
-| P2PACT TCP | 104 ms (1.0×) | 1.92 s (1.0×) | 8.7 ms (1.4×) | 91 ms (0.5×) | 356 ms (0.5×) | 206 ms (1.0×) | 610/s (0.8×) | 20206/s (1.1×) |
-| WebSocket | 189 ms (1.8×) | 4.96 s (2.5×) | 6.4 ms (1.0×) | 84 ms (0.5×) | 597 ms (0.8×) | 616 ms (3.0×) | 605/s (0.8×) | 21421/s (1.0×) |
-| HTTPS+JSON | 196 ms (1.8×) | 4.97 s (2.5×) | 5.3 ms (0.9×) | 85 ms (0.5×) | 597 ms (0.8×) | 412 ms (2.0×) | 591/s (0.8×) | 18790/s (1.1×) |
-| HTTP/2 | 191 ms (1.8×) | 4.96 s (2.5×) | 6.8 ms (1.1×) | 84 ms (0.5×) | 597 ms (0.8×) | 413 ms (2.0×) | 606/s (0.8×) | 20720/s (1.0×) |
-| gRPC | 184 ms (1.7×) | 4.96 s (2.5×) | 6.7 ms (1.1×) | 83 ms (0.5×) | 597 ms (0.8×) | 617 ms (3.0×) | 608/s (0.8×) | 21145/s (1.0×) |
-| HTTP/3 | 202 ms (1.9×) | 5.17 s (2.6×) | 6.8 ms (1.1×) | 601 ms (3.3×) | 3.07 s (4.3×) | 417 ms (2.0×) | 558/s (0.9×) | 20566/s (1.0×) |
+| P2PACT UDP | **107 ms** | **1.96 s** | **9.5 ms** | **95 ms** | **653 ms** | **205 ms** | **594/s** | **19035/s** |
+| P2PACT TCP | 103 ms (1.0×) | 1.92 s (1.0×) | 8.3 ms (0.9×) | 91 ms (1.0×) | 357 ms (0.5×) | 206 ms (1.0×) | 607/s (1.0×) | 19731/s (1.0×) |
+| WebSocket | 190 ms (1.8×) | 4.96 s (2.5×) | 6.5 ms (0.7×) | 89 ms (0.9×) | 600 ms (0.9×) | 616 ms (3.0×) | 606/s (1.0×) | 19714/s (1.0×) |
+| HTTPS+JSON | 198 ms (1.9×) | 4.97 s (2.5×) | 7.6 ms (0.8×) | 90 ms (0.9×) | 601 ms (0.9×) | 412 ms (2.0×) | 591/s (1.0×) | 16820/s (1.1×) |
+| HTTP/2 | 191 ms (1.8×) | 4.97 s (2.5×) | 7.4 ms (0.8×) | 88 ms (0.9×) | 600 ms (0.9×) | 413 ms (2.0×) | 606/s (1.0×) | 20576/s (0.9×) |
+| gRPC | 185 ms (1.7×) | 4.97 s (2.5×) | 5.6 ms (0.6×) | 88 ms (0.9×) | 599 ms (0.9×) | 618 ms (3.0×) | 607/s (1.0×) | 18243/s (1.0×) |
+| HTTP/3 | 200 ms (1.9×) | 5.17 s (2.6×) | 5.9 ms (0.6×) | 756 ms (7.9×) | 2.75 s (4.2×) | 418 ms (2.0×) | 547/s (1.1×) | 18718/s (1.0×) |
 
 \* TCP-based protocols (P2PACT TCP, WebSocket, HTTPS, HTTP/2, gRPC) run without loss in the emulation, and the emulating proxy terminates TCP, so these columns are optimistic for them. On lossy links the fair comparison is with HTTP/3, which goes through the same emulated UDP link as P2PACT.

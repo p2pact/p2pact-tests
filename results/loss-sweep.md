@@ -12,8 +12,8 @@ Machine: darwin/arm64, 15 CPUs, go1.27.0, 2026-10-20.
 | very short (~20 chars) | 166 B |
 | medium (~100 chars) | 233 B |
 | long (~600 chars) | 496 B |
-| very long (~5 000 chars) | 2.5 KB |
-| huge (~200 000 chars) | 82 KB |
+| very long (~5 000 chars) | 2.6 KB |
+| huge (~200 000 chars) | 86 KB |
 | new connection + first message | 600 B |
 
 **Delivery**: every message arrived intact (each one checked by a fingerprint of what the receiver got).
@@ -24,23 +24,23 @@ Machine: darwin/arm64, 15 CPUs, go1.27.0, 2026-10-20.
 
 | Message | P2PACT UDP |
 |---|---:|
-| very short (~20 chars) | 81 ms |
-| medium (~100 chars) | 81 ms |
-| long (~600 chars) | 81 ms |
+| very short (~20 chars) | 82 ms |
+| medium (~100 chars) | 82 ms |
+| long (~600 chars) | 83 ms |
 | very long (~5 000 chars) | 83 ms |
-| huge (~200 000 chars) | 90 ms |
+| huge (~200 000 chars) | 92 ms |
 | new connection + first message | 85 ms |
 
 *1% loss — 40 ms one way, 1% loss*
 
 | Message | P2PACT UDP |
 |---|---:|
-| very short (~20 chars) | 81 ms |
-| medium (~100 chars) | 81 ms |
+| very short (~20 chars) | 82 ms |
+| medium (~100 chars) | 82 ms |
 | long (~600 chars) | 82 ms |
 | very long (~5 000 chars) | 83 ms |
-| huge (~200 000 chars) | 179 ms |
-| new connection + first message | 83 ms |
+| huge (~200 000 chars) | 191 ms |
+| new connection + first message | 84 ms |
 
 TCP-based protocols run without loss here (emulating it needs root), so their times are optimistic.
 
@@ -48,12 +48,12 @@ TCP-based protocols run without loss here (emulating it needs root), so their ti
 
 | Message | P2PACT UDP |
 |---|---:|
-| very short (~20 chars) | 81 ms |
-| medium (~100 chars) | 81 ms |
-| long (~600 chars) | 81 ms |
-| very long (~5 000 chars) | 83 ms |
-| huge (~200 000 chars) | 599 ms |
-| new connection + first message | 85 ms |
+| very short (~20 chars) | 83 ms |
+| medium (~100 chars) | 83 ms |
+| long (~600 chars) | 83 ms |
+| very long (~5 000 chars) | 85 ms |
+| huge (~200 000 chars) | 340 ms |
+| new connection + first message | 86 ms |
 
 TCP-based protocols run without loss here (emulating it needs root), so their times are optimistic.
 
@@ -61,12 +61,12 @@ TCP-based protocols run without loss here (emulating it needs root), so their ti
 
 | Message | P2PACT UDP |
 |---|---:|
-| very short (~20 chars) | 81 ms |
-| medium (~100 chars) | 81 ms |
-| long (~600 chars) | 81 ms |
-| very long (~5 000 chars) | 83 ms |
+| very short (~20 chars) | 82 ms |
+| medium (~100 chars) | 82 ms |
+| long (~600 chars) | 83 ms |
+| very long (~5 000 chars) | 84 ms |
 | huge (~200 000 chars) | 4.10 s |
-| new connection + first message | 196 ms |
+| new connection + first message | 87 ms |
 
 TCP-based protocols run without loss here (emulating it needs root), so their times are optimistic.
 
@@ -74,12 +74,12 @@ TCP-based protocols run without loss here (emulating it needs root), so their ti
 
 | Message | P2PACT UDP |
 |---|---:|
-| very short (~20 chars) | 81 ms |
-| medium (~100 chars) | 82 ms |
-| long (~600 chars) | 177 ms |
-| very long (~5 000 chars) | 175 ms |
-| huge (~200 000 chars) | 8.10 s |
-| new connection + first message | 85 ms |
+| very short (~20 chars) | 82 ms |
+| medium (~100 chars) | 85 ms |
+| long (~600 chars) | 171 ms |
+| very long (~5 000 chars) | 178 ms |
+| huge (~200 000 chars) | 4.47 s |
+| new connection + first message | 86 ms |
 
 TCP-based protocols run without loss here (emulating it needs root), so their times are optimistic.
 
