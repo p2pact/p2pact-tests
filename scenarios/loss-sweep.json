@@ -1,0 +1,69 @@
+{
+  "name": "Packet loss sweep",
+  "description": "P2PACT over UDP as loss grows (TCP loss cannot be emulated without root).",
+  "data": "synthetic",
+  "seed": 1,
+  "repeat": 20,
+  "sizes": [
+    {
+      "name": "very short",
+      "min": 1,
+      "max": 40,
+      "chars": 20
+    },
+    {
+      "name": "medium",
+      "min": 40,
+      "max": 200,
+      "chars": 100
+    },
+    {
+      "name": "long",
+      "min": 200,
+      "max": 2000,
+      "chars": 600
+    },
+    {
+      "name": "very long",
+      "min": 2000,
+      "max": 20000,
+      "chars": 5000
+    },
+    {
+      "name": "huge",
+      "min": 20000,
+      "max": 1000000000,
+      "chars": 200000
+    }
+  ],
+  "profiles": [
+    {
+      "name": "0% loss",
+      "delay_ms": 40,
+      "loss_percent": 0
+    },
+    {
+      "name": "1% loss",
+      "delay_ms": 40,
+      "loss_percent": 1
+    },
+    {
+      "name": "5% loss",
+      "delay_ms": 40,
+      "loss_percent": 5
+    },
+    {
+      "name": "10% loss",
+      "delay_ms": 40,
+      "loss_percent": 10
+    },
+    {
+      "name": "20% loss",
+      "delay_ms": 40,
+      "loss_percent": 20
+    }
+  ],
+  "protocols": [
+    "p2pact-udp"
+  ]
+}

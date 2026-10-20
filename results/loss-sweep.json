@@ -1,0 +1,222 @@
+{
+  "scenario": {
+    "name": "Packet loss sweep",
+    "description": "P2PACT over UDP as loss grows (TCP loss cannot be emulated without root).",
+    "data": "synthetic",
+    "seed": 1,
+    "repeat": 20,
+    "repeat_large": 2,
+    "compression": true,
+    "sizes": [
+      {
+        "name": "very short",
+        "min": 1,
+        "max": 40,
+        "chars": 20
+      },
+      {
+        "name": "medium",
+        "min": 40,
+        "max": 200,
+        "chars": 100
+      },
+      {
+        "name": "long",
+        "min": 200,
+        "max": 2000,
+        "chars": 600
+      },
+      {
+        "name": "very long",
+        "min": 2000,
+        "max": 20000,
+        "chars": 5000
+      },
+      {
+        "name": "huge",
+        "min": 20000,
+        "max": 1000000000,
+        "chars": 200000
+      }
+    ],
+    "profiles": [
+      {
+        "name": "0% loss",
+        "delay_ms": 40,
+        "rate_kbps": 0,
+        "loss_percent": 0
+      },
+      {
+        "name": "1% loss",
+        "delay_ms": 40,
+        "rate_kbps": 0,
+        "loss_percent": 1
+      },
+      {
+        "name": "5% loss",
+        "delay_ms": 40,
+        "rate_kbps": 0,
+        "loss_percent": 5
+      },
+      {
+        "name": "10% loss",
+        "delay_ms": 40,
+        "rate_kbps": 0,
+        "loss_percent": 10
+      },
+      {
+        "name": "20% loss",
+        "delay_ms": 40,
+        "rate_kbps": 0,
+        "loss_percent": 20
+      }
+    ],
+    "protocols": [
+      "p2pact-udp"
+    ]
+  },
+  "data_source": "generated text (Zipf-distributed words)",
+  "environment": {
+    "date": "2026-10-20",
+    "go": "go1.27.0",
+    "os": "darwin/arm64",
+    "cpus": 15
+  },
+  "results": [
+    {
+      "protocol": "P2PACT UDP",
+      "profile": "0% loss",
+      "payload_bytes": {
+        "huge": 92976,
+        "long": 420,
+        "medium": 158,
+        "very long": 2339,
+        "very short": 92
+      },
+      "wire_bytes": {
+        "huge": 96000,
+        "long": 476,
+        "medium": 213,
+        "very long": 2450,
+        "very short": 147
+      },
+      "rtt_ms": {
+        "huge": 239.991,
+        "long": 81.851,
+        "medium": 82.983,
+        "very long": 82.31,
+        "very short": 81.402
+      },
+      "cold_ms": 81.406,
+      "cold_bytes": 592
+    },
+    {
+      "protocol": "P2PACT UDP",
+      "profile": "1% loss",
+      "payload_bytes": {
+        "huge": 77380,
+        "long": 420,
+        "medium": 173,
+        "very long": 2457,
+        "very short": 92
+      },
+      "wire_bytes": {
+        "huge": 79872,
+        "long": 476,
+        "medium": 228,
+        "very long": 2568,
+        "very short": 147
+      },
+      "rtt_ms": {
+        "huge": 280.426,
+        "long": 82.065,
+        "medium": 81.557,
+        "very long": 82.675,
+        "very short": 81.312
+      },
+      "cold_ms": 81.809,
+      "cold_bytes": 592
+    },
+    {
+      "protocol": "P2PACT UDP",
+      "profile": "5% loss",
+      "payload_bytes": {
+        "huge": 90025,
+        "long": 532,
+        "medium": 191,
+        "very long": 2456,
+        "very short": 92
+      },
+      "wire_bytes": {
+        "huge": 92965,
+        "long": 587,
+        "medium": 246,
+        "very long": 2567,
+        "very short": 147
+      },
+      "rtt_ms": {
+        "huge": 398.599,
+        "long": 81.131,
+        "medium": 82.033,
+        "very long": 82.446,
+        "very short": 81.681
+      },
+      "cold_ms": 82.677,
+      "cold_bytes": 648
+    },
+    {
+      "protocol": "P2PACT UDP",
+      "profile": "10% loss",
+      "payload_bytes": {
+        "huge": 82103,
+        "long": 551,
+        "medium": 215,
+        "very long": 2917,
+        "very short": 98
+      },
+      "wire_bytes": {
+        "huge": 84678,
+        "long": 606,
+        "medium": 298,
+        "very long": 3029,
+        "very short": 153
+      },
+      "rtt_ms": {
+        "huge": 699.714,
+        "long": 81.471,
+        "medium": 81.532,
+        "very long": 82.972,
+        "very short": 81.366
+      },
+      "cold_ms": 81.986,
+      "cold_bytes": 592
+    },
+    {
+      "protocol": "P2PACT UDP",
+      "profile": "20% loss",
+      "payload_bytes": {
+        "huge": 102098,
+        "long": 557,
+        "medium": 291,
+        "very long": 3053,
+        "very short": 130
+      },
+      "wire_bytes": {
+        "huge": 105570,
+        "long": 641,
+        "medium": 403,
+        "very long": 3193,
+        "very short": 214
+      },
+      "rtt_ms": {
+        "huge": 2899.445,
+        "long": 81.028,
+        "medium": 177.807,
+        "very long": 176.075,
+        "very short": 80.857
+      },
+      "cold_ms": 601.914,
+      "cold_bytes": 921
+    }
+  ]
+}

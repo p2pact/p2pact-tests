@@ -1,0 +1,70 @@
+{
+  "name": "Coding agent output",
+  "description": "A coding agent at work: tool outputs (files, logs, diffs) from SWE-Gym OpenHands trajectories.",
+  "data": "swe-gym:tool",
+  "seed": 1,
+  "repeat": 20,
+  "sizes": [
+    {
+      "name": "very short",
+      "min": 1,
+      "max": 40,
+      "chars": 20
+    },
+    {
+      "name": "medium",
+      "min": 40,
+      "max": 200,
+      "chars": 100
+    },
+    {
+      "name": "long",
+      "min": 200,
+      "max": 2000,
+      "chars": 600
+    },
+    {
+      "name": "very long",
+      "min": 2000,
+      "max": 20000,
+      "chars": 5000
+    },
+    {
+      "name": "huge",
+      "min": 20000,
+      "max": 1000000000,
+      "chars": 200000
+    }
+  ],
+  "profiles": [
+    {
+      "name": "local network",
+      "delay_ms": 1
+    },
+    {
+      "name": "bluetooth",
+      "delay_ms": 30,
+      "rate_kbps": 40
+    },
+    {
+      "name": "internet",
+      "delay_ms": 40,
+      "loss_percent": 1
+    },
+    {
+      "name": "mobile",
+      "delay_ms": 100,
+      "rate_kbps": 500,
+      "loss_percent": 3
+    }
+  ],
+  "protocols": [
+    "p2pact-udp",
+    "p2pact-tcp",
+    "websocket",
+    "https",
+    "http2",
+    "grpc",
+    "http3"
+  ]
+}

@@ -1,0 +1,763 @@
+{
+  "scenario": {
+    "name": "Human messages",
+    "description": "What people type to an assistant: OpenAssistant oasst2 prompts, all languages.",
+    "data": "oasst2:human",
+    "seed": 1,
+    "repeat": 20,
+    "repeat_large": 2,
+    "compression": true,
+    "sizes": [
+      {
+        "name": "very short",
+        "min": 1,
+        "max": 40,
+        "chars": 24
+      },
+      {
+        "name": "medium",
+        "min": 40,
+        "max": 200,
+        "chars": 80
+      },
+      {
+        "name": "long",
+        "min": 200,
+        "max": 2000,
+        "chars": 296
+      },
+      {
+        "name": "very long",
+        "min": 2000,
+        "max": 20000,
+        "chars": 2718
+      }
+    ],
+    "profiles": [
+      {
+        "name": "local network",
+        "delay_ms": 1,
+        "rate_kbps": 0,
+        "loss_percent": 0
+      },
+      {
+        "name": "bluetooth",
+        "delay_ms": 30,
+        "rate_kbps": 40,
+        "loss_percent": 0
+      },
+      {
+        "name": "internet",
+        "delay_ms": 40,
+        "rate_kbps": 0,
+        "loss_percent": 1
+      },
+      {
+        "name": "mobile",
+        "delay_ms": 100,
+        "rate_kbps": 500,
+        "loss_percent": 3
+      }
+    ],
+    "protocols": [
+      "p2pact-udp",
+      "p2pact-tcp",
+      "websocket",
+      "https",
+      "http2",
+      "grpc",
+      "http3"
+    ]
+  },
+  "data_source": "OpenAssistant oasst2 (Apache-2.0), human",
+  "environment": {
+    "date": "2026-10-20",
+    "go": "go1.27.0",
+    "os": "darwin/arm64",
+    "cpus": 15
+  },
+  "results": [
+    {
+      "protocol": "P2PACT UDP",
+      "profile": "local network",
+      "payload_bytes": {
+        "long": 348,
+        "medium": 157,
+        "very long": 1686,
+        "very short": 107
+      },
+      "wire_bytes": {
+        "long": 403,
+        "medium": 213,
+        "very long": 1769,
+        "very short": 163
+      },
+      "rtt_ms": {
+        "long": 2.521,
+        "medium": 2.42,
+        "very long": 2.631,
+        "very short": 2.428
+      },
+      "cold_ms": 3.231,
+      "cold_bytes": 771
+    },
+    {
+      "protocol": "P2PACT TCP",
+      "profile": "local network",
+      "payload_bytes": {
+        "long": 349,
+        "medium": 162,
+        "very long": 1699,
+        "very short": 111
+      },
+      "wire_bytes": {
+        "long": 557,
+        "medium": 369,
+        "very long": 1959,
+        "very short": 319
+      },
+      "rtt_ms": {
+        "long": 2.478,
+        "medium": 2.474,
+        "very long": 2.601,
+        "very short": 2.44
+      },
+      "cold_ms": 3.141,
+      "cold_bytes": 919
+    },
+    {
+      "protocol": "WebSocket",
+      "profile": "local network",
+      "payload_bytes": {
+        "long": 627,
+        "medium": 231,
+        "very long": 4139,
+        "very short": 174
+      },
+      "wire_bytes": {
+        "long": 835,
+        "medium": 439,
+        "very long": 4503,
+        "very short": 382
+      },
+      "rtt_ms": {
+        "long": 2.447,
+        "medium": 2.421,
+        "very long": 2.458,
+        "very short": 2.436
+      },
+      "cold_ms": 8.099,
+      "cold_bytes": 4472
+    },
+    {
+      "protocol": "HTTPS+JSON",
+      "profile": "local network",
+      "payload_bytes": {
+        "long": 920,
+        "medium": 523,
+        "very long": 4442,
+        "very short": 467
+      },
+      "wire_bytes": {
+        "long": 1128,
+        "medium": 731,
+        "very long": 4806,
+        "very short": 675
+      },
+      "rtt_ms": {
+        "long": 2.45,
+        "medium": 2.477,
+        "very long": 2.439,
+        "very short": 2.49
+      },
+      "cold_ms": 5.661,
+      "cold_bytes": 4378
+    },
+    {
+      "protocol": "HTTP/2",
+      "profile": "local network",
+      "payload_bytes": {
+        "long": 656,
+        "medium": 255,
+        "very long": 4188,
+        "very short": 199
+      },
+      "wire_bytes": {
+        "long": 864,
+        "medium": 463,
+        "very long": 4552,
+        "very short": 407
+      },
+      "rtt_ms": {
+        "long": 2.501,
+        "medium": 2.535,
+        "very long": 2.466,
+        "very short": 2.502
+      },
+      "cold_ms": 5.481,
+      "cold_bytes": 4538
+    },
+    {
+      "protocol": "gRPC",
+      "profile": "local network",
+      "payload_bytes": {
+        "long": 774,
+        "medium": 370,
+        "very long": 4181,
+        "very short": 312
+      },
+      "wire_bytes": {
+        "long": 982,
+        "medium": 578,
+        "very long": 4545,
+        "very short": 520
+      },
+      "rtt_ms": {
+        "long": 2.422,
+        "medium": 2.442,
+        "very long": 2.422,
+        "very short": 2.432
+      },
+      "cold_ms": 7.831,
+      "cold_bytes": 4528
+    },
+    {
+      "protocol": "HTTP/3",
+      "profile": "local network",
+      "payload_bytes": {
+        "long": 812,
+        "medium": 404,
+        "very long": 4453,
+        "very short": 773
+      },
+      "wire_bytes": {
+        "long": 952,
+        "medium": 542,
+        "very long": 4724,
+        "very short": 919
+      },
+      "rtt_ms": {
+        "long": 2.517,
+        "medium": 2.445,
+        "very long": 2.485,
+        "very short": 2.462
+      },
+      "cold_ms": 5.538,
+      "cold_bytes": 15696
+    },
+    {
+      "protocol": "P2PACT UDP",
+      "profile": "bluetooth",
+      "payload_bytes": {
+        "long": 348,
+        "medium": 157,
+        "very long": 1758,
+        "very short": 110
+      },
+      "wire_bytes": {
+        "long": 403,
+        "medium": 213,
+        "very long": 1870,
+        "very short": 165
+      },
+      "rtt_ms": {
+        "long": 69.631,
+        "medium": 66.014,
+        "very long": 98.42,
+        "very short": 65.128
+      },
+      "cold_ms": 71.691,
+      "cold_bytes": 661
+    },
+    {
+      "protocol": "P2PACT TCP",
+      "profile": "bluetooth",
+      "payload_bytes": {
+        "long": 352,
+        "medium": 162,
+        "very long": 1766,
+        "very short": 114
+      },
+      "wire_bytes": {
+        "long": 559,
+        "medium": 369,
+        "very long": 2026,
+        "very short": 322
+      },
+      "rtt_ms": {
+        "long": 67.904,
+        "medium": 65.075,
+        "very long": 96.282,
+        "very short": 63.349
+      },
+      "cold_ms": 69.064,
+      "cold_bytes": 851
+    },
+    {
+      "protocol": "WebSocket",
+      "profile": "bluetooth",
+      "payload_bytes": {
+        "long": 627,
+        "medium": 231,
+        "very long": 4139,
+        "very short": 174
+      },
+      "wire_bytes": {
+        "long": 835,
+        "medium": 439,
+        "very long": 4503,
+        "very short": 382
+      },
+      "rtt_ms": {
+        "long": 71.952,
+        "medium": 66.572,
+        "very long": 139.116,
+        "very short": 65.291
+      },
+      "cold_ms": 276.906,
+      "cold_bytes": 4470
+    },
+    {
+      "protocol": "HTTPS+JSON",
+      "profile": "bluetooth",
+      "payload_bytes": {
+        "long": 920,
+        "medium": 523,
+        "very long": 4442,
+        "very short": 467
+      },
+      "wire_bytes": {
+        "long": 1128,
+        "medium": 731,
+        "very long": 4806,
+        "very short": 675
+      },
+      "rtt_ms": {
+        "long": 78.706,
+        "medium": 74.045,
+        "very long": 145.495,
+        "very short": 72.527
+      },
+      "cold_ms": 212.958,
+      "cold_bytes": 4379
+    },
+    {
+      "protocol": "HTTP/2",
+      "profile": "bluetooth",
+      "payload_bytes": {
+        "long": 658,
+        "medium": 256,
+        "very long": 4191,
+        "very short": 200
+      },
+      "wire_bytes": {
+        "long": 866,
+        "medium": 464,
+        "very long": 4555,
+        "very short": 408
+      },
+      "rtt_ms": {
+        "long": 72.417,
+        "medium": 67.061,
+        "very long": 139.952,
+        "very short": 66.109
+      },
+      "cold_ms": 214.033,
+      "cold_bytes": 4539
+    },
+    {
+      "protocol": "gRPC",
+      "profile": "bluetooth",
+      "payload_bytes": {
+        "long": 801,
+        "medium": 420,
+        "very long": 4224,
+        "very short": 358
+      },
+      "wire_bytes": {
+        "long": 1009,
+        "medium": 628,
+        "very long": 4588,
+        "very short": 566
+      },
+      "rtt_ms": {
+        "long": 75.599,
+        "medium": 69.716,
+        "very long": 139.858,
+        "very short": 68.022
+      },
+      "cold_ms": 275.945,
+      "cold_bytes": 4552
+    },
+    {
+      "protocol": "HTTP/3",
+      "profile": "bluetooth",
+      "payload_bytes": {
+        "long": 816,
+        "medium": 411,
+        "very long": 4688,
+        "very short": 916
+      },
+      "wire_bytes": {
+        "long": 968,
+        "medium": 556,
+        "very long": 5043,
+        "very short": 1073
+      },
+      "rtt_ms": {
+        "long": 79.356,
+        "medium": 73.292,
+        "very long": 149.26,
+        "very short": 72.887
+      },
+      "cold_ms": 267.881,
+      "cold_bytes": 7160
+    },
+    {
+      "protocol": "P2PACT UDP",
+      "profile": "internet",
+      "payload_bytes": {
+        "long": 348,
+        "medium": 178,
+        "very long": 1754,
+        "very short": 110
+      },
+      "wire_bytes": {
+        "long": 403,
+        "medium": 233,
+        "very long": 1866,
+        "very short": 165
+      },
+      "rtt_ms": {
+        "long": 81.23,
+        "medium": 80.964,
+        "very long": 81.154,
+        "very short": 81.188
+      },
+      "cold_ms": 81.199,
+      "cold_bytes": 607
+    },
+    {
+      "protocol": "P2PACT TCP",
+      "profile": "internet",
+      "payload_bytes": {
+        "long": 352,
+        "medium": 162,
+        "very long": 1702,
+        "very short": 114
+      },
+      "wire_bytes": {
+        "long": 559,
+        "medium": 369,
+        "very long": 1961,
+        "very short": 322
+      },
+      "rtt_ms": {
+        "long": 80.988,
+        "medium": 80.865,
+        "very long": 81.065,
+        "very short": 80.907
+      },
+      "cold_ms": 81.437,
+      "cold_bytes": 823,
+      "note": "no packet loss emulated for TCP (it would need root); real numbers would be worse"
+    },
+    {
+      "protocol": "WebSocket",
+      "profile": "internet",
+      "payload_bytes": {
+        "long": 627,
+        "medium": 231,
+        "very long": 4139,
+        "very short": 174
+      },
+      "wire_bytes": {
+        "long": 835,
+        "medium": 439,
+        "very long": 4503,
+        "very short": 382
+      },
+      "rtt_ms": {
+        "long": 80.906,
+        "medium": 81.203,
+        "very long": 80.887,
+        "very short": 80.752
+      },
+      "cold_ms": 244.668,
+      "cold_bytes": 4471,
+      "note": "no packet loss emulated for TCP (it would need root); real numbers would be worse"
+    },
+    {
+      "protocol": "HTTPS+JSON",
+      "profile": "internet",
+      "payload_bytes": {
+        "long": 920,
+        "medium": 523,
+        "very long": 4442,
+        "very short": 467
+      },
+      "wire_bytes": {
+        "long": 1128,
+        "medium": 731,
+        "very long": 4806,
+        "very short": 675
+      },
+      "rtt_ms": {
+        "long": 80.988,
+        "medium": 81.362,
+        "very long": 81.138,
+        "very short": 81.411
+      },
+      "cold_ms": 162.839,
+      "cold_bytes": 4378,
+      "note": "no packet loss emulated for TCP (it would need root); real numbers would be worse"
+    },
+    {
+      "protocol": "HTTP/2",
+      "profile": "internet",
+      "payload_bytes": {
+        "long": 657,
+        "medium": 257,
+        "very long": 4190,
+        "very short": 201
+      },
+      "wire_bytes": {
+        "long": 865,
+        "medium": 465,
+        "very long": 4554,
+        "very short": 409
+      },
+      "rtt_ms": {
+        "long": 81.267,
+        "medium": 81.307,
+        "very long": 80.964,
+        "very short": 81.063
+      },
+      "cold_ms": 162.945,
+      "cold_bytes": 4517,
+      "note": "no packet loss emulated for TCP (it would need root); real numbers would be worse"
+    },
+    {
+      "protocol": "gRPC",
+      "profile": "internet",
+      "payload_bytes": {
+        "long": 775,
+        "medium": 387,
+        "very long": 4205,
+        "very short": 325
+      },
+      "wire_bytes": {
+        "long": 983,
+        "medium": 595,
+        "very long": 4569,
+        "very short": 533
+      },
+      "rtt_ms": {
+        "long": 81.293,
+        "medium": 81.016,
+        "very long": 81.416,
+        "very short": 81.21
+      },
+      "cold_ms": 243.484,
+      "cold_bytes": 4507,
+      "note": "no packet loss emulated for TCP (it would need root); real numbers would be worse"
+    },
+    {
+      "protocol": "HTTP/3",
+      "profile": "internet",
+      "payload_bytes": {
+        "long": 801,
+        "medium": 414,
+        "very long": 4664,
+        "very short": 900
+      },
+      "wire_bytes": {
+        "long": 937,
+        "medium": 555,
+        "very long": 4935,
+        "very short": 1039
+      },
+      "rtt_ms": {
+        "long": 81.007,
+        "medium": 81.294,
+        "very long": 81.257,
+        "very short": 80.977
+      },
+      "cold_ms": 162.823,
+      "cold_bytes": 7101
+    },
+    {
+      "protocol": "P2PACT UDP",
+      "profile": "mobile",
+      "payload_bytes": {
+        "long": 383,
+        "medium": 188,
+        "very long": 1816,
+        "very short": 110
+      },
+      "wire_bytes": {
+        "long": 439,
+        "medium": 243,
+        "very long": 1927,
+        "very short": 165
+      },
+      "rtt_ms": {
+        "long": 201.865,
+        "medium": 201.568,
+        "very long": 204.102,
+        "very short": 201.283
+      },
+      "cold_ms": 201.782,
+      "cold_bytes": 661
+    },
+    {
+      "protocol": "P2PACT TCP",
+      "profile": "mobile",
+      "payload_bytes": {
+        "long": 352,
+        "medium": 162,
+        "very long": 1702,
+        "very short": 114
+      },
+      "wire_bytes": {
+        "long": 559,
+        "medium": 369,
+        "very long": 1961,
+        "very short": 322
+      },
+      "rtt_ms": {
+        "long": 202.39,
+        "medium": 201.825,
+        "very long": 204.228,
+        "very short": 201.608
+      },
+      "cold_ms": 201.759,
+      "cold_bytes": 823,
+      "note": "no packet loss emulated for TCP (it would need root); real numbers would be worse"
+    },
+    {
+      "protocol": "WebSocket",
+      "profile": "mobile",
+      "payload_bytes": {
+        "long": 627,
+        "medium": 231,
+        "very long": 4139,
+        "very short": 174
+      },
+      "wire_bytes": {
+        "long": 835,
+        "medium": 439,
+        "very long": 4503,
+        "very short": 382
+      },
+      "rtt_ms": {
+        "long": 203.058,
+        "medium": 202.706,
+        "very long": 208.221,
+        "very short": 202.6
+      },
+      "cold_ms": 615.507,
+      "cold_bytes": 4470,
+      "note": "no packet loss emulated for TCP (it would need root); real numbers would be worse"
+    },
+    {
+      "protocol": "HTTPS+JSON",
+      "profile": "mobile",
+      "payload_bytes": {
+        "long": 920,
+        "medium": 523,
+        "very long": 4442,
+        "very short": 467
+      },
+      "wire_bytes": {
+        "long": 1128,
+        "medium": 731,
+        "very long": 4806,
+        "very short": 675
+      },
+      "rtt_ms": {
+        "long": 203.828,
+        "medium": 203.321,
+        "very long": 209.436,
+        "very short": 203.375
+      },
+      "cold_ms": 412.024,
+      "cold_bytes": 4376,
+      "note": "no packet loss emulated for TCP (it would need root); real numbers would be worse"
+    },
+    {
+      "protocol": "HTTP/2",
+      "profile": "mobile",
+      "payload_bytes": {
+        "long": 660,
+        "medium": 259,
+        "very long": 4192,
+        "very short": 203
+      },
+      "wire_bytes": {
+        "long": 868,
+        "medium": 467,
+        "very long": 4556,
+        "very short": 411
+      },
+      "rtt_ms": {
+        "long": 202.788,
+        "medium": 202.796,
+        "very long": 208.806,
+        "very short": 202.639
+      },
+      "cold_ms": 410.466,
+      "cold_bytes": 4515,
+      "note": "no packet loss emulated for TCP (it would need root); real numbers would be worse"
+    },
+    {
+      "protocol": "gRPC",
+      "profile": "mobile",
+      "payload_bytes": {
+        "long": 796,
+        "medium": 393,
+        "very long": 4218,
+        "very short": 336
+      },
+      "wire_bytes": {
+        "long": 1004,
+        "medium": 601,
+        "very long": 4582,
+        "very short": 544
+      },
+      "rtt_ms": {
+        "long": 202.662,
+        "medium": 202.622,
+        "very long": 207.452,
+        "very short": 202.666
+      },
+      "cold_ms": 614.344,
+      "cold_bytes": 4528,
+      "note": "no packet loss emulated for TCP (it would need root); real numbers would be worse"
+    },
+    {
+      "protocol": "HTTP/3",
+      "profile": "mobile",
+      "payload_bytes": {
+        "long": 999,
+        "medium": 428,
+        "very long": 4636,
+        "very short": 945
+      },
+      "wire_bytes": {
+        "long": 1165,
+        "medium": 581,
+        "very long": 4949,
+        "very short": 1113
+      },
+      "rtt_ms": {
+        "long": 202.922,
+        "medium": 202.87,
+        "very long": 207.57,
+        "very short": 202.889
+      },
+      "cold_ms": 414.258,
+      "cold_bytes": 12738
+    }
+  ]
+}
