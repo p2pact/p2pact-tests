@@ -7,6 +7,12 @@ Tests for [P2PACT](https://github.com/p2pact/p2pact) implementations:
   300 KB of random bytes;
 - **p2pact-bench** — bytes and time against WebSocket, HTTPS, HTTP/2, gRPC and HTTP/3.
 
+**Results at a glance: [SUMMARY.md](SUMMARY.md)** — one table for the real network, one for
+the emulated links; every cell is the value and how many times worse the protocol is than
+P2PACT over UDP. Full tables: [results-real/RESULTS.md](results-real/RESULTS.md) and
+[results/RESULTS.md](results/RESULTS.md). `go run ./cmd/p2pact-bench report` rebuilds all of
+them from the saved JSON.
+
 ## Interop
 
 ```sh

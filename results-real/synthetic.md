@@ -18,22 +18,22 @@ Machine: darwin/arm64, 15 CPUs, go1.27.0, 2026-10-20.
 
 **Delivery**: every message arrived intact (each one checked by a fingerprint of what the receiver got).
 
-**Time from sending a message to its ack** (median):
+**Time from sending a message to its ack** (median; in brackets — how many times longer than P2PACT UDP):
 
 *real network — a real network, nothing emulated*
 
 | Message | P2PACT UDP | P2PACT TCP | WebSocket | HTTPS+JSON | HTTP/2 | gRPC | HTTP/3 |
 |---|---:|---:|---:|---:|---:|---:|---:|
-| very short (~20 chars) | 139 ms | 130 ms | 126 ms | 159 ms | 136 ms | 133 ms | 135 ms |
-| medium (~100 chars) | 145 ms | 141 ms | 135 ms | 157 ms | 123 ms | 129 ms | 136 ms |
-| long (~600 chars) | 141 ms | 140 ms | 129 ms | 154 ms | 134 ms | 130 ms | 144 ms |
-| very long (~5 000 chars) | 144 ms | 144 ms | 144 ms | 161 ms | 140 ms | 143 ms | 143 ms |
-| huge (~200 000 chars) | 181 ms | 197 ms | 199 ms | 231 ms | 206 ms | 188 ms | 440 ms |
-| new connection + first message | 150 ms | 287 ms | 528 ms | 420 ms | 430 ms | 567 ms | 291 ms |
+| very short (~20 chars) | 139 ms | 130 ms (0.9×) | 126 ms (0.9×) | 159 ms (1.1×) | 136 ms (1.0×) | 133 ms (1.0×) | 135 ms (1.0×) |
+| medium (~100 chars) | 145 ms | 141 ms (1.0×) | 135 ms (0.9×) | 157 ms (1.1×) | 123 ms (0.9×) | 129 ms (0.9×) | 136 ms (0.9×) |
+| long (~600 chars) | 141 ms | 140 ms (1.0×) | 129 ms (0.9×) | 154 ms (1.1×) | 134 ms (0.9×) | 130 ms (0.9×) | 144 ms (1.0×) |
+| very long (~5 000 chars) | 144 ms | 144 ms (1.0×) | 144 ms (1.0×) | 161 ms (1.1×) | 140 ms (1.0×) | 143 ms (1.0×) | 143 ms (1.0×) |
+| huge (~200 000 chars) | 181 ms | 197 ms (1.1×) | 199 ms (1.1×) | 231 ms (1.3×) | 206 ms (1.1×) | 188 ms (1.0×) | 440 ms (2.4×) |
+| new connection + first message | 150 ms | 287 ms (1.9×) | 528 ms (3.5×) | 420 ms (2.8×) | 430 ms (2.9×) | 567 ms (3.8×) | 291 ms (1.9×) |
 
-Load: 2000 messages, 50 at a time — messages per second (errors):
+Load: 2000 messages, 50 at a time — messages per second (errors; in brackets — how many times fewer than P2PACT UDP):
 
 | P2PACT UDP | P2PACT TCP | WebSocket | HTTPS+JSON | HTTP/2 | gRPC | HTTP/3 |
 |---:|---:|---:|---:|---:|---:|---:|
-| 330 (0) | 339 (0) | 347 (0) | 217 (0) | 332 (0) | 357 (0) | 348 (0) |
+| 330 (0 errors) | 339 (0 errors) (1.0×) | 347 (0 errors) (1.0×) | 217 (0 errors) (1.5×) | 332 (0 errors) (1.0×) | 357 (0 errors) (0.9×) | 348 (0 errors) (0.9×) |
 

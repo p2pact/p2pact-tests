@@ -18,7 +18,7 @@ Machine: darwin/arm64, 15 CPUs, go1.27.0, 2026-10-20.
 
 **Delivery**: every message arrived intact (each one checked by a fingerprint of what the receiver got).
 
-**Time from sending a message to its ack** (median):
+**Time from sending a message to its ack** (median; in brackets — how many times longer than P2PACT UDP):
 
 *0% loss — 40 ms one way*
 

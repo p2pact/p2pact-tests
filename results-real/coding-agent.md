@@ -17,21 +17,21 @@ Machine: darwin/arm64, 15 CPUs, go1.27.0, 2026-10-20.
 
 **Delivery**: every message arrived intact (each one checked by a fingerprint of what the receiver got).
 
-**Time from sending a message to its ack** (median):
+**Time from sending a message to its ack** (median; in brackets — how many times longer than P2PACT UDP):
 
 *real network — a real network, nothing emulated*
 
 | Message | P2PACT UDP | P2PACT TCP | WebSocket | HTTPS+JSON | HTTP/2 | gRPC | HTTP/3 |
 |---|---:|---:|---:|---:|---:|---:|---:|
-| medium (~157 chars) | 140 ms | 136 ms | 161 ms | 133 ms | 146 ms | 146 ms | 137 ms |
-| long (~660 chars) | 144 ms | 153 ms | 154 ms | 144 ms | 140 ms | 137 ms | 140 ms |
-| very long (~5 302 chars) | 147 ms | 151 ms | 160 ms | 133 ms | 147 ms | 151 ms | 152 ms |
-| huge (~23 355 chars) | 156 ms | 160 ms | 169 ms | 164 ms | 160 ms | 156 ms | 159 ms |
-| new connection + first message | 182 ms | 288 ms | 593 ms | 420 ms | 429 ms | 595 ms | 303 ms |
+| medium (~157 chars) | 140 ms | 136 ms (1.0×) | 161 ms (1.2×) | 133 ms (1.0×) | 146 ms (1.0×) | 146 ms (1.0×) | 137 ms (1.0×) |
+| long (~660 chars) | 144 ms | 153 ms (1.1×) | 154 ms (1.1×) | 144 ms (1.0×) | 140 ms (1.0×) | 137 ms (1.0×) | 140 ms (1.0×) |
+| very long (~5 302 chars) | 147 ms | 151 ms (1.0×) | 160 ms (1.1×) | 133 ms (0.9×) | 147 ms (1.0×) | 151 ms (1.0×) | 152 ms (1.0×) |
+| huge (~23 355 chars) | 156 ms | 160 ms (1.0×) | 169 ms (1.1×) | 164 ms (1.1×) | 160 ms (1.0×) | 156 ms (1.0×) | 159 ms (1.0×) |
+| new connection + first message | 182 ms | 288 ms (1.6×) | 593 ms (3.3×) | 420 ms (2.3×) | 429 ms (2.4×) | 595 ms (3.3×) | 303 ms (1.7×) |
 
-Load: 2000 messages, 50 at a time — messages per second (errors):
+Load: 2000 messages, 50 at a time — messages per second (errors; in brackets — how many times fewer than P2PACT UDP):
 
 | P2PACT UDP | P2PACT TCP | WebSocket | HTTPS+JSON | HTTP/2 | gRPC | HTTP/3 |
 |---:|---:|---:|---:|---:|---:|---:|
-| 339 (0) | 331 (0) | 312 (0) | 224 (0) | 306 (0) | 331 (0) | 310 (0) |
+| 339 (0 errors) | 331 (0 errors) (1.0×) | 312 (0 errors) (1.1×) | 224 (0 errors) (1.5×) | 306 (0 errors) (1.1×) | 331 (0 errors) (1.0×) | 310 (0 errors) (1.1×) |
 

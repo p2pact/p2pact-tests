@@ -114,7 +114,8 @@ func (r *Report) Markdown() string {
 		b.WriteString("**Delivery errors** (lost, or arrived not intact): " + strings.Join(lines, "; ") + ".\n\n")
 	}
 
-	b.WriteString("**Time from sending a message to its ack** (median):\n\n")
+	b.WriteString("**Time from sending a message to its ack** (median; in brackets — how many times longer " +
+		"than P2PACT UDP):\n\n")
 	for _, p := range sc.Profiles {
 		rs := byProfile[p.Name]
 		if len(rs) == 0 {
@@ -125,25 +126,30 @@ func (r *Report) Markdown() string {
 		for _, s := range sc.Sizes {
 			var cols []string
 			for _, x := range rs {
-				cols = append(cols, dur(x.RTTms[s.Name]))
+				cols = append(cols, timeCell(x.RTTms[s.Name], rs[0].RTTms[s.Name], x == rs[0]))
 			}
 			b.WriteString("| " + label(s) + " | " + strings.Join(cols, " | ") + " |\n")
 		}
 		var cols []string
 		for _, x := range rs {
-			cols = append(cols, dur(x.ColdMS))
+			cols = append(cols, timeCell(x.ColdMS, rs[0].ColdMS, x == rs[0]))
 		}
 		b.WriteString("| new connection + first message | " + strings.Join(cols, " | ") + " |\n\n")
 		if rs[0].Load != nil {
 			l := rs[0].Load
-			fmt.Fprintf(&b, "Load: %d messages, %d at a time — messages per second (errors):\n\n", l.Messages, l.Concurrency)
+			fmt.Fprintf(&b, "Load: %d messages, %d at a time — messages per second (errors; in brackets — how many "+
+				"times fewer than P2PACT UDP):\n\n", l.Messages, l.Concurrency)
 			var hs, vs []string
 			for _, x := range rs {
 				if x.Load == nil {
 					continue
 				}
 				hs = append(hs, x.Protocol)
-				vs = append(vs, fmt.Sprintf("%.0f (%d)", x.Load.PerSecond, x.Load.Errors))
+				v := fmt.Sprintf("%.0f (%d errors)", x.Load.PerSecond, x.Load.Errors)
+				if x != rs[0] && rs[0].Load != nil && x.Load.PerSecond > 0 {
+					v = fmt.Sprintf("%.0f (%d errors) %s", x.Load.PerSecond, x.Load.Errors, times(rs[0].Load.PerSecond/x.Load.PerSecond))
+				}
+				vs = append(vs, v)
 			}
 			b.WriteString("| " + strings.Join(hs, " | ") + " |\n|" + strings.Repeat("---:|", len(hs)) + "\n| " + strings.Join(vs, " | ") + " |\n\n")
 		}
@@ -154,6 +160,16 @@ func (r *Report) Markdown() string {
 	}
 	return b.String()
 }
+
+// timeCell is a time, and for other protocols how many times longer than the baseline.
+func timeCell(v, base float64, isBase bool) string {
+	if isBase || base <= 0 {
+		return dur(v)
+	}
+	return dur(v) + " " + times(v/base)
+}
+
+func times(k float64) string { return fmt.Sprintf("(%.1f×)", k) }
 
 func describe(p Profile) string {
 	if p.DelayMS == 0 && p.RateKBps == 0 && p.LossPct == 0 {
