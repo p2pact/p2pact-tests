@@ -66,5 +66,11 @@
     "http2",
     "grpc",
     "http3"
-  ]
+  ],
+  "repeat_large": 10,
+  "load": {
+    "messages": 2000,
+    "concurrency": 50,
+    "size": "medium"
+  }
 }

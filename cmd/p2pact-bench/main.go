@@ -1,8 +1,13 @@
 // Command p2pact-bench compares P2PACT (over UDP and TCP) with WebSocket and HTTPS+JSON: bytes
 // on the wire and time for chat messages of several sizes over emulated links.
 //
-//	p2pact-bench run [-out results] [-repeat N] [-seed N] [-data SPEC] scenarios/*.json
+//	p2pact-bench run [-out results] [-repeat N] [-seed N] [-data SPEC] [-remote HOST] scenarios/*.json
+//	p2pact-bench serve [-bind 0.0.0.0] [-advertise HOST]   the receivers, for -remote (ports 48731–48736)
 //	p2pact-bench data                 list the open datasets and the cache directory
+//
+// Without -remote everything runs on this machine over emulated links. With -remote HOST the
+// receivers run on HOST (`p2pact-bench serve` there) and the network is real: the scenario's
+// profiles are replaced by one, "real network".
 //
 // A scenario is a JSON file (see scenarios/). To try a variation, copy one and change any
 // field: profiles, size bins, protocols, data, repetitions, seed. Flags override the files.
@@ -17,6 +22,7 @@ import (
 	"path/filepath"
 	"strings"
 
+	p2pact "github.com/p2pact/p2pact-go"
 	bench "github.com/p2pact/p2pact-tests"
 )
 
@@ -27,6 +33,8 @@ func main() {
 	switch os.Args[1] {
 	case "run":
 		run(os.Args[2:])
+	case "serve":
+		serve(os.Args[2:])
 	case "data":
 		fmt.Println("cache:", bench.CacheDir())
 		for _, d := range bench.Datasets {
@@ -49,6 +57,7 @@ func run(args []string) {
 	repeat := fs.Int("repeat", 0, "override: messages per size")
 	seed := fs.Int64("seed", 0, "override: seed")
 	data := fs.String("data", "", "override: data source")
+	remote := fs.String("remote", "", "host running `p2pact-bench serve`: measure over the real network")
 	_ = fs.Parse(args)
 	if fs.NArg() == 0 {
 		usage()
@@ -64,7 +73,7 @@ func run(args []string) {
 			fail(err)
 		}
 		if *repeat > 0 {
-			sc.Repeat, sc.RepeatLarge = *repeat, max(1, *repeat/10)
+			sc.Repeat = *repeat
 		}
 		if *seed != 0 {
 			sc.Seed = *seed
@@ -72,8 +81,17 @@ func run(args []string) {
 		if *data != "" {
 			sc.Data = *data
 		}
+		var t *bench.Target
+		stop := func() {}
+		if *remote != "" {
+			t = bench.RemoteTarget(*remote)
+			sc.Profiles = []bench.Profile{{Name: "real network"}}
+		} else if t, stop, err = bench.LocalTarget(); err != nil {
+			fail(err)
+		}
 		fmt.Fprintf(os.Stderr, "== %s\n", sc.Name)
-		rep, err := bench.Execute(sc, os.Stderr)
+		rep, err := bench.Execute(sc, t, os.Stderr)
+		stop()
 		if err != nil { // one failed scenario (a download, say) does not stop the rest
 			fmt.Fprintf(os.Stderr, "%s: %v\n", sc.Name, err)
 			failed = true
@@ -104,4 +122,23 @@ func run(args []string) {
 func fail(err error) {
 	fmt.Fprintln(os.Stderr, err)
 	os.Exit(1)
+}
+
+func serve(args []string) {
+	fs := flag.NewFlagSet("serve", flag.ExitOnError)
+	bind := fs.String("bind", "0.0.0.0", "address to listen on")
+	advertise := fs.String("advertise", "", "public address to announce to P2PACT clients")
+	dir := fs.String("dir", filepath.Join(os.TempDir(), "p2pact-bench-server"), "server keys")
+	_ = fs.Parse(args)
+	s, err := bench.StartServers(*dir, *bind, bench.BasePort)
+	if err != nil {
+		fail(err)
+	}
+	if *advertise != "" {
+		a := fmt.Sprintf("%s:%d", *advertise, bench.BasePort)
+		s.Node.SetAdvertise(&p2pact.Hints{UDP: []string{a}, TCP: []string{a}})
+	}
+	fmt.Printf("p2pact-bench receivers: P2PACT %s (udp+tcp), WebSocket %s, HTTPS %s, HTTP/2 %s, gRPC %s, HTTP/3 %s\n",
+		s.P2PUDP, s.WS, s.HTTPS, s.HTTP2, s.GRPC, s.HTTP3)
+	select {}
 }

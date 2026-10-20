@@ -32,6 +32,7 @@ type Scenario struct {
 	Compression *bool     `json:"compression"`  // P2PACT zstd; default true
 	Sizes       []Size    `json:"sizes"`
 	Profiles    []Profile `json:"profiles"`
+	Load        *Load     `json:"load,omitempty"`
 	Protocols   []string  `json:"protocols"` // p2pact-udp, p2pact-tcp, websocket, https, http2, grpc, http3
 }
 
@@ -107,7 +108,7 @@ func (s *Scenario) defaults() {
 		s.Repeat = 20
 	}
 	if s.RepeatLarge <= 0 {
-		s.RepeatLarge = max(1, s.Repeat/10)
+		s.RepeatLarge = 10
 	}
 	if s.Compression == nil {
 		t := true
@@ -218,9 +219,12 @@ type Result struct {
 	Wire    map[string]int64   `json:"wire_bytes"`    // ≈ with IP and TCP/UDP headers
 	RTTms   map[string]float64 `json:"rtt_ms"`        // median: send a message, get the ack
 	// a new connection (P2PACT: a new session) plus the first very short message
-	ColdMS    float64 `json:"cold_ms"`
-	ColdBytes int64   `json:"cold_bytes"`
-	Note      string  `json:"note,omitempty"`
+	ColdMS    float64     `json:"cold_ms"`
+	ColdBytes int64       `json:"cold_bytes"`
+	Sent      int         `json:"sent"`   // messages sent in the size tests
+	Errors    int         `json:"errors"` // lost or arrived not intact (fingerprint mismatch)
+	Load      *LoadResult `json:"load,omitempty"`
+	Note      string      `json:"note,omitempty"`
 }
 
 func newResult(proto, profile string) *Result {

@@ -101,6 +101,19 @@ func (r *Report) Markdown() string {
 	}
 	b.WriteString("| new connection + first message | " + strings.Join(cols, " | ") + " |\n\n")
 
+	// every message is checked: the receiver answers with a fingerprint of what it got
+	var lines []string
+	for _, x := range r.Results {
+		if x.Errors > 0 {
+			lines = append(lines, fmt.Sprintf("%s · %s: %d", x.Protocol, x.Profile, x.Errors))
+		}
+	}
+	if len(lines) == 0 {
+		b.WriteString("**Delivery**: every message arrived intact (each one checked by a fingerprint of what the receiver got).\n\n")
+	} else {
+		b.WriteString("**Delivery errors** (lost, or arrived not intact): " + strings.Join(lines, "; ") + ".\n\n")
+	}
+
 	b.WriteString("**Time from sending a message to its ack** (median):\n\n")
 	for _, p := range sc.Profiles {
 		rs := byProfile[p.Name]
@@ -121,6 +134,19 @@ func (r *Report) Markdown() string {
 			cols = append(cols, dur(x.ColdMS))
 		}
 		b.WriteString("| new connection + first message | " + strings.Join(cols, " | ") + " |\n\n")
+		if rs[0].Load != nil {
+			l := rs[0].Load
+			fmt.Fprintf(&b, "Load: %d messages, %d at a time — messages per second (errors):\n\n", l.Messages, l.Concurrency)
+			var hs, vs []string
+			for _, x := range rs {
+				if x.Load == nil {
+					continue
+				}
+				hs = append(hs, x.Protocol)
+				vs = append(vs, fmt.Sprintf("%.0f (%d)", x.Load.PerSecond, x.Load.Errors))
+			}
+			b.WriteString("| " + strings.Join(hs, " | ") + " |\n|" + strings.Repeat("---:|", len(hs)) + "\n| " + strings.Join(vs, " | ") + " |\n\n")
+		}
 		if p.LossPct > 0 {
 			b.WriteString("TCP-based protocols run without loss here (emulating it needs root), so their times " +
 				"are optimistic.\n\n")
@@ -130,6 +156,9 @@ func (r *Report) Markdown() string {
 }
 
 func describe(p Profile) string {
+	if p.DelayMS == 0 && p.RateKBps == 0 && p.LossPct == 0 {
+		return "a real network, nothing emulated"
+	}
 	parts := []string{fmt.Sprintf("%g ms one way", p.DelayMS)}
 	if p.RateKBps > 0 {
 		parts = append(parts, fmt.Sprintf("%d KB/s", p.RateKBps))

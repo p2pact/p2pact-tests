@@ -150,12 +150,14 @@ func TestInterop(t *testing.T) {
 						}
 						time.Sleep(20 * time.Millisecond)
 					}
+					stream := 0
 					for name, data := range messages() {
+						stream = (stream + 1) % 3 // stream 0 (in order) and streams 1, 2
 						for _, dir := range []struct {
 							from *peer
 							to   string
 						}{{joiner, oa}, {owner, ja}} {
-							res := dir.from.do(map[string]any{"cmd": "call", "peer": dir.to, "data": data})
+							res := dir.from.do(map[string]any{"cmd": "call", "peer": dir.to, "data": data, "stream": stream})
 							var got []byte
 							b, _ := json.Marshal(res["data"])
 							_ = json.Unmarshal(b, &got)

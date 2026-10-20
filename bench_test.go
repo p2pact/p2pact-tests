@@ -12,9 +12,14 @@ func TestSmallerThanWebProtocols(t *testing.T) {
 	if testing.Short() {
 		t.Skip("benchmark")
 	}
-	sc := &Scenario{Name: "test", Repeat: 3, Profiles: DefaultProfiles[:1],
+	sc := &Scenario{Name: "test", Repeat: 3, RepeatLarge: 1, Profiles: DefaultProfiles[:1],
 		Protocols: []string{"p2pact-udp", "websocket", "https"}}
-	rep, err := Execute(sc, io.Discard)
+	tg, stop, err := LocalTarget()
+	if err != nil {
+		t.Fatal(err)
+	}
+	defer stop()
+	rep, err := Execute(sc, tg, io.Discard)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -25,6 +30,9 @@ func TestSmallerThanWebProtocols(t *testing.T) {
 			if ours.Wire[s.Name] >= other.Wire[s.Name] {
 				t.Errorf("%s: P2PACT %d B is not smaller than %s %d B", s.Name, ours.Wire[s.Name], other.Protocol, other.Wire[s.Name])
 			}
+		}
+		if other.Errors > 0 || ours.Errors > 0 {
+			t.Errorf("errors: P2PACT %d, %s %d", ours.Errors, other.Protocol, other.Errors)
 		}
 		if ours.ColdBytes >= other.ColdBytes {
 			t.Errorf("new connection: P2PACT %d B is not smaller than %s %d B", ours.ColdBytes, other.Protocol, other.ColdBytes)

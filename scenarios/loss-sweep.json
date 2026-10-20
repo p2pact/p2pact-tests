@@ -65,5 +65,6 @@
   ],
   "protocols": [
     "p2pact-udp"
-  ]
+  ],
+  "repeat_large": 10
 }
