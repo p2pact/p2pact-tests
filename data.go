@@ -5,7 +5,9 @@ import (
 	"compress/gzip"
 	"encoding/json"
 	"fmt"
+	"hash/fnv"
 	"io"
+	"math/rand"
 	"net/http"
 	"os"
 	"path/filepath"
@@ -69,6 +71,7 @@ func LoadData(spec string, log io.Writer) ([]string, string, error) {
 			return nil, "", err
 		}
 		msgs, err := readOASST(f, map[string]string{"human": "prompter", "assistant": "assistant"}[parts[1]], lang)
+		msgs = testHalf(msgs)
 		credit := "OpenAssistant oasst2 (Apache-2.0), " + parts[1]
 		if lang != "" {
 			credit += ", language " + lang
@@ -83,9 +86,108 @@ func LoadData(spec string, log io.Writer) ([]string, string, error) {
 			return nil, "", err
 		}
 		msgs, err := readSWEGym(f, parts[1])
-		return msgs, "SWE-Gym OpenHands trajectories (MIT), " + parts[1] + " messages", err
+		return testHalf(msgs), "SWE-Gym OpenHands trajectories (MIT), " + parts[1] + " messages", err
 	}
 	return nil, "", fmt.Errorf("unknown data %q: synthetic, oasst2:human|assistant[:lang], swe-gym:agent|tool, file:<path>", spec)
+}
+
+// The open datasets are split in two by a hash of each text: one half trains the common
+// dictionary (TrainingTexts), the other is what the benchmark sends, so the dictionary never
+// sees the messages it is measured on.
+func inTrainingHalf(s string) bool {
+	h := fnv.New64a()
+	h.Write([]byte(s))
+	return h.Sum64()%2 == 0
+}
+
+func testHalf(msgs []string) []string {
+	out := msgs[:0]
+	for _, m := range msgs {
+		if !inTrainingHalf(m) {
+			out = append(out, m)
+		}
+	}
+	return out
+}
+
+// CommonSources are what the common dictionary is trained on: plain conversation, people and
+// assistants in many languages. Not the coding agent's: its texts are one program's (OpenHands)
+// format, and a dictionary trained on it would flatter the benchmark on that very format.
+var CommonSources = []string{"oasst2:human", "oasst2:assistant"}
+
+// TrainingTexts returns the training half of each source.
+func TrainingTexts(sources []string, log io.Writer) (map[string][]string, error) {
+	out := map[string][]string{}
+	for _, spec := range sources {
+		parts := strings.Split(spec, ":")
+		var msgs []string
+		var err error
+		if parts[0] == "oasst2" {
+			f, ferr := fetch(Datasets[0], log)
+			if ferr != nil {
+				return nil, ferr
+			}
+			msgs, err = readOASST(f, map[string]string{"human": "prompter", "assistant": "assistant"}[parts[1]], "")
+		} else {
+			f, ferr := fetch(Datasets[1], log)
+			if ferr != nil {
+				return nil, ferr
+			}
+			msgs, err = readSWEGym(f, parts[1])
+		}
+		if err != nil {
+			return nil, err
+		}
+		for _, m := range msgs {
+			if inTrainingHalf(m) {
+				out[spec] = append(out[spec], m)
+			}
+		}
+	}
+	return out, nil
+}
+
+// WarmTexts returns texts for a conversation before the measurements, so a P2PACT device has
+// trained its own dictionary as one that has talked a while: the training half of the
+// scenario's data (never the messages measured), or generated text with other seeds.
+func WarmTexts(sc *Scenario, log io.Writer) ([]string, error) {
+	var msgs []string
+	parts := strings.Split(sc.Data, ":")
+	switch parts[0] {
+	case "synthetic":
+		for i := 0; len(msgs) < 2000; i++ {
+			for _, sz := range sc.Sizes {
+				msgs = append(msgs, Text(min(sz.Chars, 4<<10), 7777777+int64(i)*31+int64(len(msgs))))
+			}
+		}
+	case "oasst2", "swe-gym":
+		texts, err := TrainingTexts([]string{parts[0] + ":" + parts[1]}, log)
+		if err != nil {
+			return nil, err
+		}
+		msgs = texts[parts[0]+":"+parts[1]]
+		if parts[0] == "oasst2" && len(parts) > 2 { // one language: the training half of it
+			f, err := fetch(Datasets[0], log)
+			if err != nil {
+				return nil, err
+			}
+			all, err := readOASST(f, map[string]string{"human": "prompter", "assistant": "assistant"}[parts[1]], parts[2])
+			if err != nil {
+				return nil, err
+			}
+			msgs = msgs[:0]
+			for _, m := range all {
+				if inTrainingHalf(m) {
+					msgs = append(msgs, m)
+				}
+			}
+		}
+	default:
+		return nil, nil
+	}
+	r := rand.New(rand.NewSource(sc.Seed + 99))
+	r.Shuffle(len(msgs), func(i, j int) { msgs[i], msgs[j] = msgs[j], msgs[i] })
+	return msgs, nil
 }
 
 // fetch downloads a dataset file once into the cache.

@@ -14,6 +14,9 @@ type Report struct {
 	Data     string    `json:"data_source"`
 	Env      Env       `json:"environment"`
 	Results  []*Result `json:"results"`
+	// Dict is the id of the common dictionary the nodes had (hex), empty — plain zstd, no
+	// dictionaries of their own either.
+	Dict string `json:"dictionary,omitempty"`
 }
 
 // Env describes the machine and the code that produced a report.
@@ -49,8 +52,15 @@ func (r *Report) Markdown() string {
 	if sc.Description != "" {
 		b.WriteString(sc.Description + "\n\n")
 	}
-	fmt.Fprintf(&b, "Data: %s. Messages per size: %d (%d for 10 000+ characters). Compression: %v. Seed: %d.  \n",
-		r.Data, sc.Repeat, sc.RepeatLarge, *sc.Compression, sc.Seed)
+	comp := "zstd without a dictionary"
+	if !*sc.Compression {
+		comp = "off"
+	} else if r.Dict != "" {
+		comp = "zstd with dictionaries — the common one (" + r.Dict[:8] + ") and the client's own, trained " +
+			"on a warm-up conversation from the other half of the data"
+	}
+	fmt.Fprintf(&b, "Data: %s. Messages per size: %d (%d for 10 000+ characters). P2PACT compression: %s. Seed: %d.  \n",
+		r.Data, sc.Repeat, sc.RepeatLarge, comp, sc.Seed)
 	fmt.Fprintf(&b, "Machine: %s, %d CPUs, %s, %s", r.Env.OS, r.Env.CPUs, r.Env.Go, r.Env.Date)
 	if r.Env.Revision != "" {
 		fmt.Fprintf(&b, ", commit %s", r.Env.Revision)

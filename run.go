@@ -2,6 +2,7 @@ package bench
 
 import (
 	"crypto/tls"
+	"encoding/hex"
 	"fmt"
 	"io"
 	"net"
@@ -10,6 +11,8 @@ import (
 	"strconv"
 	"strings"
 	"time"
+
+	p2pact "github.com/p2pact/p2pact-go"
 )
 
 // Execute loads the scenario's data, runs it and returns the report.
@@ -28,11 +31,21 @@ func Execute(sc *Scenario, t *Target, log io.Writer) (*Report, error) {
 			fmt.Fprintf(log, "%s: %d messages, median %d chars\n", s.Name, len(s.msgs), s.Chars)
 		}
 	}
-	res, err := Run(sc, t, log)
+	var warm []string
+	if UseDict {
+		if warm, err = WarmTexts(sc, log); err != nil {
+			return nil, err
+		}
+	}
+	res, err := Run(sc, t, warm, log)
 	if err != nil {
 		return nil, err
 	}
-	return &Report{Scenario: sc, Data: credit, Env: CurrentEnv(), Results: res}, nil
+	rep := &Report{Scenario: sc, Data: credit, Env: CurrentEnv(), Results: res}
+	if UseDict {
+		rep.Dict = hex.EncodeToString(p2pact.DictID(p2pact.CommonDict))
+	}
+	return rep, nil
 }
 
 // LocalTarget starts all receivers on this machine.

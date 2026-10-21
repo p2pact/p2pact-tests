@@ -118,6 +118,35 @@ func messages() map[string][]byte {
 	}
 }
 
+// call sends data both ways (joiner → owner, owner → joiner) and checks the echo.
+func call(t *testing.T, name string, joiner *peer, oa string, owner *peer, ja string, data []byte, stream int) {
+	t.Helper()
+	for _, dir := range []struct {
+		from *peer
+		to   string
+	}{{joiner, oa}, {owner, ja}} {
+		res := dir.from.do(map[string]any{"cmd": "call", "peer": dir.to, "data": data, "stream": stream})
+		var got []byte
+		b, _ := json.Marshal(res["data"])
+		_ = json.Unmarshal(b, &got)
+		if !bytes.Equal(got, data) {
+			t.Fatalf("%s from %s: got %d bytes back, want %d", name, dir.from.name, len(got), len(data))
+		}
+	}
+}
+
+func chatLine(i int) []byte {
+	words := []string{"the agent", "finished", "the task", "run the tests", "and commit", "сообщения не доходят",
+		"до телефона", "why is it so slow", "checked the logs", "a delivery bug", "fixed it", "pushed to the branch"}
+	var b strings.Builder
+	fmt.Fprintf(&b, "step %d: ", i)
+	for j := range 12 {
+		b.WriteString(words[(i*7+j*j)%len(words)])
+		b.WriteString(", ")
+	}
+	return []byte(b.String())
+}
+
 func TestInterop(t *testing.T) {
 	list := impls(t)
 	if len(list) < 2 {
@@ -153,18 +182,16 @@ func TestInterop(t *testing.T) {
 					stream := 0
 					for name, data := range messages() {
 						stream = (stream + 1) % 3 // stream 0 (in order) and streams 1, 2
-						for _, dir := range []struct {
-							from *peer
-							to   string
-						}{{joiner, oa}, {owner, ja}} {
-							res := dir.from.do(map[string]any{"cmd": "call", "peer": dir.to, "data": data, "stream": stream})
-							var got []byte
-							b, _ := json.Marshal(res["data"])
-							_ = json.Unmarshal(b, &got)
-							if !bytes.Equal(got, data) {
-								t.Fatalf("%s from %s: got %d bytes back, want %d", name, dir.from.name, len(got), len(data))
-							}
-						}
+						call(t, name, joiner, oa, owner, ja, data, stream)
+					}
+					// a conversation long enough for a device to train its own dictionary (a Go
+					// one does at 32 KB); talking goes on after it, with it where the other side
+					// takes it
+					for i := range 400 {
+						call(t, "conversation", joiner, oa, owner, ja, chatLine(i), i%3)
+					}
+					for name, data := range messages() {
+						call(t, name+" after training", joiner, oa, owner, ja, data, 0)
 					}
 				})
 			}

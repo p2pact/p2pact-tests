@@ -18,19 +18,19 @@
         "name": "medium",
         "min": 40,
         "max": 200,
-        "chars": 103
+        "chars": 104
       },
       {
         "name": "long",
         "min": 200,
         "max": 2000,
-        "chars": 697
+        "chars": 694
       },
       {
         "name": "very long",
         "min": 2000,
         "max": 20000,
-        "chars": 2491
+        "chars": 2476
       }
     ],
     "profiles": [
@@ -58,7 +58,7 @@
   },
   "data_source": "OpenAssistant oasst2 (Apache-2.0), assistant",
   "environment": {
-    "date": "2026-10-20",
+    "date": "2026-10-21",
     "go": "go1.27.0",
     "os": "darwin/arm64",
     "cpus": 15
@@ -68,33 +68,33 @@
       "protocol": "P2PACT UDP",
       "profile": "real network",
       "payload_bytes": {
-        "long": 715,
-        "medium": 299,
-        "very long": 1368,
-        "very short": 111
+        "long": 754,
+        "medium": 230,
+        "very long": 1291,
+        "very short": 116
       },
       "wire_bytes": {
-        "long": 774,
-        "medium": 374,
-        "very long": 1445,
-        "very short": 172
+        "long": 826,
+        "medium": 299,
+        "very long": 1370,
+        "very short": 174
       },
       "rtt_ms": {
-        "long": 130.785,
-        "medium": 125.638,
-        "very long": 131.708,
-        "very short": 121.052
+        "long": 124.157,
+        "medium": 113.883,
+        "very long": 110.724,
+        "very short": 105.627
       },
-      "cold_ms": 130.287,
-      "cold_bytes": 701,
+      "cold_ms": 114.358,
+      "cold_bytes": 874,
       "sent": 80,
       "errors": 0,
       "load": {
         "messages": 2000,
         "concurrency": 50,
-        "ms": 5926.298,
-        "per_second": 337.4787963126898,
-        "wire_bytes": 755998,
+        "ms": 7097.045,
+        "per_second": 281.80741174479084,
+        "wire_bytes": 798298,
         "errors": 0
       }
     },
@@ -102,33 +102,33 @@
       "protocol": "P2PACT TCP",
       "profile": "real network",
       "payload_bytes": {
-        "long": 685,
-        "medium": 252,
-        "very long": 1331,
-        "very short": 111
+        "long": 673,
+        "medium": 214,
+        "very long": 1298,
+        "very short": 122
       },
       "wire_bytes": {
-        "long": 893,
-        "medium": 459,
-        "very long": 1538,
-        "very short": 319
+        "long": 881,
+        "medium": 422,
+        "very long": 1506,
+        "very short": 329
       },
       "rtt_ms": {
-        "long": 126.513,
-        "medium": 125.046,
-        "very long": 132.114,
-        "very short": 122.351
+        "long": 112.421,
+        "medium": 112.394,
+        "very long": 114.617,
+        "very short": 110.997
       },
-      "cold_ms": 255.757,
-      "cold_bytes": 844,
+      "cold_ms": 235.33,
+      "cold_bytes": 1018,
       "sent": 80,
       "errors": 0,
       "load": {
         "messages": 2000,
         "concurrency": 50,
-        "ms": 5685.853,
-        "per_second": 351.7502019939165,
-        "wire_bytes": 916000,
+        "ms": 4744.242,
+        "per_second": 421.5635999434156,
+        "wire_bytes": 848000,
         "errors": 0
       }
     },
@@ -136,33 +136,33 @@
       "protocol": "WebSocket",
       "profile": "real network",
       "payload_bytes": {
-        "long": 1422,
-        "medium": 375,
-        "very long": 3377,
-        "very short": 183
+        "long": 1219,
+        "medium": 305,
+        "very long": 2961,
+        "very short": 193
       },
       "wire_bytes": {
-        "long": 1630,
-        "medium": 583,
-        "very long": 3741,
-        "very short": 391
+        "long": 1427,
+        "medium": 513,
+        "very long": 3325,
+        "very short": 401
       },
       "rtt_ms": {
-        "long": 126.484,
-        "medium": 120.219,
-        "very long": 122.359,
-        "very short": 125.484
+        "long": 104.308,
+        "medium": 104.343,
+        "very long": 105.204,
+        "very short": 104.497
       },
-      "cold_ms": 530.864,
+      "cold_ms": 416.907,
       "cold_bytes": 4323,
       "sent": 80,
       "errors": 0,
       "load": {
         "messages": 2000,
         "concurrency": 50,
-        "ms": 5476.925,
-        "per_second": 365.16836670172916,
-        "wire_bytes": 1024000,
+        "ms": 4366.578,
+        "per_second": 458.02452388616393,
+        "wire_bytes": 1026000,
         "errors": 0
       }
     },
@@ -170,33 +170,33 @@
       "protocol": "HTTPS+JSON",
       "profile": "real network",
       "payload_bytes": {
-        "long": 1715,
-        "medium": 668,
-        "very long": 3675,
-        "very short": 477
+        "long": 1512,
+        "medium": 598,
+        "very long": 3259,
+        "very short": 487
       },
       "wire_bytes": {
-        "long": 1975,
-        "medium": 876,
-        "very long": 4039,
-        "very short": 685
+        "long": 1720,
+        "medium": 806,
+        "very long": 3623,
+        "very short": 695
       },
       "rtt_ms": {
-        "long": 126.576,
-        "medium": 122.845,
-        "very long": 126.459,
-        "very short": 120.569
+        "long": 109.434,
+        "medium": 108.182,
+        "very long": 113.971,
+        "very short": 108.12
       },
-      "cold_ms": 406.316,
-      "cold_bytes": 4229,
+      "cold_ms": 429.734,
+      "cold_bytes": 4230,
       "sent": 80,
       "errors": 0,
       "load": {
         "messages": 2000,
         "concurrency": 50,
-        "ms": 8585.546,
-        "per_second": 232.94963602045087,
-        "wire_bytes": 2014000,
+        "ms": 7612.013,
+        "per_second": 262.7425741963849,
+        "wire_bytes": 2024000,
         "errors": 0
       }
     },
@@ -204,33 +204,33 @@
       "protocol": "HTTP/2",
       "profile": "real network",
       "payload_bytes": {
-        "long": 1461,
-        "medium": 405,
-        "very long": 3432,
-        "very short": 210
+        "long": 1256,
+        "medium": 332,
+        "very long": 3014,
+        "very short": 221
       },
       "wire_bytes": {
-        "long": 1668,
-        "medium": 613,
-        "very long": 3796,
-        "very short": 418
+        "long": 1464,
+        "medium": 540,
+        "very long": 3273,
+        "very short": 428
       },
       "rtt_ms": {
-        "long": 122.311,
-        "medium": 130.906,
-        "very long": 125.876,
-        "very short": 121.746
+        "long": 102.966,
+        "medium": 101.851,
+        "very long": 103.093,
+        "very short": 101.907
       },
-      "cold_ms": 405.356,
-      "cold_bytes": 4369,
+      "cold_ms": 337.969,
+      "cold_bytes": 4368,
       "sent": 80,
       "errors": 0,
       "load": {
         "messages": 2000,
         "concurrency": 50,
-        "ms": 5405.249,
-        "per_second": 370.0106920213622,
-        "wire_bytes": 1064000,
+        "ms": 4464.039,
+        "per_second": 448.0247470949305,
+        "wire_bytes": 1072000,
         "errors": 0
       }
     },
@@ -238,33 +238,33 @@
       "protocol": "gRPC",
       "profile": "real network",
       "payload_bytes": {
-        "long": 1532,
-        "medium": 497,
-        "very long": 3458,
-        "very short": 306
+        "long": 1333,
+        "medium": 422,
+        "very long": 3039,
+        "very short": 310
       },
       "wire_bytes": {
-        "long": 1740,
-        "medium": 704,
-        "very long": 3822,
-        "very short": 513
+        "long": 1541,
+        "medium": 630,
+        "very long": 3402,
+        "very short": 518
       },
       "rtt_ms": {
-        "long": 127.338,
-        "medium": 121.741,
-        "very long": 124.931,
-        "very short": 121.254
+        "long": 95.874,
+        "medium": 94.581,
+        "very long": 95.234,
+        "very short": 97.139
       },
-      "cold_ms": 538.999,
-      "cold_bytes": 4372,
+      "cold_ms": 432.55,
+      "cold_bytes": 4385,
       "sent": 80,
       "errors": 0,
       "load": {
         "messages": 2000,
         "concurrency": 50,
-        "ms": 5273.143,
-        "per_second": 379.2803955723849,
-        "wire_bytes": 944000,
+        "ms": 3970.924,
+        "per_second": 503.66101229943945,
+        "wire_bytes": 954000,
         "errors": 0
       }
     },
@@ -272,35 +272,36 @@
       "protocol": "HTTP/3",
       "profile": "real network",
       "payload_bytes": {
-        "long": 1685,
-        "medium": 570,
-        "very long": 3721,
-        "very short": 959
+        "long": 1433,
+        "medium": 548,
+        "very long": 3424,
+        "very short": 919
       },
       "wire_bytes": {
-        "long": 1906,
-        "medium": 727,
-        "very long": 4018,
-        "very short": 1130
+        "long": 1610,
+        "medium": 713,
+        "very long": 3719,
+        "very short": 1058
       },
       "rtt_ms": {
-        "long": 124.456,
-        "medium": 126.542,
-        "very long": 125.486,
-        "very short": 122.365
+        "long": 100.181,
+        "medium": 100.969,
+        "very long": 100.677,
+        "very short": 100.469
       },
-      "cold_ms": 250.442,
-      "cold_bytes": 21557,
+      "cold_ms": 203.363,
+      "cold_bytes": 21180,
       "sent": 80,
       "errors": 0,
       "load": {
         "messages": 2000,
         "concurrency": 50,
-        "ms": 5463.325,
-        "per_second": 366.077373151538,
-        "wire_bytes": 814006,
+        "ms": 4176.254,
+        "per_second": 478.8980316841931,
+        "wire_bytes": 871569,
         "errors": 0
       }
     }
-  ]
+  ],
+  "dictionary": "fba2b14e4a7d1458c1cb735ffa51b1c5"
 }

@@ -16,6 +16,7 @@ import (
 	"sync"
 	"sync/atomic"
 	"time"
+	"unicode/utf8"
 
 	"github.com/fxamacker/cbor/v2"
 	p2pact "github.com/p2pact/p2pact-go"
@@ -63,12 +64,12 @@ type p2pactSetup struct {
 	client string // ours
 }
 
-func newP2PACTSetup(invite string) (*p2pactSetup, error) {
+func newP2PACTSetup(invite string, warm []string, log io.Writer) (*p2pactSetup, error) {
 	dir, err := os.MkdirTemp("", "p2pact-bench-client")
 	if err != nil {
 		return nil, err
 	}
-	n, err := p2pact.NewNode(dir, "bench-client")
+	n, err := newNode(dir, "bench-client")
 	if err != nil {
 		return nil, err
 	}
@@ -90,7 +91,53 @@ func newP2PACTSetup(invite string) (*p2pactSetup, error) {
 	if err != nil {
 		return nil, fmt.Errorf("pairing with the server: %w", err)
 	}
+	if len(warm) > 0 {
+		if err := warmUp(n, p.Addr, warm, log); err != nil {
+			return nil, err
+		}
+	}
 	return &p2pactSetup{dir: dir, server: p.Addr, client: n.ID.Addr()}, nil
+}
+
+// warmUp sends texts until the client's history is full (a device trains on up to 1 MB of
+// what it sent, each message cut to 4 KB), then waits until the server has taken the client's
+// last dictionary and no training is under way.
+func warmUp(n *p2pact.Node, server string, warm []string, log io.Writer) error {
+	var total, sent int
+	var wg sync.WaitGroup
+	var failed atomic.Int64
+	sem := make(chan struct{}, 50)
+	for i := 0; total < 1100<<10; i++ {
+		text := cut(warm[i%len(warm)], 4<<10) // no more of a message goes into the history
+		total += len(text) + 16
+		sent++
+		wg.Add(1)
+		sem <- struct{}{}
+		go func() {
+			defer wg.Done()
+			defer func() { <-sem }()
+			ctx, cancel := context.WithTimeout(context.Background(), 2*time.Minute)
+			defer cancel()
+			if _, err := n.CallOn(ctx, server, uint64(1+i%64), 1, 2, i, text); err != nil {
+				failed.Add(1)
+			}
+		}()
+	}
+	wg.Wait()
+	if failed.Load() > 0 {
+		return fmt.Errorf("warm-up: %d of %d messages failed", failed.Load(), sent)
+	}
+	for i := 0; ; i++ {
+		own, using, training := n.DictState(server)
+		if own != nil && bytes.Equal(own, using) && !training {
+			fmt.Fprintf(log, "warm-up: %d messages, own dictionary %x in use\n", sent, own[:4])
+			return nil
+		}
+		if i > 1200 {
+			return fmt.Errorf("warm-up: the own dictionary did not come into use (own %x, using %x, training %v)", own, using, training)
+		}
+		time.Sleep(100 * time.Millisecond)
+	}
 }
 
 type p2pactClient struct {
@@ -103,7 +150,7 @@ type p2pactClient struct {
 // dial starts a fresh client device with the paired keys; addr is where the server is
 // reached on this link (a proxy or the server itself).
 func (s *p2pactSetup) dial(road, addr string) (client, error) {
-	n, err := p2pact.NewNode(s.dir, "bench-client")
+	n, err := newNode(s.dir, "bench-client")
 	if err != nil {
 		return nil, err
 	}
@@ -455,4 +502,15 @@ func makeDriver(sc *Scenario, p Profile, t *Target, setup *p2pactSetup, proto st
 		}, stop: px.close}, nil
 	}
 	return nil, fmt.Errorf("unknown protocol %q (want one of %v)", proto, AllProtocols)
+}
+
+// cut returns at most n bytes of s, at a character boundary.
+func cut(s string, n int) string {
+	if len(s) <= n {
+		return s
+	}
+	for n > 0 && !utf8.RuneStart(s[n]) {
+		n--
+	}
+	return s[:n]
 }

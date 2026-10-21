@@ -5,6 +5,9 @@
 //	p2pact-bench serve [-bind 0.0.0.0] [-advertise HOST]   the receivers, for -remote (ports 48731–48736)
 //	p2pact-bench data                 list the open datasets and the cache directory
 //	p2pact-bench report               rebuild the Markdown tables and SUMMARY.md from the saved results
+//	p2pact-bench samples DIR          write the training half of the common dictionary's sources as
+//	                                  files, for zstd --train -r DIR --maxdict=65536 --dictID=1345470787
+//	                                  -o common-1.zdict
 //
 // Without -remote everything runs on this machine over emulated links. With -remote HOST the
 // receivers run on HOST (`p2pact-bench serve` there) and the network is real: the scenario's
@@ -19,6 +22,7 @@ import (
 	"encoding/json"
 	"flag"
 	"fmt"
+	"math/rand"
 	"os"
 	"path/filepath"
 	"strings"
@@ -38,6 +42,11 @@ func main() {
 		serve(os.Args[2:])
 	case "report":
 		rebuild()
+	case "samples":
+		if len(os.Args) != 3 {
+			usage()
+		}
+		samples(os.Args[2])
 	case "data":
 		fmt.Println("cache:", bench.CacheDir())
 		for _, d := range bench.Datasets {
@@ -50,7 +59,7 @@ func main() {
 }
 
 func usage() {
-	fmt.Fprintln(os.Stderr, "usage: p2pact-bench run [-out dir] [-repeat N] [-seed N] [-data SPEC] scenario.json…\n       p2pact-bench data")
+	fmt.Fprintln(os.Stderr, "usage: p2pact-bench run [-out dir] [-repeat N] [-seed N] [-data SPEC] [-dict=false] scenario.json…\n       p2pact-bench data\n       p2pact-bench samples DIR")
 	os.Exit(2)
 }
 
@@ -61,10 +70,12 @@ func run(args []string) {
 	seed := fs.Int64("seed", 0, "override: seed")
 	data := fs.String("data", "", "override: data source")
 	remote := fs.String("remote", "", "host running `p2pact-bench serve`: measure over the real network")
+	dict := fs.Bool("dict", true, "give P2PACT nodes the common dictionary")
 	_ = fs.Parse(args)
 	if fs.NArg() == 0 {
 		usage()
 	}
+	bench.UseDict = *dict
 	if err := os.MkdirAll(*out, 0o755); err != nil {
 		fail(err)
 	}
@@ -179,4 +190,36 @@ func rebuild() {
 		fail(err)
 	}
 	fmt.Println("rebuilt results-real/, results/ and SUMMARY.md")
+}
+
+// samples writes the training half of the common dictionary's sources: equal bytes per source, each text cut
+// to 4 KB (a dictionary helps the start of a message most), in a seeded order.
+func samples(dir string) {
+	texts, err := bench.TrainingTexts(bench.CommonSources, os.Stderr)
+	if err != nil {
+		fail(err)
+	}
+	if err := os.MkdirAll(dir, 0o755); err != nil {
+		fail(err)
+	}
+	const perSource, cut = 4 << 20, 4 << 10
+	for src, msgs := range texts {
+		r := rand.New(rand.NewSource(1))
+		r.Shuffle(len(msgs), func(i, j int) { msgs[i], msgs[j] = msgs[j], msgs[i] })
+		total := 0
+		name := strings.ReplaceAll(src, ":", "-")
+		for i, m := range msgs {
+			if total >= perSource {
+				break
+			}
+			if len(m) > cut {
+				m = m[:cut]
+			}
+			total += len(m)
+			if err := os.WriteFile(filepath.Join(dir, fmt.Sprintf("%s-%06d.txt", name, i)), []byte(m), 0o644); err != nil {
+				fail(err)
+			}
+		}
+		fmt.Fprintf(os.Stderr, "%s: %d texts, %d bytes\n", src, min(len(msgs), 1<<30), total)
+	}
 }

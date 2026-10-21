@@ -164,12 +164,13 @@ func load(sc *Scenario, p Profile, d *driver, c client) (*LoadResult, error) {
 }
 
 // Run measures the scenario's protocols over its profiles against the target.
-func Run(sc *Scenario, t *Target, log io.Writer) ([]*Result, error) {
+// warm: texts the P2PACT client sends first, so it has trained its own dictionary.
+func Run(sc *Scenario, t *Target, warm []string, log io.Writer) ([]*Result, error) {
 	inv, err := t.Invite()
 	if err != nil {
 		return nil, fmt.Errorf("server invite: %w", err)
 	}
-	setup, err := newP2PACTSetup(inv)
+	setup, err := newP2PACTSetup(inv, warm, log)
 	if err != nil {
 		return nil, err
 	}

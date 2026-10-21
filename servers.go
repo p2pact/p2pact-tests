@@ -60,7 +60,7 @@ func StartServers(dir, host string, base int) (*Servers, error) {
 	cert := selfSigned()
 
 	// P2PACT: UDP and TCP on the same port number
-	n, err := p2pact.NewNode(dir, "bench-server")
+	n, err := newNode(dir, "bench-server")
 	if err != nil {
 		return fail(err)
 	}
