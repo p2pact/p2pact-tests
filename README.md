@@ -31,21 +31,21 @@ Write one for your implementation and add it to `interop_test.go`.
 ### Real network
 
 [`results-real/RESULTS.md`](results-real/RESULTS.md): a laptop on home Wi-Fi to a 1-CPU cloud
-server, about 100–140 ms round trip, nothing emulated. Every message was checked and every one
+server, about 110–140 ms round trip, nothing emulated. Every message was checked and every one
 arrived intact. P2PACT over UDP against the six other protocols:
 
-- **First message on a new connection**: 112–147 ms against 203–274 ms for HTTP/3, 320–430 ms
-  for HTTPS and HTTP/2, 417–557 ms for WebSocket and gRPC — **2–4× faster** (one round trip:
+- **First message on a new connection**: 123–134 ms against 246–280 ms for HTTP/3, 374–407 ms
+  for HTTPS and HTTP/2, 480–631 ms for WebSocket and gRPC — **2–4.7× faster** (one round trip:
   the request rides in the first handshake packet).
-- **Bytes**: a medium message (about 100 characters) with its ack takes 243–299 bytes against
-  469–540 for WebSocket and HTTP/2, 584–630 for gRPC, 598–1181 for HTTP/3 and 761–806 for
-  HTTPS — **1.6–4× fewer**: short headers, and each device's own compression dictionary.
-- **Huge messages** (200 000 characters): 133 ms against 132–161 ms for the TCP-based protocols
-  and 567 ms for HTTP/3 — **level, 4× faster than HTTP/3**.
-- **Everyday messages**: the same for everyone, 93–139 ms; the network's round trip decides.
-- **Load** (2000 messages, 50 at a time, like 50 chats): 282–466 messages a second against
-  380–523 for gRPC, WebSocket, HTTP/2 and HTTP/3 and 252–282 for HTTPS — **level**; a real
-  network varies from run to run (a repeat of the 282 scenario gave 410).
+- **Bytes**: a medium message (about 100 characters) with its ack takes 232–393 bytes against
+  469–541 for WebSocket and HTTP/2, 558–1205 for HTTP/3, 592–642 for gRPC and 761–806 for
+  HTTPS — **1.3–3.5× fewer**: short headers, and each device's own compression dictionary.
+- **Huge messages** (200 000 characters): 137 ms against 148–272 ms — **level or up to 2×
+  faster**.
+- **Everyday messages**: the same for everyone, 109–149 ms; the network's round trip decides.
+- **Load** (2000 messages, 50 at a time, like 50 chats): 362–405 messages a second against
+  323–393 for gRPC, WebSocket, HTTP/2 and HTTP/3 and 231–234 for HTTPS — **level with the best,
+  1.6× ahead of HTTPS**. A real network varies from run to run by about 10–20 %.
 
 ### Emulated links
 
@@ -54,17 +54,17 @@ internet (40 ms, 1 % loss), mobile (100 ms, 500 KB/s, 3 % loss). All messages ar
 
 - **Faster**: a new connection 2–3× everywhere; Bluetooth 1.1–1.9× on very long messages and
   2.6× on huge ones (fewer bytes on a slow link); huge messages against HTTP/3 on the same lossy
-  link 4–7× (96–180 ms against 686 ms at 1 % loss, 0.7 s against 3.1 s at 3 %).
-- **Level**: everyday messages; the local network under load (14 000–21 000 messages a second
-  for every protocol); load against HTTP/3 on the lossy profiles (internet 511–545 a second
-  against 551–573, mobile 151–231 against 183–207).
-- **Slower**: load over Bluetooth (122–175 a second against 158–223 for WebSocket, HTTP/2 and
-  gRPC; 412 against 170–182 on the coding agent's output, which compresses well); huge
-  messages at 10–20 % loss take 0.3–1.8 s and vary a lot from run to run (4.1–4.5 s in the
-  previous run): a lost last packet waits for the retransmission timer. TCP-based protocols
-  look faster on lossy profiles only because they run without loss there (see the method).
+  link 4–5× (180 ms against 829 ms at 1 % loss, 0.68 s against 2.75 s at 3 %); huge messages
+  at 5–20 % loss take 0.28–0.42 s.
+- **Level**: everyday messages; the local network under load (18 000–21 000 messages a second
+  for every protocol, P2PACT with its dictionaries included); load against HTTP/3 on the lossy
+  profiles (internet 491–565 a second against 552–574, mobile 148–224 against 178–200).
+- **Slower**: load over Bluetooth varies a lot, 95–271 a second against 158–223 for WebSocket,
+  HTTP/2 and gRPC (HTTP/3: 99–117): parts are resent needlessly while the slow link queues.
+  TCP-based protocols look faster on lossy profiles only because they run without loss there
+  (see the method).
 - A huge message at 1 % loss is about 60 packets: in about half the runs one of them is lost
-  and costs a round trip, so its median is 96 ms in one run and 180 ms in another.
+  and costs a round trip, so its median is about 95 ms in one run and 180 ms in another.
 
 ### What the tests found in the protocol
 
@@ -106,6 +106,15 @@ Each of these was a real bug or weakness, fixed in all implementations and in th
 17. A new dictionary moved the others in the list, and the list travels on stream 0: a message
     on another stream could arrive after the new list and decompress with the wrong dictionary.
     Now a listed dictionary keeps its place (found by review).
+18. Learning sat on the sending path: every message was copied into the history under the
+    node's lock, and training started right when it was due, in the middle of a burst. Now
+    sending only queues the message; the history is filled in the background once a second, a
+    dictionary is trained in a lull, and short messages compress at the fastest level. Local
+    load with dictionaries went from ~10 % below plain zstd to ~10 % above.
+19. The benchmark's server, which only answers with fingerprints, trained a dictionary per
+    client from what it received, on its one CPU, during the measurements (+20 ms, and a
+    dictionary download inside a measured message). Now a device that has sent fewer than 8
+    messages worth compressing trains none.
 
 ## Real network
 

@@ -13,11 +13,11 @@ Machine: darwin/arm64, 15 CPUs, go1.27.0, 2026-10-21.
 
 | Message | P2PACT UDP | P2PACT TCP | WebSocket | HTTPS+JSON | HTTP/2 | gRPC | HTTP/3 |
 |---|---:|---:|---:|---:|---:|---:|---:|
-| very short (~18 chars) | 172 B | ≈327 B (1.9×) | ≈401 B (2.3×) | ≈695 B (4.0×) | ≈426 B (2.5×) | ≈541 B (3.1×) | ≈491 B (2.9×) |
-| medium (~104 chars) | 248 B | ≈401 B (1.6×) | ≈513 B (2.1×) | ≈806 B (3.2×) | ≈538 B (2.2×) | ≈649 B (2.6×) | ≈636 B (2.6×) |
-| long (~694 chars) | 581 B | ≈736 B (1.3×) | ≈1.4 KB (2.5×) | ≈1.7 KB (3.0×) | ≈1.4 KB (2.5×) | ≈1.5 KB (2.7×) | ≈1.6 KB (2.7×) |
-| very long (~2 476 chars) | 1.2 KB | ≈1.3 KB (1.1×) | ≈3.2 KB (2.8×) | ≈3.5 KB (3.1×) | ≈3.2 KB (2.8×) | ≈3.3 KB (2.9×) | ≈3.4 KB (3.0×) |
-| new connection + first message | 753 B | ≈933 B (1.2×) | ≈4.2 KB (5.7×) | ≈4.1 KB (5.6×) | ≈4.3 KB (5.8×) | ≈4.3 KB (5.8×) | ≈47 KB (64.2×) |
+| very short (~18 chars) | 179 B | ≈327 B (1.8×) | ≈401 B (2.2×) | ≈695 B (3.9×) | ≈426 B (2.4×) | ≈545 B (3.0×) | ≈602 B (3.4×) |
+| medium (~104 chars) | 258 B | ≈405 B (1.6×) | ≈513 B (2.0×) | ≈806 B (3.1×) | ≈539 B (2.1×) | ≈653 B (2.5×) | ≈615 B (2.4×) |
+| long (~694 chars) | 575 B | ≈730 B (1.3×) | ≈1.4 KB (2.5×) | ≈1.7 KB (3.0×) | ≈1.4 KB (2.5×) | ≈1.5 KB (2.7×) | ≈1.6 KB (2.9×) |
+| very long (~2 476 chars) | 1.1 KB | ≈1.3 KB (1.1×) | ≈3.2 KB (2.9×) | ≈3.5 KB (3.1×) | ≈3.2 KB (2.8×) | ≈3.2 KB (2.8×) | ≈3.4 KB (3.0×) |
+| new connection + first message | 853 B | ≈1003 B (1.2×) | ≈4.2 KB (5.1×) | ≈4.1 KB (5.0×) | ≈4.3 KB (5.1×) | ≈4.3 KB (5.2×) | ≈56 KB (67.4×) |
 
 **Delivery**: every message arrived intact (each one checked by a fingerprint of what the receiver got).
 
@@ -27,49 +27,49 @@ Machine: darwin/arm64, 15 CPUs, go1.27.0, 2026-10-21.
 
 | Message | P2PACT UDP | P2PACT TCP | WebSocket | HTTPS+JSON | HTTP/2 | gRPC | HTTP/3 |
 |---|---:|---:|---:|---:|---:|---:|---:|
-| very short (~18 chars) | 2.5 ms | 2.5 ms (1.0×) | 2.5 ms (1.0×) | 2.5 ms (1.0×) | 2.5 ms (1.0×) | 2.5 ms (1.0×) | 2.5 ms (1.0×) |
-| medium (~104 chars) | 2.7 ms | 2.5 ms (0.9×) | 2.5 ms (0.9×) | 2.5 ms (0.9×) | 2.6 ms (1.0×) | 2.5 ms (0.9×) | 2.5 ms (0.9×) |
-| long (~694 chars) | 2.9 ms | 2.9 ms (1.0×) | 2.4 ms (0.8×) | 2.6 ms (0.9×) | 2.5 ms (0.8×) | 2.5 ms (0.8×) | 2.5 ms (0.9×) |
-| very long (~2 476 chars) | 3.1 ms | 3.1 ms (1.0×) | 2.4 ms (0.8×) | 2.6 ms (0.8×) | 2.6 ms (0.8×) | 2.5 ms (0.8×) | 2.5 ms (0.8×) |
-| new connection + first message | 4.9 ms | 5.2 ms (1.1×) | 8.7 ms (1.8×) | 5.5 ms (1.1×) | 6.9 ms (1.4×) | 9.4 ms (1.9×) | 5.6 ms (1.1×) |
+| very short (~18 chars) | 2.5 ms | 2.5 ms (1.0×) | 2.5 ms (1.0×) | 2.6 ms (1.0×) | 2.6 ms (1.0×) | 2.5 ms (1.0×) | 2.5 ms (1.0×) |
+| medium (~104 chars) | 2.5 ms | 2.5 ms (1.0×) | 2.5 ms (1.0×) | 2.6 ms (1.0×) | 2.6 ms (1.0×) | 2.4 ms (1.0×) | 2.5 ms (1.0×) |
+| long (~694 chars) | 2.9 ms | 2.8 ms (1.0×) | 2.5 ms (0.9×) | 2.6 ms (0.9×) | 2.6 ms (0.9×) | 2.5 ms (0.9×) | 2.5 ms (0.9×) |
+| very long (~2 476 chars) | 3.2 ms | 2.7 ms (0.9×) | 2.5 ms (0.8×) | 2.7 ms (0.8×) | 2.6 ms (0.8×) | 2.6 ms (0.8×) | 2.6 ms (0.8×) |
+| new connection + first message | 6.0 ms | 8.3 ms (1.4×) | 9.3 ms (1.5×) | 6.1 ms (1.0×) | 7.0 ms (1.2×) | 9.4 ms (1.6×) | 7.9 ms (1.3×) |
 
 Load: 2000 messages, 50 at a time — messages per second (errors; in brackets — how many times fewer than P2PACT UDP):
 
 | P2PACT UDP | P2PACT TCP | WebSocket | HTTPS+JSON | HTTP/2 | gRPC | HTTP/3 |
 |---:|---:|---:|---:|---:|---:|---:|
-| 15742 (0 errors) | 14871 (0 errors) (1.1×) | 21051 (0 errors) (0.7×) | 18961 (0 errors) (0.8×) | 21031 (0 errors) (0.7×) | 19358 (0 errors) (0.8×) | 19616 (0 errors) (0.8×) |
+| 19635 (0 errors) | 19302 (0 errors) (1.0×) | 20839 (0 errors) (0.9×) | 18917 (0 errors) (1.0×) | 20508 (0 errors) (1.0×) | 19062 (0 errors) (1.0×) | 17950 (0 errors) (1.1×) |
 
 *bluetooth — 30 ms one way, 40 KB/s*
 
 | Message | P2PACT UDP | P2PACT TCP | WebSocket | HTTPS+JSON | HTTP/2 | gRPC | HTTP/3 |
 |---|---:|---:|---:|---:|---:|---:|---:|
-| very short (~18 chars) | 66 ms | 64 ms (1.0×) | 67 ms (1.0×) | 74 ms (1.1×) | 67 ms (1.0×) | 68 ms (1.0×) | 73 ms (1.1×) |
-| medium (~104 chars) | 67 ms | 65 ms (1.0×) | 69 ms (1.0×) | 75 ms (1.1×) | 68 ms (1.0×) | 71 ms (1.1×) | 74 ms (1.1×) |
-| long (~694 chars) | 77 ms | 73 ms (1.0×) | 94 ms (1.2×) | 100 ms (1.3×) | 95 ms (1.2×) | 95 ms (1.2×) | 99 ms (1.3×) |
-| very long (~2 476 chars) | 88 ms | 83 ms (0.9×) | 124 ms (1.4×) | 131 ms (1.5×) | 125 ms (1.4×) | 125 ms (1.4×) | 132 ms (1.5×) |
-| new connection + first message | 79 ms | 79 ms (1.0×) | 280 ms (3.5×) | 217 ms (2.7×) | 216 ms (2.7×) | 276 ms (3.5×) | 272 ms (3.4×) |
+| very short (~18 chars) | 66 ms | 64 ms (1.0×) | 66 ms (1.0×) | 74 ms (1.1×) | 67 ms (1.0×) | 68 ms (1.0×) | 72 ms (1.1×) |
+| medium (~104 chars) | 67 ms | 66 ms (1.0×) | 68 ms (1.0×) | 75 ms (1.1×) | 68 ms (1.0×) | 70 ms (1.0×) | 74 ms (1.1×) |
+| long (~694 chars) | 77 ms | 76 ms (1.0×) | 93 ms (1.2×) | 103 ms (1.3×) | 95 ms (1.2×) | 95 ms (1.2×) | 99 ms (1.3×) |
+| very long (~2 476 chars) | 88 ms | 87 ms (1.0×) | 124 ms (1.4×) | 132 ms (1.5×) | 125 ms (1.4×) | 125 ms (1.4×) | 132 ms (1.5×) |
+| new connection + first message | 79 ms | 76 ms (1.0×) | 280 ms (3.6×) | 216 ms (2.8×) | 215 ms (2.7×) | 277 ms (3.5×) | 272 ms (3.5×) |
 
 Load: 2000 messages, 50 at a time — messages per second (errors; in brackets — how many times fewer than P2PACT UDP):
 
 | P2PACT UDP | P2PACT TCP | WebSocket | HTTPS+JSON | HTTP/2 | gRPC | HTTP/3 |
 |---:|---:|---:|---:|---:|---:|---:|
-| 123 (0 errors) | 281 (0 errors) (0.4×) | 166 (0 errors) (0.7×) | 630 (0 errors) (0.2×) | 176 (0 errors) (0.7×) | 172 (0 errors) (0.7×) | 103 (0 errors) (1.2×) |
+| 95 (0 errors) | 273 (0 errors) (0.3×) | 166 (0 errors) (0.6×) | 629 (0 errors) (0.2×) | 176 (0 errors) (0.5×) | 172 (0 errors) (0.6×) | 102 (0 errors) (0.9×) |
 
 *internet — 40 ms one way, 1% loss*
 
 | Message | P2PACT UDP | P2PACT TCP | WebSocket | HTTPS+JSON | HTTP/2 | gRPC | HTTP/3 |
 |---|---:|---:|---:|---:|---:|---:|---:|
-| very short (~18 chars) | 81 ms | 81 ms (1.0×) | 82 ms (1.0×) | 82 ms (1.0×) | 82 ms (1.0×) | 82 ms (1.0×) | 83 ms (1.0×) |
-| medium (~104 chars) | 81 ms | 82 ms (1.0×) | 81 ms (1.0×) | 82 ms (1.0×) | 82 ms (1.0×) | 82 ms (1.0×) | 83 ms (1.0×) |
-| long (~694 chars) | 82 ms | 82 ms (1.0×) | 82 ms (1.0×) | 82 ms (1.0×) | 82 ms (1.0×) | 81 ms (1.0×) | 84 ms (1.0×) |
-| very long (~2 476 chars) | 82 ms | 82 ms (1.0×) | 81 ms (1.0×) | 82 ms (1.0×) | 82 ms (1.0×) | 82 ms (1.0×) | 82 ms (1.0×) |
-| new connection + first message | 89 ms | 84 ms (0.9×) | 247 ms (2.8×) | 166 ms (1.9×) | 166 ms (1.9×) | 247 ms (2.8×) | 166 ms (1.9×) |
+| very short (~18 chars) | 82 ms | 82 ms (1.0×) | 81 ms (1.0×) | 82 ms (1.0×) | 82 ms (1.0×) | 82 ms (1.0×) | 82 ms (1.0×) |
+| medium (~104 chars) | 81 ms | 81 ms (1.0×) | 82 ms (1.0×) | 82 ms (1.0×) | 82 ms (1.0×) | 82 ms (1.0×) | 82 ms (1.0×) |
+| long (~694 chars) | 82 ms | 82 ms (1.0×) | 82 ms (1.0×) | 81 ms (1.0×) | 82 ms (1.0×) | 81 ms (1.0×) | 82 ms (1.0×) |
+| very long (~2 476 chars) | 82 ms | 82 ms (1.0×) | 82 ms (1.0×) | 82 ms (1.0×) | 82 ms (1.0×) | 82 ms (1.0×) | 82 ms (1.0×) |
+| new connection + first message | 86 ms | 86 ms (1.0×) | 247 ms (2.9×) | 165 ms (1.9×) | 165 ms (1.9×) | 246 ms (2.8×) | 165 ms (1.9×) |
 
 Load: 2000 messages, 50 at a time — messages per second (errors; in brackets — how many times fewer than P2PACT UDP):
 
 | P2PACT UDP | P2PACT TCP | WebSocket | HTTPS+JSON | HTTP/2 | gRPC | HTTP/3 |
 |---:|---:|---:|---:|---:|---:|---:|
-| 531 (0 errors) | 610 (0 errors) (0.9×) | 612 (0 errors) (0.9×) | 596 (0 errors) (0.9×) | 610 (0 errors) (0.9×) | 611 (0 errors) (0.9×) | 573 (0 errors) (0.9×) |
+| 491 (0 errors) | 614 (0 errors) (0.8×) | 612 (0 errors) (0.8×) | 597 (0 errors) (0.8×) | 610 (0 errors) (0.8×) | 613 (0 errors) (0.8×) | 566 (0 errors) (0.9×) |
 
 TCP-based protocols run without loss here (emulating it needs root), so their times are optimistic.
 
@@ -77,17 +77,17 @@ TCP-based protocols run without loss here (emulating it needs root), so their ti
 
 | Message | P2PACT UDP | P2PACT TCP | WebSocket | HTTPS+JSON | HTTP/2 | gRPC | HTTP/3 |
 |---|---:|---:|---:|---:|---:|---:|---:|
-| very short (~18 chars) | 202 ms | 203 ms (1.0×) | 203 ms (1.0×) | 204 ms (1.0×) | 203 ms (1.0×) | 203 ms (1.0×) | 204 ms (1.0×) |
-| medium (~104 chars) | 203 ms | 203 ms (1.0×) | 203 ms (1.0×) | 204 ms (1.0×) | 203 ms (1.0×) | 203 ms (1.0×) | 204 ms (1.0×) |
-| long (~694 chars) | 204 ms | 204 ms (1.0×) | 206 ms (1.0×) | 206 ms (1.0×) | 204 ms (1.0×) | 204 ms (1.0×) | 205 ms (1.0×) |
-| very long (~2 476 chars) | 204 ms | 204 ms (1.0×) | 209 ms (1.0×) | 209 ms (1.0×) | 208 ms (1.0×) | 207 ms (1.0×) | 208 ms (1.0×) |
-| new connection + first message | 210 ms | 210 ms (1.0×) | 615 ms (2.9×) | 414 ms (2.0×) | 413 ms (2.0×) | 617 ms (2.9×) | 419 ms (2.0×) |
+| very short (~18 chars) | 202 ms | 201 ms (1.0×) | 202 ms (1.0×) | 203 ms (1.0×) | 202 ms (1.0×) | 202 ms (1.0×) | 203 ms (1.0×) |
+| medium (~104 chars) | 202 ms | 202 ms (1.0×) | 202 ms (1.0×) | 203 ms (1.0×) | 202 ms (1.0×) | 202 ms (1.0×) | 202 ms (1.0×) |
+| long (~694 chars) | 202 ms | 202 ms (1.0×) | 204 ms (1.0×) | 205 ms (1.0×) | 204 ms (1.0×) | 203 ms (1.0×) | 204 ms (1.0×) |
+| very long (~2 476 chars) | 204 ms | 204 ms (1.0×) | 207 ms (1.0×) | 207 ms (1.0×) | 207 ms (1.0×) | 207 ms (1.0×) | 207 ms (1.0×) |
+| new connection + first message | 208 ms | 203 ms (1.0×) | 613 ms (2.9×) | 412 ms (2.0×) | 410 ms (2.0×) | 612 ms (2.9×) | 417 ms (2.0×) |
 
 Load: 2000 messages, 50 at a time — messages per second (errors; in brackets — how many times fewer than P2PACT UDP):
 
 | P2PACT UDP | P2PACT TCP | WebSocket | HTTPS+JSON | HTTP/2 | gRPC | HTTP/3 |
 |---:|---:|---:|---:|---:|---:|---:|
-| 190 (0 errors) | 245 (0 errors) (0.8×) | 244 (0 errors) (0.8×) | 239 (0 errors) (0.8×) | 245 (0 errors) (0.8×) | 240 (0 errors) (0.8×) | 189 (0 errors) (1.0×) |
+| 148 (0 errors) | 247 (0 errors) (0.6×) | 246 (0 errors) (0.6×) | 240 (0 errors) (0.6×) | 246 (0 errors) (0.6×) | 242 (0 errors) (0.6×) | 178 (0 errors) (0.8×) |
 
 TCP-based protocols run without loss here (emulating it needs root), so their times are optimistic.
 
@@ -103,11 +103,11 @@ Machine: darwin/arm64, 15 CPUs, go1.27.0, 2026-10-21.
 
 | Message | P2PACT UDP | P2PACT TCP | WebSocket | HTTPS+JSON | HTTP/2 | gRPC | HTTP/3 |
 |---|---:|---:|---:|---:|---:|---:|---:|
-| medium (~125 chars) | 183 B | ≈342 B (1.9×) | ≈512 B (2.8×) | ≈805 B (4.4×) | ≈536 B (2.9×) | ≈610 B (3.3×) | ≈626 B (3.4×) |
-| long (~749 chars) | 369 B | ≈516 B (1.4×) | ≈1.2 KB (3.4×) | ≈1.5 KB (4.2×) | ≈1.3 KB (3.5×) | ≈1.3 KB (3.6×) | ≈1.4 KB (3.8×) |
-| very long (~5 101 chars) | 1.7 KB | ≈1.9 KB (1.1×) | ≈7.0 KB (4.0×) | ≈7.3 KB (4.2×) | ≈7.0 KB (4.1×) | ≈6.8 KB (4.0×) | ≈7.2 KB (4.2×) |
-| huge (~24 207 chars) | 6.2 KB | ≈6.1 KB (1.0×) | ≈26 KB (4.2×) | ≈26 KB (4.2×) | ≈26 KB (4.2×) | ≈24 KB (3.9×) | ≈26 KB (4.3×) |
-| new connection + first message | 806 B | ≈1.1 KB (1.4×) | ≈4.3 KB (5.5×) | ≈4.2 KB (5.4×) | ≈4.4 KB (5.6×) | ≈4.4 KB (5.6×) | ≈57 KB (71.8×) |
+| medium (~125 chars) | 186 B | ≈344 B (1.8×) | ≈512 B (2.8×) | ≈805 B (4.3×) | ≈535 B (2.9×) | ≈624 B (3.4×) | ≈1.0 KB (5.6×) |
+| long (~749 chars) | 374 B | ≈528 B (1.4×) | ≈1.2 KB (3.4×) | ≈1.5 KB (4.1×) | ≈1.3 KB (3.4×) | ≈1.3 KB (3.6×) | ≈1.3 KB (3.7×) |
+| very long (~5 101 chars) | 1.7 KB | ≈1.9 KB (1.1×) | ≈7.0 KB (4.0×) | ≈7.3 KB (4.2×) | ≈7.0 KB (4.1×) | ≈6.8 KB (3.9×) | ≈7.3 KB (4.2×) |
+| huge (~24 207 chars) | 6.3 KB | ≈6.5 KB (1.0×) | ≈26 KB (4.1×) | ≈26 KB (4.2×) | ≈26 KB (4.2×) | ≈24 KB (3.9×) | ≈26 KB (4.2×) |
+| new connection + first message | 771 B | ≈1003 B (1.3×) | ≈4.3 KB (5.7×) | ≈4.2 KB (5.6×) | ≈4.4 KB (5.8×) | ≈4.4 KB (5.9×) | ≈43 KB (57.0×) |
 
 **Delivery**: every message arrived intact (each one checked by a fingerprint of what the receiver got).
 
@@ -117,49 +117,49 @@ Machine: darwin/arm64, 15 CPUs, go1.27.0, 2026-10-21.
 
 | Message | P2PACT UDP | P2PACT TCP | WebSocket | HTTPS+JSON | HTTP/2 | gRPC | HTTP/3 |
 |---|---:|---:|---:|---:|---:|---:|---:|
-| medium (~125 chars) | 2.8 ms | 2.7 ms (1.0×) | 2.7 ms (1.0×) | 2.8 ms (1.0×) | 2.9 ms (1.0×) | 2.8 ms (1.0×) | 2.7 ms (0.9×) |
-| long (~749 chars) | 3.0 ms | 2.9 ms (1.0×) | 2.7 ms (0.9×) | 2.8 ms (0.9×) | 2.7 ms (0.9×) | 2.7 ms (0.9×) | 2.7 ms (0.9×) |
-| very long (~5 101 chars) | 3.4 ms | 3.5 ms (1.0×) | 2.8 ms (0.8×) | 2.9 ms (0.8×) | 2.9 ms (0.8×) | 2.7 ms (0.8×) | 2.7 ms (0.8×) |
-| huge (~24 207 chars) | 3.1 ms | 3.1 ms (1.0×) | 3.1 ms (1.0×) | 3.2 ms (1.1×) | 2.8 ms (0.9×) | 2.7 ms (0.9×) | 2.7 ms (0.9×) |
-| new connection + first message | 8.0 ms | 7.3 ms (0.9×) | 9.5 ms (1.2×) | 6.5 ms (0.8×) | 7.3 ms (0.9×) | 9.5 ms (1.2×) | 5.9 ms (0.7×) |
+| medium (~125 chars) | 2.5 ms | 2.5 ms (1.0×) | 2.5 ms (1.0×) | 2.4 ms (1.0×) | 2.5 ms (1.0×) | 2.5 ms (1.0×) | 2.5 ms (1.0×) |
+| long (~749 chars) | 2.6 ms | 2.6 ms (1.0×) | 2.4 ms (0.9×) | 2.6 ms (1.0×) | 2.6 ms (1.0×) | 2.5 ms (1.0×) | 2.5 ms (1.0×) |
+| very long (~5 101 chars) | 2.9 ms | 2.9 ms (1.0×) | 2.5 ms (0.9×) | 2.6 ms (0.9×) | 2.6 ms (0.9×) | 2.5 ms (0.9×) | 2.5 ms (0.9×) |
+| huge (~24 207 chars) | 3.4 ms | 2.9 ms (0.8×) | 2.9 ms (0.8×) | 2.6 ms (0.7×) | 2.6 ms (0.8×) | 2.5 ms (0.7×) | 2.6 ms (0.8×) |
+| new connection + first message | 8.9 ms | 4.7 ms (0.5×) | 8.8 ms (1.0×) | 5.8 ms (0.7×) | 5.5 ms (0.6×) | 8.0 ms (0.9×) | 5.7 ms (0.6×) |
 
 Load: 2000 messages, 50 at a time — messages per second (errors; in brackets — how many times fewer than P2PACT UDP):
 
 | P2PACT UDP | P2PACT TCP | WebSocket | HTTPS+JSON | HTTP/2 | gRPC | HTTP/3 |
 |---:|---:|---:|---:|---:|---:|---:|
-| 21412 (0 errors) | 21073 (0 errors) (1.0×) | 19110 (0 errors) (1.1×) | 18252 (0 errors) (1.2×) | 19522 (0 errors) (1.1×) | 18471 (0 errors) (1.2×) | 19084 (0 errors) (1.1×) |
+| 19831 (0 errors) | 21157 (0 errors) (0.9×) | 21056 (0 errors) (0.9×) | 19295 (0 errors) (1.0×) | 21036 (0 errors) (0.9×) | 19847 (0 errors) (1.0×) | 20639 (0 errors) (1.0×) |
 
 *bluetooth — 30 ms one way, 40 KB/s*
 
 | Message | P2PACT UDP | P2PACT TCP | WebSocket | HTTPS+JSON | HTTP/2 | gRPC | HTTP/3 |
 |---|---:|---:|---:|---:|---:|---:|---:|
-| medium (~125 chars) | 67 ms | 66 ms (1.0×) | 70 ms (1.1×) | 78 ms (1.2×) | 70 ms (1.1×) | 71 ms (1.1×) | 76 ms (1.1×) |
-| long (~749 chars) | 70 ms | 70 ms (1.0×) | 90 ms (1.3×) | 98 ms (1.4×) | 90 ms (1.3×) | 91 ms (1.3×) | 95 ms (1.4×) |
-| very long (~5 101 chars) | 96 ms | 96 ms (1.0×) | 175 ms (1.8×) | 181 ms (1.9×) | 175 ms (1.8×) | 169 ms (1.8×) | 184 ms (1.9×) |
-| huge (~24 207 chars) | 209 ms | 209 ms (1.0×) | 600 ms (2.9×) | 606 ms (2.9×) | 602 ms (2.9×) | 563 ms (2.7×) | 625 ms (3.0×) |
-| new connection + first message | 85 ms | 83 ms (1.0×) | 287 ms (3.4×) | 221 ms (2.6×) | 220 ms (2.6×) | 283 ms (3.3×) | 274 ms (3.2×) |
+| medium (~125 chars) | 66 ms | 65 ms (1.0×) | 69 ms (1.0×) | 77 ms (1.2×) | 69 ms (1.0×) | 71 ms (1.1×) | 75 ms (1.1×) |
+| long (~749 chars) | 70 ms | 68 ms (1.0×) | 89 ms (1.3×) | 97 ms (1.4×) | 90 ms (1.3×) | 91 ms (1.3×) | 95 ms (1.4×) |
+| very long (~5 101 chars) | 94 ms | 92 ms (1.0×) | 172 ms (1.8×) | 181 ms (1.9×) | 173 ms (1.9×) | 169 ms (1.8×) | 185 ms (2.0×) |
+| huge (~24 207 chars) | 221 ms | 217 ms (1.0×) | 597 ms (2.7×) | 604 ms (2.7×) | 601 ms (2.7×) | 562 ms (2.5×) | 624 ms (2.8×) |
+| new connection + first message | 77 ms | 75 ms (1.0×) | 282 ms (3.7×) | 218 ms (2.8×) | 218 ms (2.8×) | 279 ms (3.6×) | 270 ms (3.5×) |
 
 Load: 2000 messages, 50 at a time — messages per second (errors; in brackets — how many times fewer than P2PACT UDP):
 
 | P2PACT UDP | P2PACT TCP | WebSocket | HTTPS+JSON | HTTP/2 | gRPC | HTTP/3 |
 |---:|---:|---:|---:|---:|---:|---:|
-| 412 (0 errors) | 626 (0 errors) (0.7×) | 170 (0 errors) (2.4×) | 618 (0 errors) (0.7×) | 182 (0 errors) (2.3×) | 175 (0 errors) (2.4×) | 106 (0 errors) (3.9×) |
+| 271 (0 errors) | 445 (0 errors) (0.6×) | 170 (0 errors) (1.6×) | 630 (0 errors) (0.4×) | 182 (0 errors) (1.5×) | 177 (0 errors) (1.5×) | 104 (0 errors) (2.6×) |
 
 *internet — 40 ms one way, 1% loss*
 
 | Message | P2PACT UDP | P2PACT TCP | WebSocket | HTTPS+JSON | HTTP/2 | gRPC | HTTP/3 |
 |---|---:|---:|---:|---:|---:|---:|---:|
-| medium (~125 chars) | 82 ms | 82 ms (1.0×) | 83 ms (1.0×) | 83 ms (1.0×) | 82 ms (1.0×) | 83 ms (1.0×) | 83 ms (1.0×) |
-| long (~749 chars) | 82 ms | 81 ms (1.0×) | 83 ms (1.0×) | 82 ms (1.0×) | 83 ms (1.0×) | 83 ms (1.0×) | 83 ms (1.0×) |
-| very long (~5 101 chars) | 82 ms | 82 ms (1.0×) | 83 ms (1.0×) | 83 ms (1.0×) | 83 ms (1.0×) | 82 ms (1.0×) | 83 ms (1.0×) |
-| huge (~24 207 chars) | 84 ms | 83 ms (1.0×) | 84 ms (1.0×) | 84 ms (1.0×) | 83 ms (1.0×) | 83 ms (1.0×) | 166 ms (2.0×) |
-| new connection + first message | 89 ms | 86 ms (1.0×) | 247 ms (2.8×) | 168 ms (1.9×) | 168 ms (1.9×) | 249 ms (2.8×) | 168 ms (1.9×) |
+| medium (~125 chars) | 81 ms | 82 ms (1.0×) | 81 ms (1.0×) | 82 ms (1.0×) | 82 ms (1.0×) | 82 ms (1.0×) | 82 ms (1.0×) |
+| long (~749 chars) | 82 ms | 81 ms (1.0×) | 82 ms (1.0×) | 82 ms (1.0×) | 82 ms (1.0×) | 82 ms (1.0×) | 82 ms (1.0×) |
+| very long (~5 101 chars) | 82 ms | 82 ms (1.0×) | 81 ms (1.0×) | 81 ms (1.0×) | 82 ms (1.0×) | 81 ms (1.0×) | 82 ms (1.0×) |
+| huge (~24 207 chars) | 83 ms | 83 ms (1.0×) | 82 ms (1.0×) | 82 ms (1.0×) | 83 ms (1.0×) | 82 ms (1.0×) | 165 ms (2.0×) |
+| new connection + first message | 86 ms | 83 ms (1.0×) | 246 ms (2.9×) | 164 ms (1.9×) | 163 ms (1.9×) | 246 ms (2.9×) | 165 ms (1.9×) |
 
 Load: 2000 messages, 50 at a time — messages per second (errors; in brackets — how many times fewer than P2PACT UDP):
 
 | P2PACT UDP | P2PACT TCP | WebSocket | HTTPS+JSON | HTTP/2 | gRPC | HTTP/3 |
 |---:|---:|---:|---:|---:|---:|---:|
-| 543 (0 errors) | 609 (0 errors) (0.9×) | 606 (0 errors) (0.9×) | 589 (0 errors) (0.9×) | 606 (0 errors) (0.9×) | 606 (0 errors) (0.9×) | 573 (0 errors) (0.9×) |
+| 557 (0 errors) | 610 (0 errors) (0.9×) | 612 (0 errors) (0.9×) | 597 (0 errors) (0.9×) | 609 (0 errors) (0.9×) | 613 (0 errors) (0.9×) | 563 (0 errors) (1.0×) |
 
 TCP-based protocols run without loss here (emulating it needs root), so their times are optimistic.
 
@@ -167,17 +167,17 @@ TCP-based protocols run without loss here (emulating it needs root), so their ti
 
 | Message | P2PACT UDP | P2PACT TCP | WebSocket | HTTPS+JSON | HTTP/2 | gRPC | HTTP/3 |
 |---|---:|---:|---:|---:|---:|---:|---:|
-| medium (~125 chars) | 203 ms | 202 ms (1.0×) | 204 ms (1.0×) | 204 ms (1.0×) | 203 ms (1.0×) | 203 ms (1.0×) | 205 ms (1.0×) |
-| long (~749 chars) | 204 ms | 203 ms (1.0×) | 205 ms (1.0×) | 206 ms (1.0×) | 204 ms (1.0×) | 204 ms (1.0×) | 205 ms (1.0×) |
-| very long (~5 101 chars) | 206 ms | 206 ms (1.0×) | 211 ms (1.0×) | 213 ms (1.0×) | 212 ms (1.0×) | 211 ms (1.0×) | 210 ms (1.0×) |
-| huge (~24 207 chars) | 214 ms | 214 ms (1.0×) | 247 ms (1.2×) | 246 ms (1.2×) | 247 ms (1.2×) | 244 ms (1.1×) | 621 ms (2.9×) |
-| new connection + first message | 209 ms | 208 ms (1.0×) | 617 ms (3.0×) | 413 ms (2.0×) | 414 ms (2.0×) | 617 ms (3.0×) | 417 ms (2.0×) |
+| medium (~125 chars) | 202 ms | 202 ms (1.0×) | 202 ms (1.0×) | 203 ms (1.0×) | 202 ms (1.0×) | 202 ms (1.0×) | 203 ms (1.0×) |
+| long (~749 chars) | 203 ms | 203 ms (1.0×) | 204 ms (1.0×) | 204 ms (1.0×) | 204 ms (1.0×) | 203 ms (1.0×) | 203 ms (1.0×) |
+| very long (~5 101 chars) | 205 ms | 205 ms (1.0×) | 210 ms (1.0×) | 211 ms (1.0×) | 211 ms (1.0×) | 210 ms (1.0×) | 210 ms (1.0×) |
+| huge (~24 207 chars) | 215 ms | 214 ms (1.0×) | 245 ms (1.1×) | 246 ms (1.1×) | 245 ms (1.1×) | 241 ms (1.1×) | 617 ms (2.9×) |
+| new connection + first message | 210 ms | 208 ms (1.0×) | 614 ms (2.9×) | 410 ms (2.0×) | 411 ms (2.0×) | 613 ms (2.9×) | 414 ms (2.0×) |
 
 Load: 2000 messages, 50 at a time — messages per second (errors; in brackets — how many times fewer than P2PACT UDP):
 
 | P2PACT UDP | P2PACT TCP | WebSocket | HTTPS+JSON | HTTP/2 | gRPC | HTTP/3 |
 |---:|---:|---:|---:|---:|---:|---:|
-| 161 (0 errors) | 247 (0 errors) (0.7×) | 245 (0 errors) (0.7×) | 239 (0 errors) (0.7×) | 245 (0 errors) (0.7×) | 240 (0 errors) (0.7×) | 207 (0 errors) (0.8×) |
+| 173 (0 errors) | 247 (0 errors) (0.7×) | 246 (0 errors) (0.7×) | 240 (0 errors) (0.7×) | 247 (0 errors) (0.7×) | 242 (0 errors) (0.7×) | 191 (0 errors) (0.9×) |
 
 TCP-based protocols run without loss here (emulating it needs root), so their times are optimistic.
 
@@ -193,11 +193,11 @@ Machine: darwin/arm64, 15 CPUs, go1.27.0, 2026-10-21.
 
 | Message | P2PACT UDP | P2PACT TCP | WebSocket | HTTPS+JSON | HTTP/2 | gRPC | HTTP/3 |
 |---|---:|---:|---:|---:|---:|---:|---:|
-| very short (~27 chars) | 175 B | ≈330 B (1.9×) | ≈417 B (2.4×) | ≈710 B (4.1×) | ≈442 B (2.5×) | ≈555 B (3.2×) | ≈681 B (3.9×) |
-| medium (~75 chars) | 196 B | ≈349 B (1.8×) | ≈508 B (2.6×) | ≈801 B (4.1×) | ≈533 B (2.7×) | ≈630 B (3.2×) | ≈627 B (3.2×) |
-| long (~333 chars) | 397 B | ≈552 B (1.4×) | ≈1.1 KB (2.9×) | ≈1.4 KB (3.7×) | ≈1.2 KB (3.0×) | ≈1.3 KB (3.3×) | ≈1.3 KB (3.3×) |
-| very long (~2 567 chars) | 2.0 KB | ≈2.1 KB (1.1×) | ≈6.4 KB (3.2×) | ≈6.7 KB (3.4×) | ≈6.5 KB (3.3×) | ≈6.5 KB (3.3×) | ≈6.6 KB (3.3×) |
-| new connection + first message | 732 B | ≈961 B (1.3×) | ≈4.2 KB (5.9×) | ≈4.2 KB (5.8×) | ≈4.3 KB (6.0×) | ≈4.3 KB (6.1×) | ≈41 KB (57.9×) |
+| very short (~27 chars) | 176 B | ≈331 B (1.9×) | ≈417 B (2.4×) | ≈710 B (4.0×) | ≈442 B (2.5×) | ≈528 B (3.0×) | ≈925 B (5.3×) |
+| medium (~75 chars) | 204 B | ≈358 B (1.8×) | ≈508 B (2.5×) | ≈801 B (3.9×) | ≈533 B (2.6×) | ≈613 B (3.0×) | ≈573 B (2.8×) |
+| long (~333 chars) | 411 B | ≈566 B (1.4×) | ≈1.1 KB (2.8×) | ≈1.4 KB (3.5×) | ≈1.2 KB (2.9×) | ≈1.2 KB (3.1×) | ≈1.2 KB (3.0×) |
+| very long (~2 567 chars) | 2.0 KB | ≈2.1 KB (1.1×) | ≈6.4 KB (3.2×) | ≈6.7 KB (3.4×) | ≈6.5 KB (3.3×) | ≈6.5 KB (3.3×) | ≈6.6 KB (3.4×) |
+| new connection + first message | 867 B | ≈949 B (1.1×) | ≈4.2 KB (5.0×) | ≈4.2 KB (4.9×) | ≈4.3 KB (5.1×) | ≈4.3 KB (5.1×) | ≈47 KB (55.8×) |
 
 **Delivery**: every message arrived intact (each one checked by a fingerprint of what the receiver got).
 
@@ -207,49 +207,49 @@ Machine: darwin/arm64, 15 CPUs, go1.27.0, 2026-10-21.
 
 | Message | P2PACT UDP | P2PACT TCP | WebSocket | HTTPS+JSON | HTTP/2 | gRPC | HTTP/3 |
 |---|---:|---:|---:|---:|---:|---:|---:|
-| very short (~27 chars) | 2.7 ms | 2.8 ms (1.0×) | 2.7 ms (1.0×) | 2.8 ms (1.0×) | 2.8 ms (1.0×) | 2.7 ms (1.0×) | 2.7 ms (1.0×) |
-| medium (~75 chars) | 2.8 ms | 2.9 ms (1.0×) | 2.7 ms (1.0×) | 2.8 ms (1.0×) | 2.8 ms (1.0×) | 2.7 ms (1.0×) | 2.6 ms (0.9×) |
-| long (~333 chars) | 2.8 ms | 3.0 ms (1.1×) | 2.7 ms (0.9×) | 2.8 ms (1.0×) | 2.9 ms (1.0×) | 2.7 ms (1.0×) | 2.7 ms (0.9×) |
-| very long (~2 567 chars) | 3.4 ms | 2.9 ms (0.9×) | 2.8 ms (0.8×) | 3.0 ms (0.9×) | 2.8 ms (0.8×) | 2.7 ms (0.8×) | 2.7 ms (0.8×) |
-| new connection + first message | 5.0 ms | 5.2 ms (1.0×) | 8.5 ms (1.7×) | 7.1 ms (1.4×) | 6.0 ms (1.2×) | 10 ms (2.1×) | 7.5 ms (1.5×) |
+| very short (~27 chars) | 2.5 ms | 2.4 ms (1.0×) | 2.4 ms (1.0×) | 2.4 ms (1.0×) | 2.6 ms (1.0×) | 2.4 ms (1.0×) | 2.4 ms (1.0×) |
+| medium (~75 chars) | 2.5 ms | 2.4 ms (1.0×) | 2.4 ms (1.0×) | 2.5 ms (1.0×) | 2.7 ms (1.1×) | 2.5 ms (1.0×) | 2.4 ms (1.0×) |
+| long (~333 chars) | 2.5 ms | 2.5 ms (1.0×) | 2.4 ms (1.0×) | 2.6 ms (1.0×) | 2.5 ms (1.0×) | 2.4 ms (1.0×) | 2.4 ms (1.0×) |
+| very long (~2 567 chars) | 2.6 ms | 2.6 ms (1.0×) | 2.4 ms (0.9×) | 2.7 ms (1.0×) | 2.5 ms (0.9×) | 2.4 ms (0.9×) | 2.4 ms (0.9×) |
+| new connection + first message | 4.3 ms | 5.0 ms (1.2×) | 8.3 ms (1.9×) | 5.3 ms (1.2×) | 6.1 ms (1.4×) | 7.7 ms (1.8×) | 5.4 ms (1.3×) |
 
 Load: 2000 messages, 50 at a time — messages per second (errors; in brackets — how many times fewer than P2PACT UDP):
 
 | P2PACT UDP | P2PACT TCP | WebSocket | HTTPS+JSON | HTTP/2 | gRPC | HTTP/3 |
 |---:|---:|---:|---:|---:|---:|---:|
-| 16507 (0 errors) | 15526 (0 errors) (1.1×) | 19859 (0 errors) (0.8×) | 16789 (0 errors) (1.0×) | 19767 (0 errors) (0.8×) | 17903 (0 errors) (0.9×) | 19082 (0 errors) (0.9×) |
+| 20174 (0 errors) | 20455 (0 errors) (1.0×) | 21310 (0 errors) (0.9×) | 17548 (0 errors) (1.1×) | 21882 (0 errors) (0.9×) | 20655 (0 errors) (1.0×) | 21323 (0 errors) (0.9×) |
 
 *bluetooth — 30 ms one way, 40 KB/s*
 
 | Message | P2PACT UDP | P2PACT TCP | WebSocket | HTTPS+JSON | HTTP/2 | gRPC | HTTP/3 |
 |---|---:|---:|---:|---:|---:|---:|---:|
-| very short (~27 chars) | 67 ms | 66 ms (1.0×) | 67 ms (1.0×) | 74 ms (1.1×) | 67 ms (1.0×) | 69 ms (1.0×) | 73 ms (1.1×) |
-| medium (~75 chars) | 68 ms | 65 ms (1.0×) | 69 ms (1.0×) | 76 ms (1.1×) | 69 ms (1.0×) | 71 ms (1.0×) | 75 ms (1.1×) |
-| long (~333 chars) | 72 ms | 70 ms (1.0×) | 80 ms (1.1×) | 87 ms (1.2×) | 80 ms (1.1×) | 81 ms (1.1×) | 86 ms (1.2×) |
-| very long (~2 567 chars) | 102 ms | 86 ms (0.8×) | 170 ms (1.7×) | 178 ms (1.8×) | 170 ms (1.7×) | 171 ms (1.7×) | 182 ms (1.8×) |
-| new connection + first message | 79 ms | 79 ms (1.0×) | 281 ms (3.6×) | 217 ms (2.8×) | 217 ms (2.7×) | 278 ms (3.5×) | 272 ms (3.5×) |
+| very short (~27 chars) | 66 ms | 64 ms (1.0×) | 67 ms (1.0×) | 74 ms (1.1×) | 67 ms (1.0×) | 68 ms (1.0×) | 72 ms (1.1×) |
+| medium (~75 chars) | 67 ms | 65 ms (1.0×) | 69 ms (1.0×) | 76 ms (1.1×) | 69 ms (1.0×) | 70 ms (1.1×) | 75 ms (1.1×) |
+| long (~333 chars) | 71 ms | 69 ms (1.0×) | 79 ms (1.1×) | 87 ms (1.2×) | 81 ms (1.1×) | 81 ms (1.1×) | 85 ms (1.2×) |
+| very long (~2 567 chars) | 101 ms | 98 ms (1.0×) | 170 ms (1.7×) | 178 ms (1.8×) | 171 ms (1.7×) | 171 ms (1.7×) | 180 ms (1.8×) |
+| new connection + first message | 75 ms | 78 ms (1.0×) | 280 ms (3.8×) | 217 ms (2.9×) | 217 ms (2.9×) | 277 ms (3.7×) | 270 ms (3.6×) |
 
 Load: 2000 messages, 50 at a time — messages per second (errors; in brackets — how many times fewer than P2PACT UDP):
 
 | P2PACT UDP | P2PACT TCP | WebSocket | HTTPS+JSON | HTTP/2 | gRPC | HTTP/3 |
 |---:|---:|---:|---:|---:|---:|---:|
-| 122 (0 errors) | 243 (0 errors) (0.5×) | 158 (0 errors) (0.8×) | 629 (0 errors) (0.2×) | 167 (0 errors) (0.7×) | 162 (0 errors) (0.8×) | 98 (0 errors) (1.2×) |
+| 169 (0 errors) | 348 (0 errors) (0.5×) | 158 (0 errors) (1.1×) | 628 (0 errors) (0.3×) | 167 (0 errors) (1.0×) | 163 (0 errors) (1.0×) | 99 (0 errors) (1.7×) |
 
 *internet — 40 ms one way, 1% loss*
 
 | Message | P2PACT UDP | P2PACT TCP | WebSocket | HTTPS+JSON | HTTP/2 | gRPC | HTTP/3 |
 |---|---:|---:|---:|---:|---:|---:|---:|
-| very short (~27 chars) | 81 ms | 81 ms (1.0×) | 81 ms (1.0×) | 82 ms (1.0×) | 82 ms (1.0×) | 81 ms (1.0×) | 82 ms (1.0×) |
-| medium (~75 chars) | 81 ms | 81 ms (1.0×) | 82 ms (1.0×) | 82 ms (1.0×) | 82 ms (1.0×) | 82 ms (1.0×) | 82 ms (1.0×) |
-| long (~333 chars) | 82 ms | 81 ms (1.0×) | 81 ms (1.0×) | 82 ms (1.0×) | 82 ms (1.0×) | 81 ms (1.0×) | 82 ms (1.0×) |
-| very long (~2 567 chars) | 82 ms | 82 ms (1.0×) | 82 ms (1.0×) | 82 ms (1.0×) | 82 ms (1.0×) | 82 ms (1.0×) | 81 ms (1.0×) |
-| new connection + first message | 89 ms | 86 ms (1.0×) | 247 ms (2.8×) | 164 ms (1.8×) | 165 ms (1.8×) | 248 ms (2.8×) | 165 ms (1.9×) |
+| very short (~27 chars) | 81 ms | 81 ms (1.0×) | 82 ms (1.0×) | 82 ms (1.0×) | 82 ms (1.0×) | 81 ms (1.0×) | 82 ms (1.0×) |
+| medium (~75 chars) | 81 ms | 81 ms (1.0×) | 81 ms (1.0×) | 82 ms (1.0×) | 82 ms (1.0×) | 81 ms (1.0×) | 81 ms (1.0×) |
+| long (~333 chars) | 81 ms | 82 ms (1.0×) | 82 ms (1.0×) | 81 ms (1.0×) | 82 ms (1.0×) | 81 ms (1.0×) | 82 ms (1.0×) |
+| very long (~2 567 chars) | 82 ms | 81 ms (1.0×) | 81 ms (1.0×) | 82 ms (1.0×) | 82 ms (1.0×) | 81 ms (1.0×) | 82 ms (1.0×) |
+| new connection + first message | 83 ms | 83 ms (1.0×) | 247 ms (3.0×) | 163 ms (2.0×) | 164 ms (2.0×) | 245 ms (3.0×) | 163 ms (2.0×) |
 
 Load: 2000 messages, 50 at a time — messages per second (errors; in brackets — how many times fewer than P2PACT UDP):
 
 | P2PACT UDP | P2PACT TCP | WebSocket | HTTPS+JSON | HTTP/2 | gRPC | HTTP/3 |
 |---:|---:|---:|---:|---:|---:|---:|
-| 517 (0 errors) | 612 (0 errors) (0.8×) | 613 (0 errors) (0.8×) | 595 (0 errors) (0.9×) | 610 (0 errors) (0.8×) | 612 (0 errors) (0.8×) | 563 (0 errors) (0.9×) |
+| 510 (0 errors) | 613 (0 errors) (0.8×) | 613 (0 errors) (0.8×) | 597 (0 errors) (0.9×) | 614 (0 errors) (0.8×) | 614 (0 errors) (0.8×) | 563 (0 errors) (0.9×) |
 
 TCP-based protocols run without loss here (emulating it needs root), so their times are optimistic.
 
@@ -257,17 +257,17 @@ TCP-based protocols run without loss here (emulating it needs root), so their ti
 
 | Message | P2PACT UDP | P2PACT TCP | WebSocket | HTTPS+JSON | HTTP/2 | gRPC | HTTP/3 |
 |---|---:|---:|---:|---:|---:|---:|---:|
-| very short (~27 chars) | 202 ms | 202 ms (1.0×) | 202 ms (1.0×) | 203 ms (1.0×) | 203 ms (1.0×) | 202 ms (1.0×) | 204 ms (1.0×) |
-| medium (~75 chars) | 202 ms | 201 ms (1.0×) | 202 ms (1.0×) | 203 ms (1.0×) | 202 ms (1.0×) | 202 ms (1.0×) | 202 ms (1.0×) |
-| long (~333 chars) | 203 ms | 203 ms (1.0×) | 204 ms (1.0×) | 204 ms (1.0×) | 203 ms (1.0×) | 203 ms (1.0×) | 203 ms (1.0×) |
-| very long (~2 567 chars) | 204 ms | 205 ms (1.0×) | 211 ms (1.0×) | 211 ms (1.0×) | 210 ms (1.0×) | 211 ms (1.0×) | 211 ms (1.0×) |
-| new connection + first message | 209 ms | 207 ms (1.0×) | 615 ms (2.9×) | 411 ms (2.0×) | 412 ms (2.0×) | 614 ms (2.9×) | 616 ms (2.9×) |
+| very short (~27 chars) | 201 ms | 202 ms (1.0×) | 202 ms (1.0×) | 203 ms (1.0×) | 202 ms (1.0×) | 202 ms (1.0×) | 203 ms (1.0×) |
+| medium (~75 chars) | 202 ms | 202 ms (1.0×) | 202 ms (1.0×) | 203 ms (1.0×) | 202 ms (1.0×) | 202 ms (1.0×) | 202 ms (1.0×) |
+| long (~333 chars) | 202 ms | 202 ms (1.0×) | 204 ms (1.0×) | 204 ms (1.0×) | 202 ms (1.0×) | 203 ms (1.0×) | 203 ms (1.0×) |
+| very long (~2 567 chars) | 205 ms | 206 ms (1.0×) | 211 ms (1.0×) | 212 ms (1.0×) | 211 ms (1.0×) | 210 ms (1.0×) | 210 ms (1.0×) |
+| new connection + first message | 208 ms | 209 ms (1.0×) | 614 ms (3.0×) | 412 ms (2.0×) | 411 ms (2.0×) | 613 ms (2.9×) | 416 ms (2.0×) |
 
 Load: 2000 messages, 50 at a time — messages per second (errors; in brackets — how many times fewer than P2PACT UDP):
 
 | P2PACT UDP | P2PACT TCP | WebSocket | HTTPS+JSON | HTTP/2 | gRPC | HTTP/3 |
 |---:|---:|---:|---:|---:|---:|---:|
-| 151 (0 errors) | 246 (0 errors) (0.6×) | 246 (0 errors) (0.6×) | 240 (0 errors) (0.6×) | 246 (0 errors) (0.6×) | 242 (0 errors) (0.6×) | 187 (0 errors) (0.8×) |
+| 208 (0 errors) | 246 (0 errors) (0.8×) | 246 (0 errors) (0.8×) | 240 (0 errors) (0.9×) | 247 (0 errors) (0.8×) | 245 (0 errors) (0.9×) | 178 (0 errors) (1.2×) |
 
 TCP-based protocols run without loss here (emulating it needs root), so their times are optimistic.
 
@@ -283,11 +283,11 @@ Machine: darwin/arm64, 15 CPUs, go1.27.0, 2026-10-21.
 
 | Message | P2PACT UDP | P2PACT TCP | WebSocket | HTTPS+JSON | HTTP/2 | gRPC | HTTP/3 |
 |---|---:|---:|---:|---:|---:|---:|---:|
-| very short (~24 chars) | 172 B | ≈327 B (1.9×) | ≈403 B (2.3×) | ≈697 B (4.1×) | ≈428 B (2.5×) | ≈548 B (3.2×) | ≈529 B (3.1×) |
-| medium (~80 chars) | 208 B | ≈362 B (1.7×) | ≈469 B (2.3×) | ≈761 B (3.7×) | ≈493 B (2.4×) | ≈583 B (2.8×) | ≈580 B (2.8×) |
-| long (~298 chars) | 461 B | ≈616 B (1.3×) | ≈1.1 KB (2.4×) | ≈1.4 KB (3.0×) | ≈1.1 KB (2.4×) | ≈1.2 KB (2.7×) | ≈1.2 KB (2.7×) |
-| very long (~2 750 chars) | 1.5 KB | ≈1.6 KB (1.1×) | ≈4.2 KB (2.9×) | ≈4.5 KB (3.1×) | ≈4.3 KB (2.9×) | ≈4.3 KB (2.9×) | ≈4.7 KB (3.2×) |
-| new connection + first message | 792 B | ≈955 B (1.2×) | ≈4.2 KB (5.5×) | ≈4.2 KB (5.4×) | ≈4.3 KB (5.6×) | ≈4.3 KB (5.6×) | ≈42 KB (54.7×) |
+| very short (~24 chars) | 173 B | ≈327 B (1.9×) | ≈403 B (2.3×) | ≈697 B (4.0×) | ≈429 B (2.5×) | ≈514 B (3.0×) | ≈956 B (5.5×) |
+| medium (~80 chars) | 208 B | ≈362 B (1.7×) | ≈469 B (2.3×) | ≈761 B (3.7×) | ≈492 B (2.4×) | ≈605 B (2.9×) | ≈539 B (2.6×) |
+| long (~298 chars) | 462 B | ≈616 B (1.3×) | ≈1.1 KB (2.4×) | ≈1.4 KB (3.0×) | ≈1.1 KB (2.4×) | ≈1.2 KB (2.7×) | ≈1.2 KB (2.6×) |
+| very long (~2 750 chars) | 1.5 KB | ≈1.6 KB (1.1×) | ≈4.2 KB (2.9×) | ≈4.5 KB (3.1×) | ≈4.3 KB (2.9×) | ≈4.3 KB (2.9×) | ≈4.4 KB (3.0×) |
+| new connection + first message | 715 B | ≈936 B (1.3×) | ≈4.2 KB (6.1×) | ≈4.2 KB (5.9×) | ≈4.3 KB (6.1×) | ≈4.3 KB (6.2×) | ≈44 KB (63.2×) |
 
 **Delivery**: every message arrived intact (each one checked by a fingerprint of what the receiver got).
 
@@ -297,49 +297,49 @@ Machine: darwin/arm64, 15 CPUs, go1.27.0, 2026-10-21.
 
 | Message | P2PACT UDP | P2PACT TCP | WebSocket | HTTPS+JSON | HTTP/2 | gRPC | HTTP/3 |
 |---|---:|---:|---:|---:|---:|---:|---:|
-| very short (~24 chars) | 2.6 ms | 2.4 ms (0.9×) | 2.4 ms (0.9×) | 2.5 ms (1.0×) | 2.6 ms (1.0×) | 2.4 ms (0.9×) | 2.5 ms (1.0×) |
-| medium (~80 chars) | 2.4 ms | 2.4 ms (1.0×) | 2.4 ms (1.0×) | 2.5 ms (1.0×) | 2.5 ms (1.0×) | 2.5 ms (1.0×) | 2.5 ms (1.0×) |
-| long (~298 chars) | 2.8 ms | 2.7 ms (1.0×) | 2.5 ms (0.9×) | 2.5 ms (0.9×) | 2.6 ms (0.9×) | 2.5 ms (0.9×) | 2.5 ms (0.9×) |
-| very long (~2 750 chars) | 3.4 ms | 2.9 ms (0.9×) | 2.5 ms (0.7×) | 2.6 ms (0.8×) | 2.7 ms (0.8×) | 2.4 ms (0.7×) | 2.5 ms (0.8×) |
-| new connection + first message | 8.0 ms | 5.0 ms (0.6×) | 8.0 ms (1.0×) | 5.7 ms (0.7×) | 7.0 ms (0.9×) | 8.6 ms (1.1×) | 5.7 ms (0.7×) |
+| very short (~24 chars) | 2.5 ms | 2.5 ms (1.0×) | 2.5 ms (1.0×) | 2.5 ms (1.0×) | 2.6 ms (1.0×) | 2.4 ms (1.0×) | 2.4 ms (1.0×) |
+| medium (~80 chars) | 2.5 ms | 2.5 ms (1.0×) | 2.5 ms (1.0×) | 2.6 ms (1.0×) | 2.6 ms (1.0×) | 2.5 ms (1.0×) | 2.4 ms (1.0×) |
+| long (~298 chars) | 2.6 ms | 2.6 ms (1.0×) | 2.5 ms (1.0×) | 2.6 ms (1.0×) | 2.4 ms (0.9×) | 2.5 ms (1.0×) | 2.5 ms (1.0×) |
+| very long (~2 750 chars) | 2.6 ms | 2.9 ms (1.1×) | 2.5 ms (1.0×) | 2.6 ms (1.0×) | 2.6 ms (1.0×) | 2.5 ms (1.0×) | 2.5 ms (1.0×) |
+| new connection + first message | 6.7 ms | 9.2 ms (1.4×) | 9.1 ms (1.4×) | 6.8 ms (1.0×) | 6.8 ms (1.0×) | 9.4 ms (1.4×) | 7.3 ms (1.1×) |
 
 Load: 2000 messages, 50 at a time — messages per second (errors; in brackets — how many times fewer than P2PACT UDP):
 
 | P2PACT UDP | P2PACT TCP | WebSocket | HTTPS+JSON | HTTP/2 | gRPC | HTTP/3 |
 |---:|---:|---:|---:|---:|---:|---:|
-| 19139 (0 errors) | 19806 (0 errors) (1.0×) | 20890 (0 errors) (0.9×) | 17454 (0 errors) (1.1×) | 21777 (0 errors) (0.9×) | 20088 (0 errors) (1.0×) | 21451 (0 errors) (0.9×) |
+| 20664 (0 errors) | 20884 (0 errors) (1.0×) | 20971 (0 errors) (1.0×) | 19000 (0 errors) (1.1×) | 21093 (0 errors) (1.0×) | 19457 (0 errors) (1.1×) | 21382 (0 errors) (1.0×) |
 
 *bluetooth — 30 ms one way, 40 KB/s*
 
 | Message | P2PACT UDP | P2PACT TCP | WebSocket | HTTPS+JSON | HTTP/2 | gRPC | HTTP/3 |
 |---|---:|---:|---:|---:|---:|---:|---:|
-| very short (~24 chars) | 66 ms | 65 ms (1.0×) | 67 ms (1.0×) | 74 ms (1.1×) | 67 ms (1.0×) | 68 ms (1.0×) | 73 ms (1.1×) |
-| medium (~80 chars) | 67 ms | 64 ms (1.0×) | 68 ms (1.0×) | 75 ms (1.1×) | 68 ms (1.0×) | 70 ms (1.1×) | 74 ms (1.1×) |
-| long (~298 chars) | 71 ms | 69 ms (1.0×) | 77 ms (1.1×) | 85 ms (1.2×) | 79 ms (1.1×) | 81 ms (1.1×) | 84 ms (1.2×) |
-| very long (~2 750 chars) | 100 ms | 90 ms (0.9×) | 160 ms (1.6×) | 169 ms (1.7×) | 161 ms (1.6×) | 161 ms (1.6×) | 171 ms (1.7×) |
-| new connection + first message | 77 ms | 79 ms (1.0×) | 281 ms (3.7×) | 217 ms (2.8×) | 216 ms (2.8×) | 278 ms (3.6×) | 272 ms (3.5×) |
+| very short (~24 chars) | 66 ms | 64 ms (1.0×) | 66 ms (1.0×) | 74 ms (1.1×) | 66 ms (1.0×) | 68 ms (1.0×) | 73 ms (1.1×) |
+| medium (~80 chars) | 67 ms | 65 ms (1.0×) | 68 ms (1.0×) | 75 ms (1.1×) | 68 ms (1.0×) | 69 ms (1.0×) | 74 ms (1.1×) |
+| long (~298 chars) | 72 ms | 70 ms (1.0×) | 78 ms (1.1×) | 85 ms (1.2×) | 78 ms (1.1×) | 80 ms (1.1×) | 83 ms (1.2×) |
+| very long (~2 750 chars) | 100 ms | 97 ms (1.0×) | 160 ms (1.6×) | 168 ms (1.7×) | 161 ms (1.6×) | 162 ms (1.6×) | 171 ms (1.7×) |
+| new connection + first message | 78 ms | 77 ms (1.0×) | 280 ms (3.6×) | 216 ms (2.8×) | 216 ms (2.8×) | 277 ms (3.6×) | 272 ms (3.5×) |
 
 Load: 2000 messages, 50 at a time — messages per second (errors; in brackets — how many times fewer than P2PACT UDP):
 
 | P2PACT UDP | P2PACT TCP | WebSocket | HTTPS+JSON | HTTP/2 | gRPC | HTTP/3 |
 |---:|---:|---:|---:|---:|---:|---:|
-| 175 (0 errors) | 349 (0 errors) (0.5×) | 200 (0 errors) (0.9×) | 637 (0 errors) (0.3×) | 216 (0 errors) (0.8×) | 209 (0 errors) (0.8×) | 113 (0 errors) (1.5×) |
+| 197 (0 errors) | 338 (0 errors) (0.6×) | 200 (0 errors) (1.0×) | 638 (0 errors) (0.3×) | 216 (0 errors) (0.9×) | 207 (0 errors) (1.0×) | 115 (0 errors) (1.7×) |
 
 *internet — 40 ms one way, 1% loss*
 
 | Message | P2PACT UDP | P2PACT TCP | WebSocket | HTTPS+JSON | HTTP/2 | gRPC | HTTP/3 |
 |---|---:|---:|---:|---:|---:|---:|---:|
-| very short (~24 chars) | 81 ms | 81 ms (1.0×) | 81 ms (1.0×) | 82 ms (1.0×) | 82 ms (1.0×) | 82 ms (1.0×) | 81 ms (1.0×) |
-| medium (~80 chars) | 81 ms | 82 ms (1.0×) | 82 ms (1.0×) | 82 ms (1.0×) | 82 ms (1.0×) | 82 ms (1.0×) | 81 ms (1.0×) |
-| long (~298 chars) | 81 ms | 82 ms (1.0×) | 81 ms (1.0×) | 81 ms (1.0×) | 81 ms (1.0×) | 81 ms (1.0×) | 81 ms (1.0×) |
-| very long (~2 750 chars) | 82 ms | 82 ms (1.0×) | 82 ms (1.0×) | 82 ms (1.0×) | 82 ms (1.0×) | 81 ms (1.0×) | 81 ms (1.0×) |
-| new connection + first message | 89 ms | 88 ms (1.0×) | 247 ms (2.8×) | 165 ms (1.8×) | 165 ms (1.8×) | 247 ms (2.8×) | 163 ms (1.8×) |
+| very short (~24 chars) | 82 ms | 82 ms (1.0×) | 82 ms (1.0×) | 83 ms (1.0×) | 83 ms (1.0×) | 82 ms (1.0×) | 82 ms (1.0×) |
+| medium (~80 chars) | 82 ms | 82 ms (1.0×) | 82 ms (1.0×) | 83 ms (1.0×) | 82 ms (1.0×) | 82 ms (1.0×) | 83 ms (1.0×) |
+| long (~298 chars) | 82 ms | 82 ms (1.0×) | 82 ms (1.0×) | 82 ms (1.0×) | 82 ms (1.0×) | 82 ms (1.0×) | 83 ms (1.0×) |
+| very long (~2 750 chars) | 83 ms | 82 ms (1.0×) | 82 ms (1.0×) | 83 ms (1.0×) | 83 ms (1.0×) | 83 ms (1.0×) | 82 ms (1.0×) |
+| new connection + first message | 88 ms | 88 ms (1.0×) | 247 ms (2.8×) | 169 ms (1.9×) | 166 ms (1.9×) | 248 ms (2.8×) | 167 ms (1.9×) |
 
 Load: 2000 messages, 50 at a time — messages per second (errors; in brackets — how many times fewer than P2PACT UDP):
 
 | P2PACT UDP | P2PACT TCP | WebSocket | HTTPS+JSON | HTTP/2 | gRPC | HTTP/3 |
 |---:|---:|---:|---:|---:|---:|---:|
-| 511 (0 errors) | 610 (0 errors) (0.8×) | 613 (0 errors) (0.8×) | 595 (0 errors) (0.9×) | 612 (0 errors) (0.8×) | 614 (0 errors) (0.8×) | 569 (0 errors) (0.9×) |
+| 565 (0 errors) | 609 (0 errors) (0.9×) | 607 (0 errors) (0.9×) | 590 (0 errors) (1.0×) | 605 (0 errors) (0.9×) | 606 (0 errors) (0.9×) | 574 (0 errors) (1.0×) |
 
 TCP-based protocols run without loss here (emulating it needs root), so their times are optimistic.
 
@@ -347,17 +347,17 @@ TCP-based protocols run without loss here (emulating it needs root), so their ti
 
 | Message | P2PACT UDP | P2PACT TCP | WebSocket | HTTPS+JSON | HTTP/2 | gRPC | HTTP/3 |
 |---|---:|---:|---:|---:|---:|---:|---:|
-| very short (~24 chars) | 201 ms | 202 ms (1.0×) | 202 ms (1.0×) | 203 ms (1.0×) | 202 ms (1.0×) | 202 ms (1.0×) | 203 ms (1.0×) |
-| medium (~80 chars) | 201 ms | 201 ms (1.0×) | 202 ms (1.0×) | 203 ms (1.0×) | 202 ms (1.0×) | 202 ms (1.0×) | 202 ms (1.0×) |
-| long (~298 chars) | 202 ms | 202 ms (1.0×) | 203 ms (1.0×) | 204 ms (1.0×) | 203 ms (1.0×) | 202 ms (1.0×) | 203 ms (1.0×) |
-| very long (~2 750 chars) | 204 ms | 204 ms (1.0×) | 210 ms (1.0×) | 210 ms (1.0×) | 209 ms (1.0×) | 209 ms (1.0×) | 210 ms (1.0×) |
-| new connection + first message | 205 ms | 211 ms (1.0×) | 614 ms (3.0×) | 411 ms (2.0×) | 411 ms (2.0×) | 613 ms (3.0×) | 417 ms (2.0×) |
+| very short (~24 chars) | 202 ms | 202 ms (1.0×) | 203 ms (1.0×) | 203 ms (1.0×) | 203 ms (1.0×) | 203 ms (1.0×) | 205 ms (1.0×) |
+| medium (~80 chars) | 202 ms | 202 ms (1.0×) | 203 ms (1.0×) | 204 ms (1.0×) | 204 ms (1.0×) | 202 ms (1.0×) | 204 ms (1.0×) |
+| long (~298 chars) | 203 ms | 203 ms (1.0×) | 204 ms (1.0×) | 205 ms (1.0×) | 204 ms (1.0×) | 204 ms (1.0×) | 205 ms (1.0×) |
+| very long (~2 750 chars) | 205 ms | 205 ms (1.0×) | 209 ms (1.0×) | 211 ms (1.0×) | 210 ms (1.0×) | 210 ms (1.0×) | 210 ms (1.0×) |
+| new connection + first message | 207 ms | 208 ms (1.0×) | 616 ms (3.0×) | 413 ms (2.0×) | 415 ms (2.0×) | 616 ms (3.0×) | 419 ms (2.0×) |
 
 Load: 2000 messages, 50 at a time — messages per second (errors; in brackets — how many times fewer than P2PACT UDP):
 
 | P2PACT UDP | P2PACT TCP | WebSocket | HTTPS+JSON | HTTP/2 | gRPC | HTTP/3 |
 |---:|---:|---:|---:|---:|---:|---:|
-| 181 (0 errors) | 247 (0 errors) (0.7×) | 246 (0 errors) (0.7×) | 240 (0 errors) (0.8×) | 246 (0 errors) (0.7×) | 243 (0 errors) (0.7×) | 198 (0 errors) (0.9×) |
+| 224 (0 errors) | 246 (0 errors) (0.9×) | 245 (0 errors) (0.9×) | 239 (0 errors) (0.9×) | 246 (0 errors) (0.9×) | 241 (0 errors) (0.9×) | 183 (0 errors) (1.2×) |
 
 TCP-based protocols run without loss here (emulating it needs root), so their times are optimistic.
 
@@ -373,12 +373,12 @@ Machine: darwin/arm64, 15 CPUs, go1.27.0, 2026-10-21.
 
 | Message | P2PACT UDP |
 |---|---:|
-| very short (~20 chars) | 293 B |
-| medium (~100 chars) | 333 B |
-| long (~600 chars) | 530 B |
-| very long (~5 000 chars) | 2.2 KB |
-| huge (~200 000 chars) | 86 KB |
-| new connection + first message | 1.0 KB |
+| very short (~20 chars) | 166 B |
+| medium (~100 chars) | 208 B |
+| long (~600 chars) | 407 B |
+| very long (~5 000 chars) | 2.3 KB |
+| huge (~200 000 chars) | 88 KB |
+| new connection + first message | 668 B |
 
 **Delivery**: every message arrived intact (each one checked by a fingerprint of what the receiver got).
 
@@ -388,23 +388,23 @@ Machine: darwin/arm64, 15 CPUs, go1.27.0, 2026-10-21.
 
 | Message | P2PACT UDP |
 |---|---:|
-| very short (~20 chars) | 81 ms |
-| medium (~100 chars) | 81 ms |
-| long (~600 chars) | 82 ms |
-| very long (~5 000 chars) | 83 ms |
-| huge (~200 000 chars) | 87 ms |
-| new connection + first message | 85 ms |
+| very short (~20 chars) | 83 ms |
+| medium (~100 chars) | 83 ms |
+| long (~600 chars) | 83 ms |
+| very long (~5 000 chars) | 84 ms |
+| huge (~200 000 chars) | 96 ms |
+| new connection + first message | 87 ms |
 
 *1% loss — 40 ms one way, 1% loss*
 
 | Message | P2PACT UDP |
 |---|---:|
-| very short (~20 chars) | 81 ms |
+| very short (~20 chars) | 82 ms |
 | medium (~100 chars) | 82 ms |
-| long (~600 chars) | 82 ms |
+| long (~600 chars) | 83 ms |
 | very long (~5 000 chars) | 83 ms |
-| huge (~200 000 chars) | 96 ms |
-| new connection + first message | 88 ms |
+| huge (~200 000 chars) | 190 ms |
+| new connection + first message | 87 ms |
 
 TCP-based protocols run without loss here (emulating it needs root), so their times are optimistic.
 
@@ -412,12 +412,12 @@ TCP-based protocols run without loss here (emulating it needs root), so their ti
 
 | Message | P2PACT UDP |
 |---|---:|
-| very short (~20 chars) | 82 ms |
+| very short (~20 chars) | 83 ms |
 | medium (~100 chars) | 82 ms |
-| long (~600 chars) | 82 ms |
+| long (~600 chars) | 81 ms |
 | very long (~5 000 chars) | 83 ms |
-| huge (~200 000 chars) | 340 ms |
-| new connection + first message | 87 ms |
+| huge (~200 000 chars) | 279 ms |
+| new connection + first message | 88 ms |
 
 TCP-based protocols run without loss here (emulating it needs root), so their times are optimistic.
 
@@ -427,10 +427,10 @@ TCP-based protocols run without loss here (emulating it needs root), so their ti
 |---|---:|
 | very short (~20 chars) | 82 ms |
 | medium (~100 chars) | 82 ms |
-| long (~600 chars) | 81 ms |
-| very long (~5 000 chars) | 82 ms |
-| huge (~200 000 chars) | 300 ms |
-| new connection + first message | 83 ms |
+| long (~600 chars) | 83 ms |
+| very long (~5 000 chars) | 85 ms |
+| huge (~200 000 chars) | 320 ms |
+| new connection + first message | 186 ms |
 
 TCP-based protocols run without loss here (emulating it needs root), so their times are optimistic.
 
@@ -438,12 +438,12 @@ TCP-based protocols run without loss here (emulating it needs root), so their ti
 
 | Message | P2PACT UDP |
 |---|---:|
-| very short (~20 chars) | 81 ms |
-| medium (~100 chars) | 81 ms |
-| long (~600 chars) | 81 ms |
-| very long (~5 000 chars) | 204 ms |
-| huge (~200 000 chars) | 1.79 s |
-| new connection + first message | 86 ms |
+| very short (~20 chars) | 82 ms |
+| medium (~100 chars) | 82 ms |
+| long (~600 chars) | 178 ms |
+| very long (~5 000 chars) | 85 ms |
+| huge (~200 000 chars) | 420 ms |
+| new connection + first message | 89 ms |
 
 TCP-based protocols run without loss here (emulating it needs root), so their times are optimistic.
 
@@ -459,12 +459,12 @@ Machine: darwin/arm64, 15 CPUs, go1.27.0, 2026-10-21.
 
 | Message | P2PACT UDP | P2PACT TCP | WebSocket | HTTPS+JSON | HTTP/2 | gRPC | HTTP/3 |
 |---|---:|---:|---:|---:|---:|---:|---:|
-| very short (~20 chars) | 159 B | ≈314 B (2.0×) | ≈387 B (2.4×) | ≈681 B (4.3×) | ≈411 B (2.6×) | ≈522 B (3.3×) | ≈805 B (5.1×) |
-| medium (~100 chars) | 200 B | ≈354 B (1.8×) | ≈469 B (2.3×) | ≈762 B (3.8×) | ≈490 B (2.5×) | ≈597 B (3.0×) | ≈587 B (2.9×) |
-| long (~600 chars) | 395 B | ≈550 B (1.4×) | ≈969 B (2.5×) | ≈1.2 KB (3.2×) | ≈995 B (2.5×) | ≈1.1 KB (2.8×) | ≈1.1 KB (2.8×) |
-| very long (~5 000 chars) | 2.0 KB | ≈2.2 KB (1.1×) | ≈5.4 KB (2.7×) | ≈5.8 KB (2.8×) | ≈5.5 KB (2.7×) | ≈5.6 KB (2.8×) | ≈5.9 KB (2.9×) |
-| huge (~200 000 chars) | 74 KB | ≈76 KB (1.0×) | ≈206 KB (2.8×) | ≈207 KB (2.8×) | ≈207 KB (2.8×) | ≈207 KB (2.8×) | ≈209 KB (2.8×) |
-| new connection + first message | 756 B | ≈934 B (1.2×) | ≈4.2 KB (5.7×) | ≈4.1 KB (5.6×) | ≈4.3 KB (5.8×) | ≈4.3 KB (5.8×) | ≈44 KB (60.1×) |
+| very short (~20 chars) | 159 B | ≈314 B (2.0×) | ≈387 B (2.4×) | ≈681 B (4.3×) | ≈410 B (2.6×) | ≈527 B (3.3×) | ≈490 B (3.1×) |
+| medium (~100 chars) | 208 B | ≈355 B (1.7×) | ≈469 B (2.3×) | ≈762 B (3.7×) | ≈490 B (2.4×) | ≈602 B (2.9×) | ≈567 B (2.7×) |
+| long (~600 chars) | 408 B | ≈556 B (1.4×) | ≈969 B (2.4×) | ≈1.2 KB (3.1×) | ≈996 B (2.4×) | ≈1.1 KB (2.7×) | ≈1.1 KB (2.7×) |
+| very long (~5 000 chars) | 2.0 KB | ≈2.2 KB (1.1×) | ≈5.4 KB (2.7×) | ≈5.8 KB (2.9×) | ≈5.5 KB (2.7×) | ≈5.6 KB (2.8×) | ≈5.9 KB (2.9×) |
+| huge (~200 000 chars) | 74 KB | ≈76 KB (1.0×) | ≈206 KB (2.8×) | ≈207 KB (2.8×) | ≈207 KB (2.8×) | ≈207 KB (2.8×) | ≈214 KB (2.9×) |
+| new connection + first message | 722 B | ≈900 B (1.2×) | ≈4.2 KB (6.0×) | ≈4.1 KB (5.9×) | ≈4.3 KB (6.0×) | ≈4.3 KB (6.1×) | ≈54 KB (77.2×) |
 
 **Delivery**: every message arrived intact (each one checked by a fingerprint of what the receiver got).
 
@@ -474,52 +474,52 @@ Machine: darwin/arm64, 15 CPUs, go1.27.0, 2026-10-21.
 
 | Message | P2PACT UDP | P2PACT TCP | WebSocket | HTTPS+JSON | HTTP/2 | gRPC | HTTP/3 |
 |---|---:|---:|---:|---:|---:|---:|---:|
-| very short (~20 chars) | 2.5 ms | 2.5 ms (1.0×) | 2.4 ms (1.0×) | 2.4 ms (1.0×) | 2.4 ms (0.9×) | 2.4 ms (0.9×) | 2.3 ms (0.9×) |
-| medium (~100 chars) | 2.5 ms | 2.6 ms (1.0×) | 2.4 ms (1.0×) | 2.4 ms (0.9×) | 2.4 ms (1.0×) | 2.4 ms (0.9×) | 2.3 ms (0.9×) |
-| long (~600 chars) | 2.9 ms | 2.8 ms (1.0×) | 2.4 ms (0.8×) | 2.4 ms (0.8×) | 2.4 ms (0.8×) | 2.4 ms (0.8×) | 2.3 ms (0.8×) |
-| very long (~5 000 chars) | 3.5 ms | 3.5 ms (1.0×) | 2.7 ms (0.8×) | 2.5 ms (0.7×) | 2.4 ms (0.7×) | 2.4 ms (0.7×) | 2.4 ms (0.7×) |
-| huge (~200 000 chars) | 11 ms | 8.0 ms (0.7×) | 9.3 ms (0.9×) | 4.9 ms (0.5×) | 4.9 ms (0.5×) | 4.5 ms (0.4×) | 5.5 ms (0.5×) |
-| new connection + first message | 9.4 ms | 4.4 ms (0.5×) | 8.4 ms (0.9×) | 6.1 ms (0.7×) | 5.1 ms (0.5×) | 7.6 ms (0.8×) | 5.2 ms (0.6×) |
+| very short (~20 chars) | 2.8 ms | 2.8 ms (1.0×) | 2.7 ms (1.0×) | 2.8 ms (1.0×) | 2.8 ms (1.0×) | 2.7 ms (1.0×) | 2.7 ms (1.0×) |
+| medium (~100 chars) | 2.8 ms | 2.9 ms (1.0×) | 2.7 ms (1.0×) | 2.9 ms (1.0×) | 2.9 ms (1.0×) | 2.7 ms (1.0×) | 2.7 ms (1.0×) |
+| long (~600 chars) | 2.9 ms | 2.9 ms (1.0×) | 2.8 ms (1.0×) | 2.8 ms (1.0×) | 2.9 ms (1.0×) | 2.7 ms (0.9×) | 2.7 ms (0.9×) |
+| very long (~5 000 chars) | 3.6 ms | 3.4 ms (0.9×) | 3.0 ms (0.8×) | 3.0 ms (0.8×) | 3.0 ms (0.8×) | 2.8 ms (0.8×) | 2.7 ms (0.8×) |
+| huge (~200 000 chars) | 9.6 ms | 12 ms (1.2×) | 9.0 ms (0.9×) | 9.4 ms (1.0×) | 9.4 ms (1.0×) | 8.0 ms (0.8×) | 9.1 ms (1.0×) |
+| new connection + first message | 9.6 ms | 7.2 ms (0.8×) | 9.7 ms (1.0×) | 6.3 ms (0.7×) | 6.6 ms (0.7×) | 10 ms (1.1×) | 7.6 ms (0.8×) |
 
 Load: 2000 messages, 50 at a time — messages per second (errors; in brackets — how many times fewer than P2PACT UDP):
 
 | P2PACT UDP | P2PACT TCP | WebSocket | HTTPS+JSON | HTTP/2 | gRPC | HTTP/3 |
 |---:|---:|---:|---:|---:|---:|---:|
-| 14169 (0 errors) | 16451 (0 errors) (0.9×) | 21163 (0 errors) (0.7×) | 20799 (0 errors) (0.7×) | 22038 (0 errors) (0.6×) | 21163 (0 errors) (0.7×) | 21662 (0 errors) (0.7×) |
+| 18764 (0 errors) | 19204 (0 errors) (1.0×) | 20262 (0 errors) (0.9×) | 17928 (0 errors) (1.0×) | 20085 (0 errors) (0.9×) | 17858 (0 errors) (1.1×) | 18807 (0 errors) (1.0×) |
 
 *bluetooth — 30 ms one way, 40 KB/s*
 
 | Message | P2PACT UDP | P2PACT TCP | WebSocket | HTTPS+JSON | HTTP/2 | gRPC | HTTP/3 |
 |---|---:|---:|---:|---:|---:|---:|---:|
-| very short (~20 chars) | 65 ms | 64 ms (1.0×) | 66 ms (1.0×) | 73 ms (1.1×) | 66 ms (1.0×) | 68 ms (1.0×) | 73 ms (1.1×) |
-| medium (~100 chars) | 65 ms | 64 ms (1.0×) | 68 ms (1.1×) | 75 ms (1.2×) | 68 ms (1.1×) | 70 ms (1.1×) | 75 ms (1.2×) |
-| long (~600 chars) | 71 ms | 65 ms (0.9×) | 80 ms (1.1×) | 88 ms (1.2×) | 81 ms (1.1×) | 82 ms (1.2×) | 88 ms (1.2×) |
-| very long (~5 000 chars) | 111 ms | 104 ms (0.9×) | 188 ms (1.7×) | 196 ms (1.8×) | 189 ms (1.7×) | 190 ms (1.7×) | 201 ms (1.8×) |
-| huge (~200 000 chars) | 1.90 s | 1.86 s (1.0×) | 4.96 s (2.6×) | 4.97 s (2.6×) | 4.97 s (2.6×) | 4.96 s (2.6×) | 5.17 s (2.7×) |
-| new connection + first message | 81 ms | 79 ms (1.0×) | 280 ms (3.4×) | 217 ms (2.7×) | 216 ms (2.7×) | 275 ms (3.4×) | 271 ms (3.3×) |
+| very short (~20 chars) | 66 ms | 66 ms (1.0×) | 67 ms (1.0×) | 75 ms (1.1×) | 66 ms (1.0×) | 68 ms (1.0×) | 73 ms (1.1×) |
+| medium (~100 chars) | 67 ms | 67 ms (1.0×) | 69 ms (1.0×) | 76 ms (1.1×) | 68 ms (1.0×) | 70 ms (1.1×) | 75 ms (1.1×) |
+| long (~600 chars) | 72 ms | 72 ms (1.0×) | 81 ms (1.1×) | 88 ms (1.2×) | 82 ms (1.1×) | 83 ms (1.2×) | 88 ms (1.2×) |
+| very long (~5 000 chars) | 113 ms | 111 ms (1.0×) | 189 ms (1.7×) | 197 ms (1.8×) | 190 ms (1.7×) | 191 ms (1.7×) | 201 ms (1.8×) |
+| huge (~200 000 chars) | 1.91 s | 1.87 s (1.0×) | 4.96 s (2.6×) | 4.97 s (2.6×) | 4.97 s (2.6×) | 4.97 s (2.6×) | 5.18 s (2.7×) |
+| new connection + first message | 79 ms | 77 ms (1.0×) | 284 ms (3.6×) | 219 ms (2.8×) | 217 ms (2.8×) | 279 ms (3.6×) | 273 ms (3.5×) |
 
 Load: 2000 messages, 50 at a time — messages per second (errors; in brackets — how many times fewer than P2PACT UDP):
 
 | P2PACT UDP | P2PACT TCP | WebSocket | HTTPS+JSON | HTTP/2 | gRPC | HTTP/3 |
 |---:|---:|---:|---:|---:|---:|---:|
-| 173 (0 errors) | 388 (0 errors) (0.4×) | 202 (0 errors) (0.9×) | 631 (0 errors) (0.3×) | 223 (0 errors) (0.8×) | 209 (0 errors) (0.8×) | 115 (0 errors) (1.5×) |
+| 157 (0 errors) | 388 (0 errors) (0.4×) | 202 (0 errors) (0.8×) | 622 (0 errors) (0.3×) | 223 (0 errors) (0.7×) | 209 (0 errors) (0.8×) | 117 (0 errors) (1.3×) |
 
 *internet — 40 ms one way, 1% loss*
 
 | Message | P2PACT UDP | P2PACT TCP | WebSocket | HTTPS+JSON | HTTP/2 | gRPC | HTTP/3 |
 |---|---:|---:|---:|---:|---:|---:|---:|
-| very short (~20 chars) | 81 ms | 82 ms (1.0×) | 81 ms (1.0×) | 82 ms (1.0×) | 82 ms (1.0×) | 82 ms (1.0×) | 82 ms (1.0×) |
-| medium (~100 chars) | 81 ms | 81 ms (1.0×) | 82 ms (1.0×) | 82 ms (1.0×) | 82 ms (1.0×) | 82 ms (1.0×) | 82 ms (1.0×) |
-| long (~600 chars) | 82 ms | 82 ms (1.0×) | 82 ms (1.0×) | 81 ms (1.0×) | 81 ms (1.0×) | 81 ms (1.0×) | 82 ms (1.0×) |
-| very long (~5 000 chars) | 82 ms | 82 ms (1.0×) | 82 ms (1.0×) | 82 ms (1.0×) | 82 ms (1.0×) | 82 ms (1.0×) | 82 ms (1.0×) |
-| huge (~200 000 chars) | 180 ms | 86 ms (0.5×) | 84 ms (0.5×) | 84 ms (0.5×) | 90 ms (0.5×) | 87 ms (0.5×) | 686 ms (3.8×) |
-| new connection + first message | 83 ms | 90 ms (1.1×) | 247 ms (3.0×) | 164 ms (2.0×) | 165 ms (2.0×) | 247 ms (3.0×) | 165 ms (2.0×) |
+| very short (~20 chars) | 81 ms | 81 ms (1.0×) | 82 ms (1.0×) | 82 ms (1.0×) | 82 ms (1.0×) | 81 ms (1.0×) | 82 ms (1.0×) |
+| medium (~100 chars) | 81 ms | 83 ms (1.0×) | 82 ms (1.0×) | 83 ms (1.0×) | 83 ms (1.0×) | 82 ms (1.0×) | 82 ms (1.0×) |
+| long (~600 chars) | 82 ms | 82 ms (1.0×) | 82 ms (1.0×) | 82 ms (1.0×) | 82 ms (1.0×) | 82 ms (1.0×) | 82 ms (1.0×) |
+| very long (~5 000 chars) | 83 ms | 83 ms (1.0×) | 82 ms (1.0×) | 82 ms (1.0×) | 83 ms (1.0×) | 82 ms (1.0×) | 82 ms (1.0×) |
+| huge (~200 000 chars) | 180 ms | 96 ms (0.5×) | 92 ms (0.5×) | 92 ms (0.5×) | 89 ms (0.5×) | 89 ms (0.5×) | 829 ms (4.6×) |
+| new connection + first message | 89 ms | 89 ms (1.0×) | 249 ms (2.8×) | 167 ms (1.9×) | 168 ms (1.9×) | 246 ms (2.8×) | 166 ms (1.9×) |
 
 Load: 2000 messages, 50 at a time — messages per second (errors; in brackets — how many times fewer than P2PACT UDP):
 
 | P2PACT UDP | P2PACT TCP | WebSocket | HTTPS+JSON | HTTP/2 | gRPC | HTTP/3 |
 |---:|---:|---:|---:|---:|---:|---:|
-| 545 (0 errors) | 614 (0 errors) (0.9×) | 611 (0 errors) (0.9×) | 597 (0 errors) (0.9×) | 611 (0 errors) (0.9×) | 611 (0 errors) (0.9×) | 551 (0 errors) (1.0×) |
+| 519 (0 errors) | 606 (0 errors) (0.9×) | 605 (0 errors) (0.9×) | 589 (0 errors) (0.9×) | 606 (0 errors) (0.9×) | 610 (0 errors) (0.9×) | 552 (0 errors) (0.9×) |
 
 TCP-based protocols run without loss here (emulating it needs root), so their times are optimistic.
 
@@ -528,17 +528,17 @@ TCP-based protocols run without loss here (emulating it needs root), so their ti
 | Message | P2PACT UDP | P2PACT TCP | WebSocket | HTTPS+JSON | HTTP/2 | gRPC | HTTP/3 |
 |---|---:|---:|---:|---:|---:|---:|---:|
 | very short (~20 chars) | 201 ms | 202 ms (1.0×) | 202 ms (1.0×) | 203 ms (1.0×) | 202 ms (1.0×) | 202 ms (1.0×) | 203 ms (1.0×) |
-| medium (~100 chars) | 202 ms | 202 ms (1.0×) | 202 ms (1.0×) | 203 ms (1.0×) | 202 ms (1.0×) | 202 ms (1.0×) | 202 ms (1.0×) |
-| long (~600 chars) | 203 ms | 202 ms (1.0×) | 203 ms (1.0×) | 204 ms (1.0×) | 203 ms (1.0×) | 202 ms (1.0×) | 203 ms (1.0×) |
-| very long (~5 000 chars) | 205 ms | 205 ms (1.0×) | 212 ms (1.0×) | 213 ms (1.0×) | 212 ms (1.0×) | 212 ms (1.0×) | 212 ms (1.0×) |
-| huge (~200 000 chars) | 705 ms | 351 ms (0.5×) | 601 ms (0.9×) | 599 ms (0.8×) | 599 ms (0.8×) | 599 ms (0.8×) | 3.12 s (4.4×) |
-| new connection + first message | 207 ms | 210 ms (1.0×) | 614 ms (3.0×) | 412 ms (2.0×) | 411 ms (2.0×) | 612 ms (3.0×) | 615 ms (3.0×) |
+| medium (~100 chars) | 202 ms | 202 ms (1.0×) | 202 ms (1.0×) | 203 ms (1.0×) | 203 ms (1.0×) | 202 ms (1.0×) | 202 ms (1.0×) |
+| long (~600 chars) | 202 ms | 203 ms (1.0×) | 203 ms (1.0×) | 204 ms (1.0×) | 203 ms (1.0×) | 202 ms (1.0×) | 203 ms (1.0×) |
+| very long (~5 000 chars) | 206 ms | 207 ms (1.0×) | 212 ms (1.0×) | 213 ms (1.0×) | 213 ms (1.0×) | 212 ms (1.0×) | 212 ms (1.0×) |
+| huge (~200 000 chars) | 678 ms | 356 ms (0.5×) | 602 ms (0.9×) | 601 ms (0.9×) | 601 ms (0.9×) | 600 ms (0.9×) | 2.75 s (4.1×) |
+| new connection + first message | 208 ms | 209 ms (1.0×) | 615 ms (3.0×) | 411 ms (2.0×) | 411 ms (2.0×) | 614 ms (3.0×) | 418 ms (2.0×) |
 
 Load: 2000 messages, 50 at a time — messages per second (errors; in brackets — how many times fewer than P2PACT UDP):
 
 | P2PACT UDP | P2PACT TCP | WebSocket | HTTPS+JSON | HTTP/2 | gRPC | HTTP/3 |
 |---:|---:|---:|---:|---:|---:|---:|
-| 231 (0 errors) | 247 (0 errors) (0.9×) | 245 (0 errors) (0.9×) | 240 (0 errors) (1.0×) | 247 (0 errors) (0.9×) | 243 (0 errors) (1.0×) | 183 (0 errors) (1.3×) |
+| 177 (0 errors) | 246 (0 errors) (0.7×) | 246 (0 errors) (0.7×) | 240 (0 errors) (0.7×) | 247 (0 errors) (0.7×) | 245 (0 errors) (0.7×) | 200 (0 errors) (0.9×) |
 
 TCP-based protocols run without loss here (emulating it needs root), so their times are optimistic.
 

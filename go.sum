@@ -31,6 +31,10 @@ github.com/p2pact/p2pact-go v0.0.0-20261020230435-1fc218caa524 h1:grSdfVlCPZPM0T
 github.com/p2pact/p2pact-go v0.0.0-20261020230435-1fc218caa524/go.mod h1:wv9ydt0gqhxBVQksAxLWWq6yCQzh0qxv2Pq8pia9t1k=
 github.com/p2pact/p2pact-go v0.0.0-20261021110730-66f1542fb6ba h1:l6NLX5WTpLTh9Uih+GQZnMqteI4j+aTRk49KjEPuKZg=
 github.com/p2pact/p2pact-go v0.0.0-20261021110730-66f1542fb6ba/go.mod h1:wv9ydt0gqhxBVQksAxLWWq6yCQzh0qxv2Pq8pia9t1k=
+github.com/p2pact/p2pact-go v0.0.0-20261021115424-948d2fb16bfc h1:lTthM15SuQkbmulXx7YpGZR1Gxfa6r59A6ZYva2bkOU=
+github.com/p2pact/p2pact-go v0.0.0-20261021115424-948d2fb16bfc/go.mod h1:wv9ydt0gqhxBVQksAxLWWq6yCQzh0qxv2Pq8pia9t1k=
+github.com/p2pact/p2pact-go v0.0.0-20261021130306-dfd0b974d0e0 h1:nqnkfkl/vXqCH9qXGAfPENgTDuW7TDNV2+Yz4clqE7A=
+github.com/p2pact/p2pact-go v0.0.0-20261021130306-dfd0b974d0e0/go.mod h1:wv9ydt0gqhxBVQksAxLWWq6yCQzh0qxv2Pq8pia9t1k=
 github.com/parquet-go/bitpack v1.0.0 h1:AUqzlKzPPXf2bCdjfj4sTeacrUwsT7NlcYDMUQxPcQA=
 github.com/parquet-go/bitpack v1.0.0/go.mod h1:XnVk9TH+O40eOOmvpAVZ7K2ocQFrQwysLMnc6M/8lgs=
 github.com/parquet-go/jsonlite v1.0.0 h1:87QNdi56wOfsE5bdgas0vRzHPxfJgzrXGml1zZdd7VU=
