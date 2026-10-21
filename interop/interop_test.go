@@ -77,6 +77,16 @@ func start(t *testing.T, im impl, name string) *peer {
 
 func (p *peer) do(req map[string]any) map[string]any {
 	p.t.Helper()
+	res, e := p.try(req)
+	if e != "" {
+		p.t.Fatalf("%s %v: %v", p.name, req["cmd"], e)
+	}
+	return res
+}
+
+// try is do that returns an error answer instead of failing the test.
+func (p *peer) try(req map[string]any) (map[string]any, string) {
+	p.t.Helper()
 	if err := p.in.Encode(req); err != nil {
 		p.t.Fatalf("%s: %v", p.name, err)
 	}
@@ -97,13 +107,38 @@ func (p *peer) do(req map[string]any) map[string]any {
 			p.t.Fatalf("%s: %s", p.name, b)
 		}
 		if e, ok := res["error"]; ok {
-			p.t.Fatalf("%s %v: %v", p.name, req["cmd"], e)
+			return nil, fmt.Sprint(e)
 		}
-		return res
+		return res, ""
 	case <-time.After(90 * time.Second):
 		p.t.Fatalf("%s %v: no answer", p.name, req["cmd"])
 	}
-	return nil
+	return nil, ""
+}
+
+// ownDictInUse waits until p has trained its own dictionary for the device at addr and uses it:
+// that device took it (fetched it with 0.5 and announced it back). A peer without the
+// dict-state command is skipped.
+func ownDictInUse(t *testing.T, p *peer, addr string) {
+	t.Helper()
+	req := map[string]any{"cmd": "dict-state", "peer": addr}
+	for deadline := time.Now().Add(60 * time.Second); ; time.Sleep(100 * time.Millisecond) {
+		res, e := p.try(req)
+		if strings.Contains(e, "unknown command") {
+			t.Logf("%s does not report its dictionaries: not checked", p.name)
+			return
+		}
+		if e != "" {
+			t.Fatalf("%s dict-state: %s", p.name, e)
+		}
+		if res["own"] != nil && res["using"] == res["own"] && res["training"] == false {
+			t.Logf("%s compresses with its own dictionary %.12s…", p.name, res["own"])
+			return
+		}
+		if time.Now().After(deadline) {
+			t.Fatalf("%s does not compress with its own dictionary: %v", p.name, res)
+		}
+	}
 }
 
 func messages() map[string][]byte {
@@ -192,6 +227,12 @@ func TestInterop(t *testing.T) {
 					}
 					for name, data := range messages() {
 						call(t, name+" after training", joiner, oa, owner, ja, data, 0)
+					}
+					// both trained one for the other and the other took it: talk with them
+					ownDictInUse(t, owner, ja)
+					ownDictInUse(t, joiner, oa)
+					for i := 400; i < 450; i++ {
+						call(t, "conversation with own dictionaries", joiner, oa, owner, ja, chatLine(i), i%3)
 					}
 				})
 			}
