@@ -1,6 +1,7 @@
 // Package interop checks that implementations of P2PACT understand each other: every pair
 // (including an implementation with itself) pairs by invite and exchanges messages both ways,
-// over UDP and over TCP, and over an application road that stands in for Bluetooth LE.
+// over UDP and over TCP, and over an application road that stands in for Bluetooth LE; a call
+// answered later does not hold up the calls behind it on its stream.
 //
 // Implementations are interop peers (see p2pact-go/cmd/p2pact-interop) driven by JSON lines.
 // The Go one is always built; others are added through environment variables:
@@ -174,6 +175,33 @@ func call(t *testing.T, name string, joiner *peer, oa string, owner *peer, ja st
 	}
 }
 
+// answerLater checks a call answered later (spec §6), both ways: the callee holds a call until
+// a second call, sent behind it on the same stream, has run. A peer without the later command
+// is skipped.
+func answerLater(t *testing.T, joiner *peer, oa string, owner *peer, ja string, stream int) {
+	t.Helper()
+	for _, dir := range []struct {
+		from *peer
+		to   string
+	}{{joiner, oa}, {owner, ja}} {
+		data := []byte("held by " + dir.from.name)
+		res, e := dir.from.try(map[string]any{"cmd": "later", "peer": dir.to, "data": data, "stream": stream})
+		if strings.Contains(e, "unknown command") {
+			t.Logf("%s does not call to be answered later: not checked", dir.from.name)
+			continue
+		}
+		if e != "" {
+			t.Fatalf("answered later, from %s: %s", dir.from.name, e)
+		}
+		var got []byte
+		b, _ := json.Marshal(res["data"])
+		_ = json.Unmarshal(b, &got)
+		if !bytes.Equal(got, data) {
+			t.Fatalf("answered later, from %s: got %q", dir.from.name, got)
+		}
+	}
+}
+
 func chatLine(i int) []byte {
 	words := []string{"the agent", "finished", "the task", "run the tests", "and commit", "сообщения не доходят",
 		"до телефона", "why is it so slow", "checked the logs", "a delivery bug", "fixed it", "pushed to the branch"}
@@ -223,6 +251,7 @@ func TestInterop(t *testing.T) {
 						stream = (stream + 1) % 3 // stream 0 (in order) and streams 1, 2
 						call(t, name, joiner, oa, owner, ja, data, stream)
 					}
+					answerLater(t, joiner, oa, owner, ja, 2)
 					// a conversation long enough for a device to train its own dictionary (a Go
 					// one does at 32 KB); talking goes on after it, with it where the other side
 					// takes it
@@ -289,6 +318,7 @@ func TestInteropBluetooth(t *testing.T) {
 					stream = (stream + 1) % 3
 					call(t, name, joiner, oa, owner, ja, data, stream)
 				}
+				answerLater(t, joiner, oa, owner, ja, 2)
 				for i := range 50 {
 					call(t, "conversation", joiner, oa, owner, ja, chatLine(i), i%3)
 				}

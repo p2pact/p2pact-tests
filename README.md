@@ -5,6 +5,7 @@ Tests for [P2PACT](https://github.com/p2pact/p2pact) implementations:
 - **interop** — every pair of implementations (Go, TypeScript, Python, Kotlin, and yours) pairs
   by invite and exchanges messages both ways, over UDP and TCP: short, compressible, Russian
   text and 300 KB of random bytes; and over an application road standing in for Bluetooth LE;
+  a call answered later must not hold up the call sent behind it on its stream;
 - **p2pact-bench** — bytes and time against WebSocket, HTTPS, HTTP/2, gRPC and HTTP/3.
 
 **Results at a glance: [SUMMARY.md](SUMMARY.md)** — one table for the real network, one for
@@ -26,7 +27,7 @@ go test -v ./interop                                     # all pairs of four lan
 The Kotlin peer is built with `./gradlew installDist` in p2pact-kotlin and needs `JAVA_HOME`.
 
 Each implementation ships an interop peer: a node driven by JSON lines on stdin
-(`listen`, `invite`, `join`, `known`, `call`, `dict`, `close` — see
+(`listen`, `invite`, `join`, `known`, `call`, `later`, `dict`, `close` — see
 [p2pact-go/cmd/p2pact-interop](https://github.com/p2pact/p2pact-go/tree/main/cmd/p2pact-interop)).
 
 `TestInteropBluetooth` runs every pair whose peers know the `road` command (Go and Kotlin
