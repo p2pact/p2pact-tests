@@ -57,8 +57,11 @@ type peer struct {
 	out  *bufio.Scanner
 }
 
-func start(t *testing.T, im impl, name string) *peer {
-	c := exec.Command(im.cmd[0], append(im.cmd[1:], t.TempDir(), name)...)
+func start(t *testing.T, im impl, name string) *peer { return startIn(t, im, name, t.TempDir()) }
+
+// startIn starts a peer on dir: the same dir again — the same device after a restart.
+func startIn(t *testing.T, im impl, name, dir string) *peer {
+	c := exec.Command(im.cmd[0], append(im.cmd[1:], dir, name)...)
 	c.Stderr = os.Stderr
 	w, _ := c.StdinPipe()
 	r, _ := c.StdoutPipe()
@@ -67,17 +70,24 @@ func start(t *testing.T, im impl, name string) *peer {
 	}
 	p := &peer{t: t, name: name, cmd: c, in: json.NewEncoder(w), out: bufio.NewScanner(r)}
 	p.out.Buffer(make([]byte, 1<<20), 64<<20)
-	t.Cleanup(func() {
-		_ = p.in.Encode(map[string]string{"cmd": "close"})
-		done := make(chan struct{})
-		go func() { _ = c.Wait(); close(done) }()
-		select {
-		case <-done:
-		case <-time.After(3 * time.Second):
-			_ = c.Process.Kill()
-		}
-	})
+	t.Cleanup(p.stop)
 	return p
+}
+
+// stop closes the peer and waits for it to exit (killed after 3 s).
+func (p *peer) stop() {
+	if p.cmd.ProcessState != nil {
+		return
+	}
+	_ = p.in.Encode(map[string]string{"cmd": "close"})
+	done := make(chan struct{})
+	go func() { _ = p.cmd.Wait(); close(done) }()
+	select {
+	case <-done:
+	case <-time.After(3 * time.Second):
+		_ = p.cmd.Process.Kill()
+		<-done
+	}
 }
 
 func (p *peer) do(req map[string]any) map[string]any {
@@ -321,6 +331,43 @@ func TestInteropBluetooth(t *testing.T) {
 				answerLater(t, joiner, oa, owner, ja, 2)
 				for i := range 50 {
 					call(t, "conversation", joiner, oa, owner, ja, chatLine(i), i%3)
+				}
+			})
+		}
+	}
+}
+
+// TestInteropRestart: both sides compress with dictionaries trained for each other; then one
+// restarts on the same directory (the same device, its dictionaries kept, the other's list lost).
+// The other keeps compressing: its hello must reach the restarted one readable (never
+// compressed), so the restarted one learns the list and nothing is held. Every pair, both ways.
+func TestInteropRestart(t *testing.T) {
+	list := impls(t)
+	for _, a := range list {
+		for _, b := range list {
+			t.Run(a.name+"-restarts-"+b.name, func(t *testing.T) {
+				dir := t.TempDir()
+				owner, joiner := startIn(t, a, a.name+"-owner", dir), start(t, b, b.name+"-joiner")
+				oa := owner.do(map[string]any{"cmd": "listen", "udp": "127.0.0.1:0"})["addr"].(string)
+				ja := joiner.do(map[string]any{"cmd": "listen", "udp": "127.0.0.1:0"})["addr"].(string)
+				inv := owner.do(map[string]any{"cmd": "invite"})["invite"].(string)
+				joiner.do(map[string]any{"cmd": "join", "invite": inv})
+				for i := 0; owner.do(map[string]any{"cmd": "known", "peer": ja})["known"] != true; i++ {
+					if i > 100 {
+						t.Fatal("the owner does not know the joiner")
+					}
+					time.Sleep(20 * time.Millisecond)
+				}
+				for i := range 400 {
+					call(t, "conversation", joiner, oa, owner, ja, chatLine(i), i%3)
+				}
+				ownDictInUse(t, owner, ja)
+				ownDictInUse(t, joiner, oa)
+				owner.stop()
+				owner = startIn(t, a, a.name+"-owner-again", dir)
+				owner.do(map[string]any{"cmd": "listen", "udp": "127.0.0.1:0"})
+				for i := 400; i < 430; i++ {
+					call(t, "after the restart", joiner, oa, owner, ja, chatLine(i), i%3)
 				}
 			})
 		}

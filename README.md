@@ -30,6 +30,10 @@ Each implementation ships an interop peer: a node driven by JSON lines on stdin
 (`listen`, `invite`, `join`, `known`, `call`, `later`, `dict`, `close` — see
 [p2pact-go/cmd/p2pact-interop](https://github.com/p2pact/p2pact-go/tree/main/cmd/p2pact-interop)).
 
+`TestInteropRestart` runs every pair with dictionaries trained for each other, then restarts
+one side on the same directory: the other keeps compressing, and its messages must run on the
+restarted side at once (the hello and the dictionary list are never compressed).
+
 `TestInteropBluetooth` runs every pair whose peers know the `road` command (Go and Kotlin
 today; the others are skipped) over nothing but an application road (core spec §3): a local
 TCP connection stands in for a Bluetooth LE GATT link — writes of 20 bytes, 40 KB/s, framed as
