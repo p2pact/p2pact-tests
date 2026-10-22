@@ -25,8 +25,8 @@ github.com/kr/pretty v0.2.1/go.mod h1:ipq/a2n7PKx3OHsz4KJII5eveXtPO4qwEXGdVfWzfn
 github.com/kr/pty v1.1.1/go.mod h1:pFQYn66WHrOpPYNljwOMqo10TkYh1fy3cYio2l3bCsQ=
 github.com/kr/text v0.1.0 h1:45sCR5RtlFHMR4UwH9sdQ5TC8v0qDQCHnXt+kaKSTVE=
 github.com/kr/text v0.1.0/go.mod h1:4Jbv+DJW3UT/LiOwJeYQe1efqtUx/iVham/4vfdArNI=
-github.com/p2pact/p2pact-go v0.0.0-20261022100343-9193e6420a47 h1:8P85PosATNCtiSSTdtM2NBWVhgMLPwjTVvDD6LjaJ24=
-github.com/p2pact/p2pact-go v0.0.0-20261022100343-9193e6420a47/go.mod h1:wv9ydt0gqhxBVQksAxLWWq6yCQzh0qxv2Pq8pia9t1k=
+github.com/p2pact/p2pact-go v0.0.0-20261022102928-db0231774b62 h1:Fhrq7E7lftf4PHSRj+HXysarTj54A7OAcfDyCrsmWIc=
+github.com/p2pact/p2pact-go v0.0.0-20261022102928-db0231774b62/go.mod h1:wv9ydt0gqhxBVQksAxLWWq6yCQzh0qxv2Pq8pia9t1k=
 github.com/parquet-go/bitpack v1.0.0 h1:AUqzlKzPPXf2bCdjfj4sTeacrUwsT7NlcYDMUQxPcQA=
 github.com/parquet-go/bitpack v1.0.0/go.mod h1:XnVk9TH+O40eOOmvpAVZ7K2ocQFrQwysLMnc6M/8lgs=
 github.com/parquet-go/jsonlite v1.0.0 h1:87QNdi56wOfsE5bdgas0vRzHPxfJgzrXGml1zZdd7VU=
