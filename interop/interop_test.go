@@ -1,6 +1,6 @@
 // Package interop checks that implementations of P2PACT understand each other: every pair
 // (including an implementation with itself) pairs by invite and exchanges messages both ways,
-// over UDP and over TCP.
+// over UDP and over TCP, and over an application road that stands in for Bluetooth LE.
 //
 // Implementations are interop peers (see p2pact-go/cmd/p2pact-interop) driven by JSON lines.
 // The Go one is always built; others are added through environment variables:
@@ -240,6 +240,59 @@ func TestInterop(t *testing.T) {
 					}
 				})
 			}
+		}
+	}
+}
+
+// TestInteropBluetooth: every pair whose peers have the road command talks over an application
+// road (spec §3) and nothing else — a local TCP connection standing in for a Bluetooth LE GATT
+// link: writes of 20 bytes, 40 KB/s, framed as a stream road. They pair over it (the invite has
+// no hints; the road is bound by the handshake) and exchange messages both ways.
+func TestInteropBluetooth(t *testing.T) {
+	list := impls(t)
+	for _, a := range list {
+		for _, b := range list {
+			t.Run(a.name+"-"+b.name, func(t *testing.T) {
+				owner, joiner := start(t, a, a.name+"-owner"), start(t, b, b.name+"-joiner")
+				oa := owner.do(map[string]any{"cmd": "listen"})["addr"].(string)
+				ja := joiner.do(map[string]any{"cmd": "listen"})["addr"].(string)
+				link := map[string]any{"cmd": "road", "mtu": 20, "rate": 40 << 10}
+				link["listen"] = "127.0.0.1:0"
+				res, e := owner.try(link)
+				if strings.Contains(e, "unknown command") {
+					t.Skipf("%s has no application roads", a.name)
+				} else if e != "" {
+					t.Fatalf("%s road: %s", a.name, e)
+				}
+				delete(link, "listen")
+				link["dial"] = res["road"]
+				if _, e := joiner.try(link); strings.Contains(e, "unknown command") {
+					t.Skipf("%s has no application roads", b.name)
+				} else if e != "" {
+					t.Fatalf("%s road: %s", b.name, e)
+				}
+				inv := owner.do(map[string]any{"cmd": "invite"})["invite"].(string)
+				if got := joiner.do(map[string]any{"cmd": "join", "invite": inv})["peer"]; got != oa {
+					t.Fatalf("joined %v, want %s", got, oa)
+				}
+				for i := 0; owner.do(map[string]any{"cmd": "known", "peer": ja})["known"] != true; i++ {
+					if i > 200 {
+						t.Fatal("the owner does not know the joiner")
+					}
+					time.Sleep(20 * time.Millisecond)
+				}
+				msgs := messages()
+				msgs["random 30 KB"] = msgs["random 300 KB"][:30<<10] // 40 KB/s: a shorter long message
+				delete(msgs, "random 300 KB")
+				stream := 0
+				for name, data := range msgs {
+					stream = (stream + 1) % 3
+					call(t, name, joiner, oa, owner, ja, data, stream)
+				}
+				for i := range 50 {
+					call(t, "conversation", joiner, oa, owner, ja, chatLine(i), i%3)
+				}
+			})
 		}
 	}
 }

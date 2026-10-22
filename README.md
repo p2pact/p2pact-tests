@@ -2,9 +2,9 @@
 
 Tests for [P2PACT](https://github.com/p2pact/p2pact) implementations:
 
-- **interop** — every pair of implementations (Go, TypeScript, Python, and yours) pairs by invite
-  and exchanges messages both ways, over UDP and TCP: short, compressible, Russian text and
-  300 KB of random bytes;
+- **interop** — every pair of implementations (Go, TypeScript, Python, Kotlin, and yours) pairs
+  by invite and exchanges messages both ways, over UDP and TCP: short, compressible, Russian
+  text and 300 KB of random bytes; and over an application road standing in for Bluetooth LE;
 - **p2pact-bench** — bytes and time against WebSocket, HTTPS, HTTP/2, gRPC and HTTP/3.
 
 **Results at a glance: [SUMMARY.md](SUMMARY.md)** — one table for the real network, one for
@@ -18,12 +18,22 @@ them from the saved JSON.
 ```sh
 go test ./interop                                        # Go with itself
 P2PACT_TS=../p2pact-ts/dist/src/interop.js \
-P2PACT_PY=../p2pact-py/.venv/bin/python go test -v ./interop   # all pairs of three languages
+P2PACT_PY=../p2pact-py/.venv/bin/python \
+P2PACT_KOTLIN=../p2pact-kotlin/build/install/p2pact-interop/bin/p2pact-interop \
+go test -v ./interop                                     # all pairs of four languages
 ```
+
+The Kotlin peer is built with `./gradlew installDist` in p2pact-kotlin and needs `JAVA_HOME`.
 
 Each implementation ships an interop peer: a node driven by JSON lines on stdin
 (`listen`, `invite`, `join`, `known`, `call`, `dict`, `close` — see
 [p2pact-go/cmd/p2pact-interop](https://github.com/p2pact/p2pact-go/tree/main/cmd/p2pact-interop)).
+
+`TestInteropBluetooth` runs every pair whose peers know the `road` command (Go and Kotlin
+today; the others are skipped) over nothing but an application road (core spec §3): a local
+TCP connection stands in for a Bluetooth LE GATT link — writes of 20 bytes, 40 KB/s, framed as
+a stream road. The devices pair over it with an invite that has no addresses, the road is
+bound by the handshake, and they exchange messages both ways.
 Write one for your implementation and add it to `interop_test.go`.
 
 ## Findings

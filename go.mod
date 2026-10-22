@@ -4,7 +4,7 @@ go 1.26.0
 
 require (
 	github.com/fxamacker/cbor/v2 v2.9.6
-	github.com/p2pact/p2pact-go v0.0.0-20261021130306-dfd0b974d0e0
+	github.com/p2pact/p2pact-go v0.0.0-20261022093003-8900baa89049
 	github.com/parquet-go/parquet-go v0.32.0
 	github.com/quic-go/quic-go v0.64.1
 	google.golang.org/grpc v1.84.0
