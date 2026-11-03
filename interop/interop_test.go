@@ -9,6 +9,7 @@
 //	P2PACT_TS=/path/to/p2pact-ts/dist/src/interop.js   (run with node)
 //	P2PACT_PY=/path/to/python                            (with p2pact-py installed: python -m p2pact.interop)
 //	P2PACT_KOTLIN=/path/to/p2pact-kotlin/build/install/p2pact-interop/bin/p2pact-interop
+//	P2PACT_SWIFT=/path/to/p2pact-swift/.build/debug/p2pact-interop
 package interop
 
 import (
@@ -45,6 +46,9 @@ func impls(t *testing.T) []impl {
 	}
 	if kt := os.Getenv("P2PACT_KOTLIN"); kt != "" {
 		list = append(list, impl{"kotlin", []string{kt}})
+	}
+	if sw := os.Getenv("P2PACT_SWIFT"); sw != "" {
+		list = append(list, impl{"swift", []string{sw}})
 	}
 	return list
 }
