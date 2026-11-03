@@ -55,6 +55,7 @@ type peer struct {
 	cmd  *exec.Cmd
 	in   *json.Encoder
 	out  *bufio.Scanner
+	last map[string]any // the latest answer, an error one too
 }
 
 func start(t *testing.T, im impl, name string) *peer { return startIn(t, im, name, t.TempDir()) }
@@ -121,6 +122,7 @@ func (p *peer) try(req map[string]any) (map[string]any, string) {
 		if err := json.Unmarshal(b, &res); err != nil {
 			p.t.Fatalf("%s: %s", p.name, b)
 		}
+		p.last = res
 		if e, ok := res["error"]; ok {
 			return nil, fmt.Sprint(e)
 		}

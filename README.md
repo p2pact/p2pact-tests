@@ -41,6 +41,14 @@ a stream road. The devices pair over it with an invite that has no addresses, th
 bound by the handshake, and they exchange messages both ways.
 Write one for your implementation and add it to `interop_test.go`.
 
+`platform_test.go` runs every pair through the platform features (core spec §1, §2, §6, §8):
+`TestInteropKind` (kind told at pairing and in the hello; a device that says nothing still pairs),
+`TestInteropNamedTools` (numbers per device, resolved and called by name), `TestInteropGrants`
+(read method ok, write method error 4, event 0.6, events only with read), `TestInteropWants`
+(wants at pairing, narrowed by `onWants` or granted as asked), `TestInteropLocal` (a program of one
+language pairs with a device of another over the local socket as a plugin) and `TestInteropHosted`
+(a program behind a host answers a Go client's call through the host's tool-wide handler).
+
 ## Findings
 
 ### Real network
