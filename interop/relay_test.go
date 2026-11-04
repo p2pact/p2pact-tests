@@ -52,7 +52,9 @@ func startRelay(t *testing.T) (addr, fp, ws string, l *dropListener) {
 		t.Fatal(err)
 	}
 	l = &dropListener{Listener: ln}
-	go func() { _ = srv.Serve(tls.NewListener(l, &tls.Config{Certificates: []tls.Certificate{cert}, MinVersion: tls.VersionTLS12})) }()
+	go func() {
+		_ = srv.Serve(tls.NewListener(l, &tls.Config{Certificates: []tls.Certificate{cert}, MinVersion: tls.VersionTLS12}))
+	}()
 	wl, err := net.Listen("tcp", "127.0.0.1:0")
 	if err != nil {
 		t.Fatal(err)
@@ -71,6 +73,9 @@ func TestInteropRelay(t *testing.T) {
 	for _, a := range list {
 		for _, b := range list {
 			t.Run(a.name+"-"+b.name, func(t *testing.T) {
+				if a.name == "ts" && b.name != "ts" {
+					t.Skip("a WebSocket-only owner has no TLS relay in its invite: a TLS device cannot join it (TestInteropWSRelay covers ts as the joiner)")
+				}
 				addr, fp, ws, rl := startRelay(t)
 				owner, joiner := start(t, a, a.name+"-owner"), start(t, b, b.name+"-joiner")
 				oa := owner.do(map[string]any{"cmd": "listen"})["addr"].(string)

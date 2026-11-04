@@ -41,6 +41,8 @@ a stream road. The devices pair over it with an invite that has no addresses, th
 bound by the handshake, and they exchange messages both ways.
 Write one for your implementation and add it to `interop_test.go`.
 
+`TestInteropWSRelay` (ws_test.go) runs the Go relay's WebSocket listener on loopback (plain `ws://`) with a device that has a WebSocket road (the TypeScript peer; its interop peer knows `relay` with `ws` URLs) against a device of any language that dials the relay over TLS and tells its `ws` URL in the invite hints (Go, Swift, TS): pairing, calls both ways, events, and a reconnect after the WebSocket connections are cut. It runs straight and behind a tiny reverse proxy that sets `X-Forwarded-For` (the relay trusts it). A WebSocket-only device cannot own the invite for a TLS-only one, and Kotlin and Python do not tell a ws URL, so those pairs are skipped. `TestWSRelayPerIP` starts the real `p2pact-relay -ws-addr … [-ws-trust-proxy]` and checks that the 16-connection limit counts the `X-Forwarded-For` address only with the flag.
+
 `platform_test.go` runs every pair through the platform features (core spec §1, §2, §6, §8):
 `TestInteropKind` (kind told at pairing and in the hello; a device that says nothing still pairs),
 `TestInteropNamedTools` (numbers per device, resolved and called by name), `TestInteropGrants`
