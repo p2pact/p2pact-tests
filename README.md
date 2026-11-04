@@ -41,7 +41,7 @@ a stream road. The devices pair over it with an invite that has no addresses, th
 bound by the handshake, and they exchange messages both ways.
 
 `TestInteropForward` (`forward_test.go`) runs every triple whose peers know the forward commands
-(`hide`, `forward`, `paths`, `forward-stats`; Go and Kotlin today, the others are skipped)
+(`hide`, `forward`, `paths`, `forward-stats`; every language, a peer without them is skipped)
 through a road via a third device (core spec §3): A and B pair, restart on other ports
 announcing no addresses, so neither can find the other; X, paired with both, opts in as their
 forwarder. They talk both ways over `via:X` only, and X counts what it forwarded.

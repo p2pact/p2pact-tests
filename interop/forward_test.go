@@ -10,7 +10,7 @@ import (
 // trust (spec §3, via a third device). A and B pair over UDP, then restart on new ports and
 // announce no addresses, so neither can find the other; both reach X, which opts in as the
 // forwarder for the pair. Their session runs over the road via X, messages go both ways, and
-// X forwarded packets it could not read. Every triple of implementations; a peer without the
+// X forwarded packets it could not read. Every triple of implementations (Go, Kotlin, TS, Python, Swift); a peer without the
 // forward commands is skipped.
 func TestInteropForward(t *testing.T) {
 	list := impls(t)
